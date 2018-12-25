@@ -9,6 +9,7 @@ use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\UserRepository")
+ * @ORM\HasLifecycleCallbacks()
  */
 class User implements UserInterface
 {
@@ -68,7 +69,7 @@ class User implements UserInterface
 
     /**
      * @var string
-     * @ORM\Column(type="string", name="profile_picture")
+     * @ORM\Column(type="string", name="profile_picture", nullable=true)
      */
     private $profilePicture;
 
@@ -160,11 +161,7 @@ class User implements UserInterface
      */
     public function getRoles(): array
     {
-        $roles = $this->roles;
-        // guarantee every user at least has ROLE_USER
-        $roles[] = 'ROLE_USER';
-
-        return array_unique($roles);
+        return  $this->roles;
     }
 
     public function setRoles(array $roles): self
@@ -369,6 +366,15 @@ class User implements UserInterface
     }
 
     /**
+     * @ORM\PrePersist()
+     */
+    public function setCreatedAtValue() : self
+    {
+        $this->createdAt = new \DateTime();
+        return $this;
+    }
+
+    /**
      * @return \DateTime
      */
     public function getUpdatedAt(): \DateTime
@@ -383,6 +389,16 @@ class User implements UserInterface
     public function setUpdatedAt(\DateTime $updatedAt): User
     {
         $this->updatedAt = $updatedAt;
+        return $this;
+    }
+
+    /**
+     * @ORM\PrePersist()
+     * @ORM\PreUpdate()
+     */
+    public function setUpdatedAtValue() : self
+    {
+        $this->updatedAt = new \DateTime();
         return $this;
     }
 
