@@ -6,6 +6,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\UserRepository")
@@ -50,7 +51,7 @@ class User implements UserInterface
     private $country;
 
     /**
-     * @var \DateTime
+     * @var string
      * @ORM\Column(type="datetime", name="born_date")
      */
     private $bornDate;
@@ -75,6 +76,7 @@ class User implements UserInterface
 
     /**
      * @ORM\Column(type="string", length=180, unique=true)
+     * @Assert\Email(strict="true", checkMX=true)
      */
     private $email;
 
@@ -206,7 +208,7 @@ class User implements UserInterface
     /**
      * @return string
      */
-    public function getFirstname(): string
+    public function getFirstname(): ?string
     {
         return $this->firstname;
     }
@@ -224,7 +226,7 @@ class User implements UserInterface
     /**
      * @return string
      */
-    public function getLastname(): string
+    public function getLastname(): ?string
     {
         return $this->lastname;
     }
@@ -242,7 +244,7 @@ class User implements UserInterface
     /**
      * @return string
      */
-    public function getCity(): string
+    public function getCity(): ?string
     {
         return $this->city;
     }
@@ -251,7 +253,7 @@ class User implements UserInterface
      * @param string $city
      * @return User
      */
-    public function setCity(string $city): User
+    public function setCity(string $city): self
     {
         $this->city = $city;
         return $this;
@@ -260,7 +262,7 @@ class User implements UserInterface
     /**
      * @return string
      */
-    public function getCountry(): string
+    public function getCountry(): ?string
     {
         return $this->country;
     }
@@ -269,7 +271,7 @@ class User implements UserInterface
      * @param string $country
      * @return User
      */
-    public function setCountry(string $country): User
+    public function setCountry(string $country): self
     {
         $this->country = $country;
         return $this;
@@ -278,7 +280,7 @@ class User implements UserInterface
     /**
      * @return \DateTime
      */
-    public function getBornDate(): \DateTime
+    public function getBornDate(): ?\DateTime
     {
         return $this->bornDate;
     }
@@ -296,7 +298,7 @@ class User implements UserInterface
     /**
      * @return string
      */
-    public function getPhoneNumber(): string
+    public function getPhoneNumber(): ?string
     {
         return $this->phoneNumber;
     }
@@ -314,7 +316,7 @@ class User implements UserInterface
     /**
      * @return string
      */
-    public function getGender(): string
+    public function getGender(): ?string
     {
         return $this->gender;
     }
@@ -332,7 +334,7 @@ class User implements UserInterface
     /**
      * @return string
      */
-    public function getProfilePicture(): string
+    public function getProfilePicture(): ?string
     {
         return $this->profilePicture;
     }
