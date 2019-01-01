@@ -3,18 +3,21 @@
 namespace App\DataFixtures;
 
 use App\Entity\User;
+use App\Service\RandomStringGenerator;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\Persistence\ObjectManager;
-use Symfony\Component\Security\Core\Encoder\UserPasswordEncoder;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
 class UserFixtures extends Fixture
 {
     private $userPasswordEncoder;
 
-    public function __construct(UserPasswordEncoderInterface $userPasswordEncoder)
+    private $randomStringGenerator;
+
+    public function __construct(UserPasswordEncoderInterface $userPasswordEncoder, RandomStringGenerator $randomStringGenerator)
     {
         $this->userPasswordEncoder = $userPasswordEncoder;
+        $this->randomStringGenerator = $randomStringGenerator;
     }
 
     public function load( ObjectManager $manager)
@@ -30,9 +33,8 @@ class UserFixtures extends Fixture
             ->setEmail("alexandre.vagnair@hetic.net")
             ->setPassword($this->userPasswordEncoder->encodePassword($user, 'root'))
             ->setRoles(["ROLE_USER"]);
-        // $product = new Product();
-        $manager->persist($user);
 
+        $manager->persist($user);
         $manager->flush();
     }
 }

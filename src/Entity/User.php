@@ -108,6 +108,18 @@ class User implements UserInterface
      */
     private $responses;
 
+    /**
+     * @var string
+     * @ORM\Column(type="string", name="token", nullable=true)
+     */
+    private $token;
+
+    /**
+     * @var \DateTime
+     * @ORM\Column(type="datetime", name="token_request_at", nullable=true)
+     */
+    private $tokenRequestAt;
+
     public function __construct()
     {
         $this->recipients = new ArrayCollection();
@@ -278,9 +290,9 @@ class User implements UserInterface
     }
 
     /**
-     * @return \DateTime
+     * @return \DateTime|string|null
      */
-    public function getBornDate(): ?\DateTime
+    public function getBornDate()
     {
         return $this->bornDate;
     }
@@ -432,6 +444,60 @@ class User implements UserInterface
             }
         }
 
+        return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getRecipients()
+    {
+        return $this->recipients;
+    }
+
+    /**
+     * @param mixed $recipients
+     * @return User
+     */
+    public function setRecipients($recipients)
+    {
+        $this->recipients = $recipients;
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getToken(): string
+    {
+        return $this->token;
+    }
+
+    /**
+     * @param string $token
+     * @return User
+     */
+    public function setToken(string $token): User
+    {
+        $this->token = $token;
+        return $this;
+    }
+
+    /**
+     * @return \DateTime
+     */
+    public function getTokenRequestAt(): \DateTime
+    {
+        return $this->tokenRequestAt;
+    }
+
+    /**
+     * @param \DateTime $tokenRequestAt
+     * @return User
+     */
+    public function setTokenRequestAt(\DateTime $tokenRequestAt): User
+    {
+        $this->tokenRequestAt = $tokenRequestAt;
         return $this;
     }
 }

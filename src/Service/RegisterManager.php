@@ -31,4 +31,9 @@ class RegisterManager
 
         return false;
     }
+
+    public function verificationEmail()
+    {
+        
+    }
 }
