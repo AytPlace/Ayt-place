@@ -15,7 +15,12 @@ security:
             pattern: ^/(_(profiler|wdt)|css|images|js)/
             security: false
         main:
+            logout:
+                path: /logout
             anonymous: true
+            guard:
+                authenticators:
+                    - App\Security\AppCustomAuthenticator
 
             # activate different ways to authenticate
 
@@ -28,5 +33,9 @@ security:
     # Easy way to control access for large sections of your site
     # Note: Only the *first* access control that matches will be used
     access_control:
-        # - { path: ^/admin, roles: ROLE_ADMIN }
-        # - { path: ^/profile, roles: ROLE_USER }
+       #  - { path: ^/admin, roles: ROLE_ADMIN }
+         - { path: ^/connexion, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+         - { path: ^/logout, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+         - { path: ^/inscription, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+         - { path: ^/mot-de-passe-oublie, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+         - { path: ^/, roles: ROLE_USER }

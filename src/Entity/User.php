@@ -6,9 +6,11 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\UserRepository")
+ * @ORM\HasLifecycleCallbacks()
  */
 class User implements UserInterface
 {
@@ -49,7 +51,7 @@ class User implements UserInterface
     private $country;
 
     /**
-     * @var \DateTime
+     * @var string
      * @ORM\Column(type="datetime", name="born_date")
      */
     private $bornDate;
@@ -68,12 +70,13 @@ class User implements UserInterface
 
     /**
      * @var string
-     * @ORM\Column(type="string", name="profile_picture")
+     * @ORM\Column(type="string", name="profile_picture", nullable=true)
      */
     private $profilePicture;
 
     /**
      * @ORM\Column(type="string", length=180, unique=true)
+     * @Assert\Email(strict="true", checkMX=true)
      */
     private $email;
 
@@ -104,6 +107,18 @@ class User implements UserInterface
      * @ORM\OneToMany(targetEntity="App\Entity\Response", mappedBy="USER")
      */
     private $responses;
+
+    /**
+     * @var string
+     * @ORM\Column(type="string", name="token", nullable=true)
+     */
+    private $token;
+
+    /**
+     * @var \DateTime
+     * @ORM\Column(type="datetime", name="token_request_at", nullable=true)
+     */
+    private $tokenRequestAt;
 
     public function __construct()
     {
@@ -160,11 +175,7 @@ class User implements UserInterface
      */
     public function getRoles(): array
     {
-        $roles = $this->roles;
-        // guarantee every user at least has ROLE_USER
-        $roles[] = 'ROLE_USER';
-
-        return array_unique($roles);
+        return  $this->roles;
     }
 
     public function setRoles(array $roles): self
@@ -209,7 +220,7 @@ class User implements UserInterface
     /**
      * @return string
      */
-    public function getFirstname(): string
+    public function getFirstname(): ?string
     {
         return $this->firstname;
     }
@@ -227,7 +238,7 @@ class User implements UserInterface
     /**
      * @return string
      */
-    public function getLastname(): string
+    public function getLastname(): ?string
     {
         return $this->lastname;
     }
@@ -245,7 +256,7 @@ class User implements UserInterface
     /**
      * @return string
      */
-    public function getCity(): string
+    public function getCity(): ?string
     {
         return $this->city;
     }
@@ -254,7 +265,7 @@ class User implements UserInterface
      * @param string $city
      * @return User
      */
-    public function setCity(string $city): User
+    public function setCity(string $city): self
     {
         $this->city = $city;
         return $this;
@@ -263,7 +274,7 @@ class User implements UserInterface
     /**
      * @return string
      */
-    public function getCountry(): string
+    public function getCountry(): ?string
     {
         return $this->country;
     }
@@ -272,16 +283,16 @@ class User implements UserInterface
      * @param string $country
      * @return User
      */
-    public function setCountry(string $country): User
+    public function setCountry(string $country): self
     {
         $this->country = $country;
         return $this;
     }
 
     /**
-     * @return \DateTime
+     * @return \DateTime|string|null
      */
-    public function getBornDate(): \DateTime
+    public function getBornDate()
     {
         return $this->bornDate;
     }
@@ -299,7 +310,7 @@ class User implements UserInterface
     /**
      * @return string
      */
-    public function getPhoneNumber(): string
+    public function getPhoneNumber(): ?string
     {
         return $this->phoneNumber;
     }
@@ -317,7 +328,7 @@ class User implements UserInterface
     /**
      * @return string
      */
-    public function getGender(): string
+    public function getGender(): ?string
     {
         return $this->gender;
     }
@@ -335,7 +346,7 @@ class User implements UserInterface
     /**
      * @return string
      */
-    public function getProfilePicture(): string
+    public function getProfilePicture(): ?string
     {
         return $this->profilePicture;
     }
@@ -369,6 +380,15 @@ class User implements UserInterface
     }
 
     /**
+     * @ORM\PrePersist()
+     */
+    public function setCreatedAtValue() : self
+    {
+        $this->createdAt = new \DateTime();
+        return $this;
+    }
+
+    /**
      * @return \DateTime
      */
     public function getUpdatedAt(): \DateTime
@@ -383,6 +403,16 @@ class User implements UserInterface
     public function setUpdatedAt(\DateTime $updatedAt): User
     {
         $this->updatedAt = $updatedAt;
+        return $this;
+    }
+
+    /**
+     * @ORM\PrePersist()
+     * @ORM\PreUpdate()
+     */
+    public function setUpdatedAtValue() : self
+    {
+        $this->updatedAt = new \DateTime();
         return $this;
     }
 
@@ -414,6 +444,60 @@ class User implements UserInterface
             }
         }
 
+        return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getRecipients()
+    {
+        return $this->recipients;
+    }
+
+    /**
+     * @param mixed $recipients
+     * @return User
+     */
+    public function setRecipients($recipients)
+    {
+        $this->recipients = $recipients;
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getToken(): string
+    {
+        return $this->token;
+    }
+
+    /**
+     * @param string $token
+     * @return User
+     */
+    public function setToken(string $token): User
+    {
+        $this->token = $token;
+        return $this;
+    }
+
+    /**
+     * @return \DateTime
+     */
+    public function getTokenRequestAt(): \DateTime
+    {
+        return $this->tokenRequestAt;
+    }
+
+    /**
+     * @param \DateTime $tokenRequestAt
+     * @return User
+     */
+    public function setTokenRequestAt(\DateTime $tokenRequestAt): User
+    {
+        $this->tokenRequestAt = $tokenRequestAt;
         return $this;
     }
 }
