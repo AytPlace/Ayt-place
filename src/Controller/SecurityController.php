@@ -93,7 +93,7 @@ class SecurityController extends AbstractController
 
                 return $this->redirectToRoute('app_homepage');
             }else{
-                $this->addFlash('error', 'Email invalide');
+                $this->addFlash('error',"Vous allez recevoir un email à l'adresse ".$data["email"]." contenant un lien pour réinitialiser votre mot de passe.");
             }
         }else{
             $this->addFlash('error', 'Une erreur est survenue.');
