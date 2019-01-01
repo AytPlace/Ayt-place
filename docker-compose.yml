@@ -1,0 +1,51 @@
+version: '2'
+
+services:
+
+    php:
+        environment:
+            - SYMFONY_ENV=dev
+        image: "php"
+        build: docker/php
+        env_file:
+            - .env
+        volumes:
+            - ./:/var/www/symfony/
+
+    nginx:
+        environment:
+            - SYMFONY_ENV=dev
+        image: "ngnix:latest"
+        build: docker/nginx
+        env_file:
+            - .env
+        ports:
+            - 81:80
+        links:
+            - php
+        volumes:
+            - ./:/var/www/symfony/
+
+    db:
+        image: mysql:5.7
+        environment:
+            - MYSQL_ROOT_PASSWORD=dF[f64]5+sdf566[sdfD
+            - MYSQL_DATABASE=bdlc_infine
+            - MYSQL_USER=infine
+            - MYSQL_PASSWORD=infine
+        volumes:
+            - ./docker/db/data:/var/lib/mysql:rw
+
+    phpmyadmin:
+        image: phpmyadmin/phpmyadmin
+        ports:
+            - "8080:80"
+        links:
+            - db
+        environment:
+            - PMA_HOST=db
+
+    maildev:
+        image: djfarrelly/maildev
+        ports:
+            - 8081:80
