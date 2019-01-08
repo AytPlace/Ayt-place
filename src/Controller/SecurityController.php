@@ -3,8 +3,11 @@
 namespace App\Controller;
 
 use App\Entity\Recipient;
+use App\Entity\Status;
 use App\Entity\User;
 use App\Form\ClientForgotPasswordType;
+use App\Form\RecipientFormType;
+use App\Form\RecipientType;
 use App\Form\UpdatePasswordType;
 use App\Form\UserType;
 use App\Service\EmailManager;
@@ -21,7 +24,8 @@ use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 class SecurityController extends AbstractController
 {
     /**
-     * @Route("/connexion", name="app_login")
+     * @Route("/client/connexion", name="app_login")
+     *
      */
     public function login(AuthenticationUtils $authenticationUtils): Response
     {
@@ -31,6 +35,20 @@ class SecurityController extends AbstractController
         $lastUsername = $authenticationUtils->getLastUsername();
 
         return $this->render('security/login.html.twig', ['last_username' => $lastUsername, 'error' => $error]);
+    }
+
+    /**
+     * @Route("/prestataire/connexion", name="recipient_login")
+     * @param AuthenticationUtils $authenticationUtils
+     * @return Response
+     */
+    public function recipientLogin(AuthenticationUtils $authenticationUtils)
+    {
+        $error = $authenticationUtils->getLastAuthenticationError();
+        // last username entered by the user
+        $lastUsername = $authenticationUtils->getLastUsername();
+
+        return $this->render('security/recipient-login.html.tiwg', ['last_username' => $lastUsername, 'error' => $error]);
     }
 
     /**
@@ -54,13 +72,51 @@ class SecurityController extends AbstractController
                 ]);
             }
 
-            $user->setRoles(['ROLE_USER']);
+            $user->setRoles(['ROLE_CLIENT']);
             $user->setPassword($userPasswordEncoder->encodePassword($user, $user->getPassword()));
 
             $em->persist($user);
             $em->flush();
 
             return $this->redirectToRoute('app_login');
+        }
+
+        return $this->render('security/registration.html.twig', [
+            "form" => $form->createView()
+        ]);
+    }
+
+    /**
+     * @Route("/prestataire/inscription", name="app_registration")
+     */
+    public function recipientRegistrationAction(Request $request, UserPasswordEncoderInterface $userPasswordEncoder, RegisterManager $registerManager)
+    {
+        $recipient = new Recipient();
+        $form = $this->createForm(RecipientType::class, $recipient);
+
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $em = $this->getDoctrine()->getManager();
+
+            if ($registerManager->getDuplicateEmail($recipient->getEmail())) {
+                $form->addError(new FormError("Cette email est dèjà utiliser"));
+
+                return $this->render('security/registration.html.twig', [
+                    "form" => $form->createView()
+                ]);
+            }
+
+            $status = $em->getRepository(Status::class)->findOneBy(['name' => 'a valider']);
+
+            $recipient->setStatus($status);
+            $recipient->setRoles(['ROLE_RECIPIENT']);
+            $recipient->setPassword($userPasswordEncoder->encodePassword($recipient, $recipient->getPassword()));
+
+            $em->persist($recipient);
+            $em->flush();
+
+            return $this->redirectToRoute('recipient_login');
         }
 
         return $this->render('security/registration.html.twig', [
@@ -91,7 +147,7 @@ class SecurityController extends AbstractController
                 $emailManager->sendCollectivePasswordEmail($user);
                 $this->addFlash('success',"Vous allez recevoir un email à l'adresse ".$data["email"]." contenant un lien pour réinitialiser votre mot de passe.");
 
-                return $this->redirectToRoute('app_homepage');
+                return $this->redirectToRoute('app_login');
             }else{
                 $this->addFlash('error',"Vous allez recevoir un email à l'adresse ".$data["email"]." contenant un lien pour réinitialiser votre mot de passe.");
             }
@@ -115,12 +171,14 @@ class SecurityController extends AbstractController
         $date = new \DateTime();
         $date = $date->sub(new \DateInterval('P2D'));
 
-        if (!is_null($user) && !$user instanceof Recipient  && $user->getResetTokenRequestedAt() > $date) {
+        if (!is_null($user) && !$user instanceof Recipient  && $user->getTokenRequestAt() > $date) {
             $form = $this->createForm(UpdatePasswordType::class);
             $form->handleRequest($request);
 
             if ($form->isSubmitted() && $form->isValid()) {
-                $user->setPassword($userPasswordEncoder->encodePassword($user,$form->get('password')));
+                $user->setPassword($userPasswordEncoder->encodePassword($user,$form->get('password')->getData()));
+                $user->setToken(null);
+                $user->setTokenRequestAt(null);
                 $em->flush();
 
                 $this->addFlash('sucess', 'Votre mot de passe a été mis à jour.');
@@ -135,5 +193,22 @@ class SecurityController extends AbstractController
         return $this->render('security/client-update-password.html.twig', [
             'form' => $form->createView()
         ]);
+    }
+
+
+    /**
+     * @Route("/client/deconnexion", name="client_logout")
+     */
+    public function clientLogout()
+    {
+        return $this->redirectToRoute('app_login');
+    }
+
+    /**
+     * @Route("/prestataire/deconnexion", name="recipient_logout")
+     */
+    public function recipientLogout()
+    {
+        return $this->redirectToRoute('recipient_login');
     }
 }

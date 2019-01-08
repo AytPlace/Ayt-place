@@ -7,6 +7,8 @@ services:
             - SYMFONY_ENV=dev
         image: "php"
         build: docker/php
+        links:
+          - mysql
         env_file:
             - .env
         volumes:
@@ -23,29 +25,36 @@ services:
             - 81:80
         links:
             - php
+            - mysql
         volumes:
             - ./:/var/www/symfony/
 
-    db:
-        image: mysql:5.7
+    mysql:
         environment:
-            - MYSQL_ROOT_PASSWORD=dF[f64]5+sdf566[sdfD
-            - MYSQL_DATABASE=bdlc_infine
-            - MYSQL_USER=infine
-            - MYSQL_PASSWORD=infine
+            - MYSQL_ROOT_PASSWORD=root
+            - MYSQL_DATABASE=docker
+            - MYSQL_USER=root
+            - MYSQL_PASSWORD=root
+        image: mysql:5.7
         volumes:
-            - ./docker/db/data:/var/lib/mysql:rw
+            - db_data:/var/lib/mysql
+        container_name: mysql
 
     phpmyadmin:
         image: phpmyadmin/phpmyadmin
         ports:
             - "8080:80"
         links:
-            - db
+            - mysql
         environment:
-            - PMA_HOST=db
+            PMA_HOST: mysql
+            PMA_USER: root
+            PMA_PASSWORD: root
+        container_name: phpmyadmin
 
     maildev:
         image: djfarrelly/maildev
         ports:
             - 8081:80
+volumes:
+    db_data:
