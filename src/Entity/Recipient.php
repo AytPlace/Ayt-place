@@ -7,36 +7,22 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Entity(repositoryClass="App\Repository\RecipientRepository")
+ * @ORM\Entity()
  */
 class Recipient extends User
 {
-    /**
-     * @ORM\Id()
-     * @ORM\GeneratedValue()
-     * @ORM\Column(type="integer")
-     */
-    private $id;
-
-    /**
-     * @var int
-     * @ORM\ManyToOne(targetEntity="User", inversedBy="recipients")
-     * @ORM\JoinColumn(name="user_id", referencedColumnName="id")
-     */
-    private $userId;
-
     /**
      * @ORM\Column(type="string", length=9)
      */
     private $siren;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="string", length=255, nullable=true)
      */
     private $sirenPicture;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="string", length=255, nullable=true)
      */
     private $identityCardPicture;
 
@@ -54,30 +40,7 @@ class Recipient extends User
 
     public function __construct()
     {
-        parent::__construct();
         $this->offers = new ArrayCollection();
-    }
-
-
-    public function getId(): ?int
-    {
-        return $this->id;
-    }
-
-    /**
-     * @return int
-     */
-    public function getUserId(): int
-    {
-        return $this->userId;
-    }
-
-    /**
-     * @param int $userId
-     */
-    public function setUserId(int $userId): void
-    {
-        $this->userId = $userId;
     }
 
     public function getSiren(): ?string

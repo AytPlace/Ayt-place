@@ -10,32 +10,54 @@ security:
             entity:
                 class: App\Entity\User
                 property: email
+
+        app_recipient_provider:
+            entity:
+                class: App\Entity\Recipient
+                property: email
+
     firewalls:
         dev:
-            pattern: ^/(_(profiler|wdt)|css|images|js)/
-            security: false
-        main:
+          pattern: ^/(_(profiler|wdt)|css|images|js)/
+          security: false
+
+        client:
+            anonymous: ~
+            pattern: ^/client
+            provider: app_user_provider
+            form_login:
+              login_path: app_login
+              check_path: app_login
+              default_target_path: app_index_home
             logout:
-                path: /logout
-            anonymous: true
+                path: client_logout
+                target: app_login
             guard:
                 authenticators:
-                    - App\Security\AppCustomAuthenticator
+                    - App\Security\UserAuthentificator
 
-            # activate different ways to authenticate
+        recipient:
+            anonymous: ~
+            pattern: ^/prestataire
+            provider: app_recipient_provider
+            form_login:
+              login_path: recipient_login
+              check_path: recipient_login
+              default_target_path: recipient_index_home
+            logout:
+              path: recipient_logout
+              target: recipient_login
+            guard:
+                authenticators:
+                    - App\Security\RecipientAuthentificator
 
-            # http_basic: true
-            # https://symfony.com/doc/current/security.html#a-configuring-how-your-users-will-authenticate
-
-            # form_login: true
-            # https://symfony.com/doc/current/security/form_login_setup.html
-
-    # Easy way to control access for large sections of your site
-    # Note: Only the *first* access control that matches will be used
     access_control:
-       #  - { path: ^/admin, roles: ROLE_ADMIN }
-         - { path: ^/connexion, roles: IS_AUTHENTICATED_ANONYMOUSLY }
-         - { path: ^/logout, roles: IS_AUTHENTICATED_ANONYMOUSLY }
-         - { path: ^/inscription, roles: IS_AUTHENTICATED_ANONYMOUSLY }
-         - { path: ^/mot-de-passe-oublie, roles: IS_AUTHENTICATED_ANONYMOUSLY }
-         - { path: ^/, roles: ROLE_USER }
+      - { path: ^/inscription, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+      - { path: ^/mot-de-passe-oublie, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+
+      - { path: ^/client/connexion, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+      - { path: ^/client, roles: ROLE_CLIENT }
+
+      - { path: ^/prestataire/inscription, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+      - { path: ^/prestataire/connexion, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+      - { path: ^/prestataire, roles: ROLE_RECIPIENT }

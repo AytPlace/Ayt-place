@@ -5,48 +5,55 @@ namespace App\Entity;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\UserRepository")
+ * @ORM\InheritanceType("JOINED")
+ * @ORM\DiscriminatorColumn(name="discr", type="string")
+ * @UniqueEntity(fields={"email"}, message="Cet email est déjà utilisé.")
  * @ORM\HasLifecycleCallbacks()
  */
 class User implements UserInterface
 {
     /**
-     * @ORM\Id()
-     * @ORM\GeneratedValue()
+     * @ORM\Id
+     * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
      */
     private $id;
 
     /**
-     * @ORM\OneToMany(targetEntity="Recipient", mappedBy="userId")
-     */
-    private $recipients;
-
-    /**
      * @var string
      * @ORM\Column(type="string", name="firstname")
+     * @Assert\NotNull(message="form.notNull")
+     * @Assert\Length(min="1", max="255", minMessage="form.length.min", maxMessage="form.length.max")
      */
     private $firstname;
 
     /**
      * @var string
      * @ORM\Column(type="string", name="lastname")
+     * @Assert\NotNull(message="form.notNull")
+     * @Assert\Length(min="1", max="255", minMessage="form.length.min", maxMessage="form.length.max")
      */
     private  $lastname;
 
     /**
      * @var string
      * @ORM\Column(type="string", name="city")
+     * @Assert\NotNull(message="form.notNull")
+     * @Assert\Length(min="1", max="255", minMessage="form.length.min", maxMessage="form.length.max")
      */
     private $city;
 
     /**
      * @var string
      * @ORM\Column(type="string", name="country")
+     * @Assert\NotNull(message="form.notNull")
+     * @Assert\Length(min="1", max="255", minMessage="form.length.min", maxMessage="form.length.max")
      */
     private $country;
 
@@ -59,6 +66,8 @@ class User implements UserInterface
     /**
      * @var string
      * @ORM\Column(type="string", name="phone_number")
+     * @Assert\NotNull(message="form.notNull")
+     * @Assert\Length(min="10", max="10", minMessage="form.length.min", maxMessage="form.length.max")
      */
     private $phoneNumber;
 
@@ -76,7 +85,9 @@ class User implements UserInterface
 
     /**
      * @ORM\Column(type="string", length=180, unique=true)
-     * @Assert\Email(strict="true", checkMX=true)
+     * @Assert\Email(strict="true", checkMX=true, message="form.email")
+     * @Assert\NotNull(message="form.notNull")
+     * @Assert\Length(min="1", max="255", minMessage="form.length.min", maxMessage="form.length.max")
      */
     private $email;
 
@@ -122,30 +133,12 @@ class User implements UserInterface
 
     public function __construct()
     {
-        $this->recipients = new ArrayCollection();
         $this->responses = new ArrayCollection();
     }
 
     public function getId(): ?int
     {
         return $this->id;
-    }
-
-
-    public function addRecipients($recipient) : self
-    {
-        if (!$this->recipients->contains($recipient)) {
-            $this->recipients->add($recipient);
-        }
-
-        return $this;
-    }
-
-    public function deleteRecipient($recipient)
-    {
-        if ($this->recipients->contains($recipient)) {
-            $this->recipients->remove($recipient);
-        }
     }
 
     public function getEmail(): ?string
@@ -444,24 +437,6 @@ class User implements UserInterface
             }
         }
 
-        return $this;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getRecipients()
-    {
-        return $this->recipients;
-    }
-
-    /**
-     * @param mixed $recipients
-     * @return User
-     */
-    public function setRecipients($recipients)
-    {
-        $this->recipients = $recipients;
         return $this;
     }
 

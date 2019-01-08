@@ -3,9 +3,11 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\StatusRepository")
+ * @ORM\HasLifecycleCallbacks()
  */
 class Status
 {
@@ -18,6 +20,7 @@ class Status
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Assert\NotNull(message="form.notNull")
      */
     private $name;
 
@@ -77,6 +80,15 @@ class Status
         return $this;
     }
 
+    /**
+     * @ORM\PrePersist()
+     */
+    public function setCreatedAtValue() : self
+    {
+        $this->createdAt = new \DateTime();
+        return $this;
+    }
+
     public function getUpdatedAt(): ?\DateTimeInterface
     {
         return $this->updatedAt;
@@ -86,6 +98,16 @@ class Status
     {
         $this->updatedAt = $updatedAt;
 
+        return $this;
+    }
+
+    /**
+     * @ORM\PrePersist()
+     * @ORM\PreUpdate()
+     */
+    public function setUpdatedAtValue() : self
+    {
+        $this->updatedAt = new \DateTime();
         return $this;
     }
 }

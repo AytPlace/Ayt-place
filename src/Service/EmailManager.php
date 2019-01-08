@@ -41,7 +41,6 @@ class EmailManager
     private function sendEmail(string $template, array $to, string $subject, $vars = [])
     {
         $vars['template'] = $template;
-
         $html = $this->twig->render(
             sprintf('email/%s.html.twig', $template),
             $vars
@@ -64,7 +63,7 @@ class EmailManager
         $vars = ['ctaUrl' => $link];
 
         return $this->sendEmail(
-            'reset_password',
+            'reset-password',
             [$user->getEmail()],
             'Aty\'place | Réinitialisation de votre mot de passe',
             $vars

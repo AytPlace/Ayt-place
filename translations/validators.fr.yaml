@@ -1,0 +1,8 @@
+form:
+  length:
+    min: "Ce champ doit avoir au minimum {{ limit }} caractère"
+    max: "Ce champ doit avoir au minimum {{ limit }} caractère"
+
+  notNull: "Cette valeur est obligatoire"
+
+  email: "Veuillez entrer une adresse email valide"

@@ -1,6 +1,7 @@
 <?php
 
-namespace App\Controller;
+namespace App\Controller\recipient;
+
 
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
@@ -8,11 +9,11 @@ use Symfony\Component\Routing\Annotation\Route;
 class HomeController extends AbstractController
 {
     /**
-     * @Route("/client", name="app_index_home")
+     * @Route("/prestataire", name="recipient_index_home")
      */
     public function index()
     {
-        return $this->render('home/index.html.twig', [
+        return $this->render('recipient/index.html.twig', [
             'controller_name' => 'HomeController',
         ]);
     }
