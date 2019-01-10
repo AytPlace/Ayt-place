@@ -17,12 +17,12 @@ class Recipient extends User
     private $siren;
 
     /**
-     * @ORM\Column(type="string", length=255, nullable=true)
+     * @ORM\OneToOne(targetEntity="Medium")
      */
     private $sirenPicture;
 
     /**
-     * @ORM\Column(type="string", length=255, nullable=true)
+     * @ORM\OneToOne(targetEntity="Medium")
      */
     private $identityCardPicture;
 
@@ -55,28 +55,36 @@ class Recipient extends User
         return $this;
     }
 
-    public function getSirenPicture(): ?string
+    /**
+     * @return mixed
+     */
+    public function getSirenPicture()
     {
         return $this->sirenPicture;
     }
 
-    public function setSirenPicture(string $sirenPicture): self
+    /**
+     * @param mixed $sirenPicture
+     */
+    public function setSirenPicture($sirenPicture): void
     {
         $this->sirenPicture = $sirenPicture;
-
-        return $this;
     }
 
-    public function getIdentityCardPicture(): ?string
+    /**
+     * @return mixed
+     */
+    public function getIdentityCardPicture()
     {
         return $this->identityCardPicture;
     }
 
-    public function setIdentityCardPicture(string $identityCardPicture): self
+    /**
+     * @param mixed $identityCardPicture
+     */
+    public function setIdentityCardPicture($identityCardPicture): void
     {
         $this->identityCardPicture = $identityCardPicture;
-
-        return $this;
     }
 
     /**

@@ -1,0 +1,15 @@
+{% block body %}
+{{ form_start(form) }}
+    {{ form_widget(form) }}
+    <button class="btn btn-lg btn-primary" type="submit">
+        Valider
+    </button>
+{{ form_end(form) }}
+
+{% if recipient.status.id == 3 %}
+    <p>Votre profil est toujours en cours de validation, votre offre sera publié quand votre profil sera valider </p>
+    {% if recipient.sirenPicture is null %}
+        <p>afin de valider votre profil merci <a href="{{ path('recipient_profil_add_siren') }}">ces documents</a></p>
+    {% endif %}
+{% endif %}
+{% endblock %}

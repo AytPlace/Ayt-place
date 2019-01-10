@@ -1,0 +1,19 @@
+{% block body %}
+    {{ form_start(form) }}
+    {{ form_widget(form) }}
+    <button class="btn btn-lg btn-primary" type="submit">
+        Valider
+    </button>
+    {{ form_end(form) }}
+
+    <div class="historique__projet-documentsList">
+        {% if recipient.sirenPicture is not null  %}
+            <h3>siren</h3>
+            <a href="{{ recipient.sirenPicture.path }}" class="historique__projet-document">{{ recipient.sirenPicture.filename }}</a>
+        {% endif %}
+        {% if recipient.identityCardPicture is not null  %}
+            <h3>carte</h3>
+            <a href="{{ recipient.identityCardPicture.path }}" class="historique__projet-document">{{ recipient.identityCardPicture.filename }}</a>
+        {% endif %}
+    </div>
+{% endblock %}
