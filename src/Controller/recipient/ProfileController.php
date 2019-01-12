@@ -55,7 +55,7 @@ class ProfileController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $em = $this->getDoctrine()->getManager();
 
-            if($form->get('sirenPicture') && $form->get('sirenPicture')->getData() != null)
+            if($form->get('sirenPicture') && !is_null($form->get('sirenPicture')->getData()))
             {
                 $medium = new Medium();
                 $medium->setUploadedFile($form->get('sirenPicture')->getData());

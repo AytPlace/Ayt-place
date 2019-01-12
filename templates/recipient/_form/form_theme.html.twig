@@ -1,0 +1,14 @@
+{# integer #}
+{% block integer_widget %}
+    <div class="form-input integer_widget">
+        {% set type = type|default('number') %}
+        {{ block('form_widget_simple') }}
+    </div>
+{% endblock %}
+
+{% block input_widget %}
+    <div class="form-input input_widget">
+        {% set type = type|default('number') %}
+        {{ block('form_widget_simple') }}
+    </div>
+{% endblock %}

@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}Welcome!{% endblock %}</title>
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">
+    {% block stylesheets %}
+        {{ encore_entry_link_tags('recipient') }}
+    {% endblock %}
+</head>
+<body>
+<header class="header-recipient">
+    <a href="{{ path('recipient_index_home') }}" class="recipient-logo__container">
+        <img src="{{ asset('logo-ex-7.png') }}" alt="" class="header-logo">
+    </a>
+    <ul class="navigation-header__container">
+        <li class="navigation-header__item"><a href="{{ path('recipient_profil_home') }}">Profil</a></li>
+        <li class="navigation-header__item"><a href="">Demandes</a></li>
+        <li class="navigation-header__item"><a href="">Offres</a></li>
+    </ul>
+</header>
+{% block body %}
+{% endblock %}
+
+{% block javascripts %}
+{{ encore_entry_script_tags('recipient') }}
+{% endblock %}
+</body>
+</html>

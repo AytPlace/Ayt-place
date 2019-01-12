@@ -1,15 +1,54 @@
-{% block body %}
-{{ form_start(form) }}
-    {{ form_widget(form) }}
-    <button class="btn btn-lg btn-primary" type="submit">
-        Valider
-    </button>
-{{ form_end(form) }}
+{% extends 'recipient/_base.html.twig' %}
 
-{% if recipient.status.id == 3 %}
-    <p>Votre profil est toujours en cours de validation, votre offre sera publié quand votre profil sera valider </p>
-    {% if recipient.sirenPicture is null %}
-        <p>afin de valider votre profil merci <a href="{{ path('recipient_profil_add_siren') }}">ces documents</a></p>
-    {% endif %}
+{% if recipient.offers is not null %}
+    {% set hasOffer = true %}
 {% endif %}
+
+{% block body %}
+    <div class="background-container">
+        <div class="profile_container">
+            <div class="profile_block-item">
+                <div class="profile_item-profile__picture">
+                    <img src="{% if recipient.profilePicture is not null %} {{ recipient.profilePicture }} {% else %} {{ asset('no-image.jpg') }} {% endif %}" alt="" class="profile-picture__item">
+                    <button class="profil-picture__cta">
+                        <span class="icon-container"><i class="fas fa-camera-retro"></i></span>
+                        <span class="profile-pictureCta__label">Modifier votre photo</span>
+                    </button>
+                </div>
+            </div>
+            <div class="profile_block-item information-container__profile">
+                <div class="name-container">
+                    <h1>{{ recipient.firstname }}  {{ recipient.lastname }}</h1>
+                    {% if recipient.status %}
+                        <span class="status-container" style="background-color: {{ recipient.status.color }};">{{ recipient.status.name }}</span>
+                    {% endif %}
+                </div>
+
+                <h2>{% if hasOffer is defined %}
+                        {{ recipient.offers.title }}
+                    {% else %}
+                        aucune offre
+                    {% endif %}
+                </h2>
+                <span><span class="icon-container"><i class="fas fa-map-marker"></i></span>{{ recipient.city }}, {{ recipient.country }}</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="no-offer__container">
+            {% if recipient.sirenPicture is null or recipient.identityCardPicture %}
+                <p>Afin de valider votre profil et pouvoir commencer votre activité merci d'ajouter <a href="{{ path('recipient_profil_add_siren') }}">vos documents personelles</a></p>
+            {% endif %}
+    </div>
+
+    <div class="form-container">
+       {{ form_start(form) }}
+       {{ form_widget(form) }}
+       <button class="btn btn-lg btn-primary" type="submit">
+           Valider
+       </button>
+       {{ form_end(form) }}
+   </div>
 {% endblock %}
+
+

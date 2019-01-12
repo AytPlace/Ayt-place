@@ -19,15 +19,15 @@ class Offer
     private $id;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Recipient", inversedBy="offers")
-     * @ORM\JoinColumn(nullable=false)
+     * @ORM\OneToOne(targetEntity="App\Entity\Recipient", inversedBy="offers")
+     * @ORM\JoinColumn(name="offer", referencedColumnName="id")
      */
     private $recipient;
 
     /**
      * @ORM\Column(type="string", length=255)
      */
-    private $title;
+    public $title;
 
     /**
      * @ORM\Column(type="integer")

@@ -27,21 +27,16 @@ class Recipient extends User
     private $identityCardPicture;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Offer", mappedBy="recipient")
+     * @ORM\OneToOne(targetEntity="App\Entity\Offer", mappedBy="recipient")
      */
     private $offers;
 
     /**
      * @ORM\OneToOne(targetEntity="App\Entity\Status", cascade={"persist", "remove"})
-     * @ORM\JoinColumn(nullable=false)
+     * @ORM\JoinColumn(name="status", referencedColumnName="id")
      */
     private $status;
 
-
-    public function __construct()
-    {
-        $this->offers = new ArrayCollection();
-    }
 
     public function getSiren(): ?string
     {
@@ -90,30 +85,14 @@ class Recipient extends User
     /**
      * @return Collection|Offer[]
      */
-    public function getOffers(): Collection
+    public function getOffers(): ?Offer
     {
         return $this->offers;
     }
 
-    public function addOffer(Offer $offer): self
+    public function setOffers(Offer $offer) : self
     {
-        if (!$this->offers->contains($offer)) {
-            $this->offers[] = $offer;
-            $offer->setRecipient($this);
-        }
-
-        return $this;
-    }
-
-    public function removeOffer(Offer $offer): self
-    {
-        if ($this->offers->contains($offer)) {
-            $this->offers->removeElement($offer);
-            // set the owning side to null (unless already changed)
-            if ($offer->getRecipient() === $this) {
-                $offer->setRecipient(null);
-            }
-        }
+        $this->offers = $offer;
 
         return $this;
     }
