@@ -5,9 +5,11 @@ namespace App\Entity;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\OfferRepository")
+ * @ORM\HasLifecycleCallbacks()
  */
 class Offer
 {
@@ -26,36 +28,44 @@ class Offer
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Assert\NotNull(message="form.notNull")
+     * @Assert\Length(max="255", min="1", minMessage="form.length.min", maxMessage="form.length.max")
      */
     public $title;
 
     /**
      * @ORM\Column(type="integer")
+     * @Assert\NotNull(message="form.notNull")
      */
     private $travelerNumbers;
 
     /**
      * @ORM\Column(type="integer")
+     * @Assert\NotNull(message="form.notNull")
      */
     private $costByTraveler;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Assert\NotNull(message="form.notNull")
      */
     private $location;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Assert\NotNull(message="form.notNull")
      */
     private $city;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Assert\NotNull(message="form.notNull")
      */
     private $country;
 
     /**
      * @ORM\Column(type="text")
+     * @Assert\NotNull(message="form.notNull")
      */
     private $description;
 
@@ -180,6 +190,15 @@ class Offer
         return $this;
     }
 
+    /**
+     * @ORM\PrePersist()
+     */
+    public function setCreatedAtValue() : self
+    {
+        $this->createdAt = new \DateTime();
+        return $this;
+    }
+
     public function getCreatedAt(): ?\DateTimeInterface
     {
         return $this->createdAt;
@@ -201,6 +220,16 @@ class Offer
     {
         $this->updatedAt = $updatedAt;
 
+        return $this;
+    }
+
+    /**
+     * @ORM\PrePersist()
+     * @ORM\PreUpdate()
+     */
+    public function setUpdatedAtValue() : self
+    {
+        $this->updatedAt = new \DateTime();
         return $this;
     }
 

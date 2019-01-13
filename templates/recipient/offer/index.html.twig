@@ -1,0 +1,46 @@
+{% extends 'recipient/_base.html.twig' %}
+
+{% form_theme form 'recipient/_form/form_theme.html.twig' %}
+{% block body %}
+    <div class="background-container">
+        <div class="offer_container">
+            {{ form_start(form) }}
+            {{ form_widget(form.title) }}
+            {{ form_widget(form.travelerNumbers) }}
+            {{ form_widget(form.costByTraveler) }}
+            {{ form_widget(form.location) }}
+            {{ form_widget(form.city) }}
+            {{ form_widget(form.country) }}
+            <div class="textarea">
+                <div id="toolbar"></div>
+                {{ form_widget(form.description) }}
+            </div>
+
+            <div class="container-submit">
+                <button class="contact100-form-btn">
+						<span>
+							Submit
+							<i class="zmdi zmdi-arrow-right m-l-8"></i>
+						</span>
+                </button>
+            </div>
+            {{ form_end(form) }}
+        </div>
+    </div>
+{% endblock %}
+
+{% block javascripts %}
+    <script type="application/javascript">
+        var quill = new Quill('#offer_description', {
+            modules: {
+                toolbar: [
+                    [{ header: [1, 2, false] }],
+                    ['bold', 'italic', 'underline'],
+                    ['image', 'code-block']
+                ]
+            },
+            placeholder: 'Compose an epic...',
+            theme: 'snow'  // or 'bubble'
+        });
+    </script>
+{% endblock %}

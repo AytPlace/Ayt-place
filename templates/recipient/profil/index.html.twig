@@ -31,6 +31,23 @@
                     {% endif %}
                 </h2>
                 <span><span class="icon-container"><i class="fas fa-map-marker"></i></span>{{ recipient.city }}, {{ recipient.country }}</span>
+
+                {% if recipient.offers is not null %}
+                    <ul class="block-list">
+                        <li>
+                            <span class="block-list_title">Tarif indicatif</span>
+                            <strong class="block-list_content">{{ recipient.offers.costByTraveler }} €/ per</strong>
+                        </li>
+                        <li>
+                            <span class="block-list_title">Capacité d'acceuil</span>
+                            <strong class="block-list_content">{{ recipient.offers.travelerNumbers }}</strong>
+                        </li>
+                        <li>
+                            <span class="block-list_title">Temps de réponse</span>
+                            <strong class="block-list_content">Quelle que jour</strong>
+                        </li>
+                    </ul>
+                {% endif %}
             </div>
         </div>
     </div>

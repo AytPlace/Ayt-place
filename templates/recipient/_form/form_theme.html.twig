@@ -1,14 +1,30 @@
 {# integer #}
-{% block integer_widget %}
-    <div class="form-input integer_widget">
-        {% set type = type|default('number') %}
-        {{ block('form_widget_simple') }}
+{% block number_widget %}
+    <div class="input-container">
+        <label for="{{ form.vars.id }}" for="first-name">{{ form.vars.label|raw }}</label>
+        <div class="wrap-input100 rs1 validate-input">
+            <input   id="{{ form.vars.id }}"  {{ block('widget_attributes') }} class="input100" type="number"  value="{{ form.vars.value }}"  placeholder="{{ form.vars.label }}">
+            <span class="focus-input100"></span>
+        </div>
     </div>
 {% endblock %}
 
-{% block input_widget %}
-    <div class="form-input input_widget">
-        {% set type = type|default('number') %}
-        {{ block('form_widget_simple') }}
+{% block text_widget %}
+    <div class="input-container">
+        <label for="{{ form.vars.id }}" for="first-name">{{ form.vars.label|raw }}</label>
+        <div class="wrap-input100 rs1 validate-input">
+            <input   id="{{ form.vars.id }}"  {{ block('widget_attributes') }} class="input100" type="text"  value="{{ form.vars.value }}"  placeholder="{{ form.vars.label }}">
+            <span class="focus-input100"></span>
+        </div>
+    </div>
+{% endblock %}
+
+{% block email_widget %}
+    <div class="input-container">
+        <label class="label-input100" for="email">Email Address *</label>
+        <div class="wrap-input100 validate-input">
+            <input id="{{ form.vars.id }}"  {{ block('widget_attributes') }} class="input100" type="email" value="{{ form.vars.value }}" placeholder="Eg. example@email.com">
+            <span class="focus-input100"></span>
+        </div>
     </div>
 {% endblock %}

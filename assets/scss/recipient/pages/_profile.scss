@@ -83,12 +83,20 @@
 
 .no-offer__container {
   background-color: $secondary-color;
-  color: $white-color;
+  color: $white-color !important;
   max-width: 1200px;
   padding: 10px 0 10px 5px;
   font-weight: bold;
   margin: 0 auto;
   margin-top: 50px;
+
+  p {
+    color: $white-color;
+  }
+
+  a {
+    color: $main-color;
+  }
 
   a:hover {
     transition: text-decoration 0.5s ease;
@@ -102,4 +110,31 @@
   max-width: 1200px;
   margin: 0 auto;
   margin-top: 50px;
+}
+
+.block-list {
+  border: 1px solid;
+  border-radius: 5px;
+  margin-top: 15px;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  max-width: 445px;
+
+  li {
+    display: flex;
+    flex-direction: column;
+    color: $text-plain-color;
+    padding: 10px;
+    border: 1px solid $text-plain-color;
+    min-height: 90px;
+    max-width: 165px;
+    background-color: #343a5e;
+    color: #fff;
+
+    strong {
+      text-align: center;
+      margin-top: 25px;
+    }
+  }
 }
