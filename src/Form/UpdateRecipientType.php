@@ -24,7 +24,7 @@ class UpdateRecipientType extends AbstractType
     {
         $builder
             ->add('gender', ChoiceType::class, [
-                'label' => false,
+                'label' => 'Genre',
                 'label_attr' => [
                     'class' => 'form__label'
                 ],
@@ -53,6 +53,7 @@ class UpdateRecipientType extends AbstractType
             ])
             ->add('bornDate', DateTimeType::class, [
                 'label' => "Date de naissance",
+                'date_format' => 'dd-MM-yyyy',
                 'required' => true,
                 'widget' => 'single_text',
             ])
@@ -63,10 +64,6 @@ class UpdateRecipientType extends AbstractType
             ->add('email', EmailType::class, [
                 'label' => "Email",
                 'required' => true
-            ])
-            ->add('siren', TextType::class, [
-                'required' => true,
-                'label' => 'Siren'
             ])
         ;
     }

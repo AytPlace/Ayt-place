@@ -9,6 +9,7 @@
 namespace App\Controller\recipient;
 
 use App\Entity\Medium;
+use App\Form\ProfilePictureType;
 use App\Form\SirenType;
 use App\Form\UpdateRecipientType;
 use App\Repository\RecipientRepository;
@@ -22,12 +23,16 @@ class ProfileController extends AbstractController
     /**
      * @Route("/prestataire/profil/", name="recipient_profil_home")
      */
-    public function indexAction(Request $request, RecipientRepository $recipientRepository)
+    public function indexAction(Request $request, FileManager $fileManager)
     {
-        $recipient = $recipientRepository->find($this->getUser()->getId());
-        $form = $this->createForm(UpdateRecipientType::class, $recipient);
+        $recipient = $this->getUser();
+        $form = $this->createForm(UpdateRecipientType::class, $this->getUser());
+        $pictureForm = $this->createForm(ProfilePictureType::class, $this->getUser());
+        $sirenForm = $this->createForm(SirenType::class, $recipient);
 
         $form->handleRequest($request);
+        $pictureForm->handleRequest($request);
+        $sirenForm->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
             $em = $this->getDoctrine()->getManager();
@@ -36,29 +41,28 @@ class ProfileController extends AbstractController
             return $this->redirectToRoute('recipient_profil_home');
         }
 
-        return $this->render('recipient/profil/index.html.twig', [
-            'form' => $form->createView(),
-            'recipient' => $recipient
-        ]);
-    }
+        if ($pictureForm->isSubmitted() && $pictureForm->isValid()) {
 
-    /**
-     * @Route("/prestataire/profil/justificatif", name="recipient_profil_add_siren")
-     */
-    public function addSirenAction(RecipientRepository $recipientRepository, Request $request, FileManager $fileManager)
-    {
-        $recipient = $recipientRepository->find($this->getUser()->getId());
-        $form = $this->createForm(SirenType::class, $recipient);
+            if($pictureForm->get('profilePicture') && !is_null($pictureForm->get('profilePicture')->getData())) {
+                $medium = new Medium();
+                $medium->setUploadedFile($pictureForm->get('profilePicture')->getData());
+                $fileManager->upload($medium);
+                $recipient->setProfilePicture($medium);
 
-        $form->handleRequest($request);
+                $em = $this->getDoctrine()->getManager();
+                $em->persist($medium);
+                $em->flush();
 
-        if ($form->isSubmitted() && $form->isValid()) {
+                return $this->redirectToRoute('recipient_profil_home');
+            }
+        }
+
+        if ($sirenForm->isSubmitted() && $sirenForm->isValid()) {
             $em = $this->getDoctrine()->getManager();
-
-            if($form->get('sirenPicture') && !is_null($form->get('sirenPicture')->getData()))
+            if($sirenForm->get('sirenPicture') && !is_null($sirenForm->get('sirenPicture')->getData()))
             {
                 $medium = new Medium();
-                $medium->setUploadedFile($form->get('sirenPicture')->getData());
+                $medium->setUploadedFile($sirenForm->get('sirenPicture')->getData());
                 $fileManager->upload($medium);
                 $recipient->setSirenPicture($medium);
 
@@ -66,10 +70,10 @@ class ProfileController extends AbstractController
                 $em->flush();
             }
 
-            if($form->get('identityCardPicture') && !is_null($form->get('identityCardPicture')->getData()))
+            if($sirenForm->get('identityCardPicture') && !is_null($sirenForm->get('identityCardPicture')->getData()))
             {
                 $medium = new Medium();
-                $medium->setUploadedFile($form->get('identityCardPicture')->getData());
+                $medium->setUploadedFile($sirenForm->get('identityCardPicture')->getData());
                 $fileManager->upload($medium);
                 $recipient->setIdentityCardPicture($medium);
 
@@ -80,10 +84,11 @@ class ProfileController extends AbstractController
             $this->addFlash('success', 'Vos documents ont été ajouter avec succé');
         }
 
-        return $this->render('recipient/profil/document.html.twig', [
-            "form" => $form->createView(),
-            "recipient" => $recipient
+        return $this->render('recipient/profil/index.html.twig', [
+            'form' => $form->createView(),
+            'formPicture' => $pictureForm->createView(),
+            'formSiren' => $sirenForm->createView(),
+            'recipient' => $this->getUser()
         ]);
-
     }
 }

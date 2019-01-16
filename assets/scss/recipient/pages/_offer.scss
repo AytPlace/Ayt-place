@@ -20,6 +20,10 @@
 .input-container {
   width: 45%;
   margin-top: 20px;
+
+  &.content-100 {
+    width: 90% !important;
+  }
 }
 
 .textarea {

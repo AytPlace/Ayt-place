@@ -4,13 +4,14 @@
     {% set hasOffer = true %}
 {% endif %}
 
+{% form_theme form 'recipient/_form/form_theme.html.twig' %}
 {% block body %}
     <div class="background-container">
         <div class="profile_container">
             <div class="profile_block-item">
                 <div class="profile_item-profile__picture">
-                    <img src="{% if recipient.profilePicture is not null %} {{ recipient.profilePicture }} {% else %} {{ asset('no-image.jpg') }} {% endif %}" alt="" class="profile-picture__item">
-                    <button class="profil-picture__cta">
+                    <img src="{% if recipient.profilePicture is not null %} {{ recipient.profilePicture.path }} {% else %} {{ asset('no-image.jpg') }} {% endif %}" alt="" class="profile-picture__item">
+                    <button class="profil-picture__cta  modal-trigger" href="#modal-profil-picture">
                         <span class="icon-container"><i class="fas fa-camera-retro"></i></span>
                         <span class="profile-pictureCta__label">Modifier votre photo</span>
                     </button>
@@ -30,9 +31,9 @@
                         aucune offre
                     {% endif %}
                 </h2>
-                <span><span class="icon-container"><i class="fas fa-map-marker"></i></span>{{ recipient.city }}, {{ recipient.country }}</span>
+                <span><span class="icon-container"><i class="material-icons">place</i></span>{{ recipient.city }}, {{ recipient.country }}</span>
 
-                {% if recipient.offers is not null %}
+                {% if hasOffer is defined %}
                     <ul class="block-list">
                         <li>
                             <span class="block-list_title">Tarif indicatif</span>
@@ -51,21 +52,132 @@
             </div>
         </div>
     </div>
-
+    {% if recipient.sirenPicture is null or recipient.identityCardPicture is null %}
     <div class="no-offer__container">
-            {% if recipient.sirenPicture is null or recipient.identityCardPicture %}
-                <p>Afin de valider votre profil et pouvoir commencer votre activité merci d'ajouter <a href="{{ path('recipient_profil_add_siren') }}">vos documents personelles</a></p>
-            {% endif %}
+        <p>Afin de valider votre profil et pouvoir commencer votre activité merci d'ajouter <a href="#modal-profil-siren" class="modal-trigger">vos documents personelles</a></p>
     </div>
+    {% endif %}
 
     <div class="form-container">
        {{ form_start(form) }}
-       {{ form_widget(form) }}
-       <button class="btn btn-lg btn-primary" type="submit">
-           Valider
-       </button>
+       {{ form_widget(form.gender) }}
+       {{ form_widget(form.firstname) }}
+       {{ form_widget(form.lastname) }}
+       {{ form_widget(form.city) }}
+       {{ form_widget(form.country) }}
+       {{ form_widget(form.bornDate) }}
+       {{ form_widget(form.email) }}
+       {{ form_widget(form.phoneNumber) }}
+        <div class="container-submit">
+            <button class="btn waves-effect waves-light bnt-blue" type="submit" name="action">Enregistrer</button>
+        </div>
        {{ form_end(form) }}
    </div>
+
+    <div class="container">
+        <h2 class="block-title">Documents administratifs</h2>
+        <div class="document-container">
+            {% if recipient.sirenPicture %}
+                {%  if recipient.sirenPicture %}
+                    <div class="offical-document-container" style="background-image: url({{asset(recipient.sirenPicture.path)}})">
+                        <p>justificatif de siren</p>
+                    </div>
+                {% endif %}
+
+                {%  if recipient.sirenPicture %}
+                    <div class="offical-document-container" style="background-image: url({{recipient.identityCardPicture.path}})">
+                        <p>justificatif d'identité</p>
+                    </div>
+                {% endif %}
+            {% else %}
+                <div class="offical-document-container demo" style="background-image: url({{asset('uploads/kbis-exemple.png')}})">
+                    <p>justificatif de siren</p>
+                </div>
+                <div class="offical-document-container demo" style="background-image: url({{asset('uploads/identitoe-exemple.jpg')}})">
+                    <p>justificatif d'identité</p>
+                </div>
+            {% endif %}
+        </div>
+        {% if recipient.sirenPicture is null %}
+        <div class="add-demo-container">
+            <h3>Mes documents administratif</h3>
+            <a href="#modal-profil-siren" class="modal-trigger"><button class="btn">Ajouter documents</button></a>
+        </div>
+        {% endif %}
+    </div>
+
+
+    <div id="modal-profil-picture" class="modal">
+        <div class="modal-content">
+            {{ form_start(formPicture) }}
+            <div class="file-field input-field">
+                <div class="btn">
+                    <span>{{ formPicture.profilePicture.vars.label }}</span>
+                    {{ form_widget(formPicture.profilePicture) }}
+                </div>
+                <div class="file-path-wrapper">
+                    <input class="file-path validate" type="text">
+                </div>
+            </div>
+            <button class="btn waves-effect waves-light" type="submit" name="action">Enregistrer</button>
+            {{ form_end(formPicture) }}
+        </div>
+    </div>
+
+    <div id="modal-profil-siren" class="modal">
+        <div class="modal-content">
+            {{ form_start(formSiren) }}
+            <div class="file-field input-field">
+                <div class="btn">
+                    <span>{{ formSiren.identityCardPicture.vars.label }}</span>
+                    {{ form_widget(formSiren.identityCardPicture) }}
+                </div>
+                <div class="file-path-wrapper">
+                    <input class="file-path validate" type="text">
+                </div>
+            </div>
+            <div class="file-field input-field">
+                <div class="btn">
+                    <span>{{ formSiren.sirenPicture.vars.label }}</span>
+                    {{ form_widget(formSiren.sirenPicture) }}
+                </div>
+                <div class="file-path-wrapper">
+                    <input class="file-path validate" type="text">
+                </div>
+            </div>
+            <div class="container-submit">
+                <button class="btn waves-effect waves-light" type="submit" name="action">Enregistrer</button>
+            </div>
+            {{ form_end(formSiren) }}
+        </div>
+    </div>
+{% endblock %}
+
+{% block javascripts %}
+    <script type="application/javascript">
+        document.addEventListener('DOMContentLoaded', function() {
+            var elems = document.querySelectorAll('.datepicker');
+            var instances = M.Datepicker.init(elems);
+        });
+
+        document.addEventListener('DOMContentLoaded', function() {
+            var elems = document.querySelectorAll('.modal');
+            var instances = M.Modal.init(elems);
+        });
+
+
+        var update_form = document.getElementsByName('update_recipient');
+        console.log(update_form)
+        update_form[0].addEventListener("submit",function () {
+            var date_value = document.getElementById("update_recipient_bornDate").value;
+            var date_parse = date_value.split('/');
+            var format_date = date_parse[2]+"-"+date_parse[1]+"-"+date_parse[0]+"T00:00:00";
+
+            document.getElementById("update_recipient_bornDate").value = format_date;
+            console.log(format_date)
+        })
+
+    </script>
 {% endblock %}
 
 

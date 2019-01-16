@@ -1,10 +1,14 @@
 {# integer #}
 {% block number_widget %}
     <div class="input-container">
-        <label for="{{ form.vars.id }}" for="first-name">{{ form.vars.label|raw }}</label>
+        <label for="{{ form.vars.id }}">{{ form.vars.label|raw }}</label>
         <div class="wrap-input100 rs1 validate-input">
-            <input   id="{{ form.vars.id }}"  {{ block('widget_attributes') }} class="input100" type="number"  value="{{ form.vars.value }}"  placeholder="{{ form.vars.label }}">
-            <span class="focus-input100"></span>
+            <input   id="{{ form.vars.id }}"  {{ block('widget_attributes') }} class="{% if form.vars.errors|length > 0  %} invalid {% endif %}" type="number"  value="{{ form.vars.value }}"  placeholder="{{ form.vars.label }}">
+            {% if form.vars.errors %}
+                {% for error in form.vars.errors %}
+                    <span class="helper-text" data-error="{{ error.message }}" data-success="right"></span>
+                {% endfor %}
+            {% endif %}
         </div>
     </div>
 {% endblock %}
@@ -13,18 +17,60 @@
     <div class="input-container">
         <label for="{{ form.vars.id }}" for="first-name">{{ form.vars.label|raw }}</label>
         <div class="wrap-input100 rs1 validate-input">
-            <input   id="{{ form.vars.id }}"  {{ block('widget_attributes') }} class="input100" type="text"  value="{{ form.vars.value }}"  placeholder="{{ form.vars.label }}">
-            <span class="focus-input100"></span>
+            <input   id="{{ form.vars.id }}"  {{ block('widget_attributes') }} class="{% if form.vars.errors|length > 0  %} invalid {% endif %}" type="text"  value="{{ form.vars.value }}"  placeholder="{{ form.vars.label }}">
+            {% if form.vars.errors %}
+                {% for error in form.vars.errors %}
+                    <span class="helper-text" data-error="{{ error.message }}" data-success="right"></span>
+                {% endfor %}
+            {% endif %}
         </div>
     </div>
 {% endblock %}
 
 {% block email_widget %}
     <div class="input-container">
-        <label class="label-input100" for="email">Email Address *</label>
+        <label class="label-input100" for="email">{{ form.vars.label }}</label>
         <div class="wrap-input100 validate-input">
-            <input id="{{ form.vars.id }}"  {{ block('widget_attributes') }} class="input100" type="email" value="{{ form.vars.value }}" placeholder="Eg. example@email.com">
-            <span class="focus-input100"></span>
+            <input id="{{ form.vars.id }}"  {{ block('widget_attributes') }} class="{% if form.vars.errors|length > 0  %} invalid {% endif %}" type="email" value="{{ form.vars.value }}" placeholder="Eg. example@email.com">
+            {% if form.vars.errors %}
+                {% for error in form.vars.errors %}
+                    <span class="helper-text" data-error="{{ error.message }}" data-success="right"></span>
+                {% endfor %}
+            {% endif %}
         </div>
+    </div>
+{% endblock %}
+
+{% block choice_widget %}
+    <div class="input-container">
+        <label for="{{ form.vars.id }}">{{ form.vars.label }}</label>
+        <div class="checkbox-container">
+            {% for var in form.vars.choices %}
+                <p>
+                    <label>
+                        <input {{ block('widget_attributes') }} type="radio" {% if var.value == form.vars.value %} checked {% endif %} value="{{ var.value }}" class="{% if form.vars.errors|length > 0  %} invalid {% endif %}"/>
+                        <span>{{ var.label }}</span>
+                    </label>
+                </p>
+            {% endfor %}
+            {% if form.vars.errors %}
+                {% for error in form.vars.errors %}
+                    <span class="helper-text" data-error="{{ error.message }}" data-success="right"></span>
+                {% endfor %}
+            {% endif %}
+        </div>
+    </div>
+
+{% endblock %}
+
+{% block datetime_widget %}
+    <div class="input-container">
+        <label for="{{ form.vars.id }}"> {{ form.vars.label }}</label>
+        <input type="text" class="datepicker {% if form.vars.errors|length > 0  %} invalid {% endif %}" {{ block('widget_attributes') }}  id="{{ form.vars.id }}" value="{{ form.vars.value|date('d/m/Y') }}">
+        {% if form.vars.errors %}
+            {% for error in form.vars.errors %}
+                <span class="helper-text" data-error="{{ error.message }}" data-success="right"></span>
+            {% endfor %}
+        {% endif %}
     </div>
 {% endblock %}

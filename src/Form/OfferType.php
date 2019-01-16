@@ -3,6 +3,7 @@
 namespace App\Form;
 
 use App\Entity\Offer;
+use FOS\CKEditorBundle\Form\Type\CKEditorType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\NumberType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
@@ -39,9 +40,10 @@ class OfferType extends AbstractType
                 'required' => true,
                 'label' => 'Pays'
             ])
-            ->add('description', TextareaType::class, [
+            ->add('description', CKEditorType::class, [
                 'required' => true,
-                'label' => 'Description'
+                'label' => 'Description',
+                'config' => ['toolbar' => 'full']
             ])
         ;
     }

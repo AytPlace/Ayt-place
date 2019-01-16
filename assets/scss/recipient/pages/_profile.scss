@@ -4,6 +4,12 @@
   position: relative;
   padding: 25px 20px 0;
 }
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  margin-top: 80px;
+  background-color: $white-color;
+}
 
 .profile_container {
   min-height: 330px;
@@ -70,7 +76,7 @@
 
 .profil-picture__cta {
   position: absolute;
-  bottom: 0;
+  bottom: 2px;
   left: 0;
   width: 100%;
   padding: 15px;
@@ -110,6 +116,21 @@
   max-width: 1200px;
   margin: 0 auto;
   margin-top: 50px;
+  display: flex;
+  flex-direction: row;
+  margin-bottom: 30px;
+
+  &.document-container {
+    justify-content: space-around;
+  }
+
+  form {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-around;
+  }
 }
 
 .block-list {
@@ -119,7 +140,6 @@
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
-  max-width: 445px;
 
   li {
     display: flex;
@@ -128,8 +148,8 @@
     padding: 10px;
     border: 1px solid $text-plain-color;
     min-height: 90px;
-    max-width: 165px;
     background-color: #343a5e;
+    width: 33%;
     color: #fff;
 
     strong {
@@ -137,4 +157,60 @@
       margin-top: 25px;
     }
   }
+}
+
+.offical-document-container {
+  height: 125px;
+  background-size: cover;
+  background-repeat: no-repeat;
+  margin: 20px 0;
+
+  &.demo {
+    opacity: 0.3;
+  }
+
+  p {
+    width: 500px;
+    text-align: center;
+    background-color: rgba(0, 0, 0, 0.2);
+    padding: 10px 0;
+    font-size: $title-size;
+    outline: 0;
+    color: $white-color;
+    margin-top: 85px;
+  }
+}
+
+.document-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+}
+
+.block-title {
+  color: $main-color;
+  font-size: 22px;
+  text-align: left;
+  margin: 0 0 10px 45px;
+  padding-top: 20px;
+}
+
+.add-demo-container {
+  text-align: center;
+  color: $main-color;
+  font-size: $title-size;
+  margin-top: 20px;
+
+  h3 {
+    margin-bottom: 20px;
+  }
+
+  .btn {
+    background-color: $main-color;
+    margin-bottom: 20px;
+  }
+}
+
+.bnt-blue {
+  background-color: $main-color !important;
 }

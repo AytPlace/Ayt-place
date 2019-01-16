@@ -35,10 +35,9 @@ class RecipientType extends AbstractType
                 'label' => "Pays",
                 'required' => true
             ])
-            ->add('bornDate', DateTimeType::class, [
+            ->add('bornDate', TextType::class, [
                 'label' => "Date de naissance",
                 'required' => true,
-                'widget' => 'single_text',
             ])
             ->add('phoneNumber', TextType::class, [
                 'label' => "numéro de téléphone",

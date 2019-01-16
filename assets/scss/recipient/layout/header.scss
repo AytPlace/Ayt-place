@@ -1,23 +1,21 @@
-.header-recipient {
-  height: 65px;
+.header-logo {
+  width: 50px;
+}
+
+.nav-wrapper {
   background-color: $white-color;
+}
+
+.nav-vertical-center {
+  height: 100%;
+  display: flex;
+  align-items: center;
+}
+
+.checkbox-container {
   display: flex;
   flex-direction: row;
-  justify-content: space-between;
-  align-items: center;
-  font-size: $default-font-size;
-  box-shadow: 0 0 35px 0 $background-color;
-
-  .header-logo {
-    height: 50px;
-  }
-
-  .navigation-header__container {
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
-    justify-content: space-evenly;
-    width: 30%;
-  }
-
+  justify-content: end;
+  margin-top: 22px;
+  border-bottom: 1px solid $input-border-color  ;
 }

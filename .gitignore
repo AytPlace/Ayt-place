@@ -17,6 +17,8 @@
 ###< symfony/web-server-bundle ###
 .idea
 docker/db
+public/uploads/*
+public/build/*
 
 ###> symfony/webpack-encore-bundle ###
 /node_modules/
