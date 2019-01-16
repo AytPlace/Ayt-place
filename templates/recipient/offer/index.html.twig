@@ -1,0 +1,33 @@
+{% extends 'recipient/_base.html.twig' %}
+
+{% form_theme form 'recipient/_form/form_theme.html.twig' %}
+{% block body %}
+    <div class="background-container"></div>
+
+    <div class="offer_container">
+        {{ form_start(form) }}
+        {{ form_widget(form.title) }}
+        {{ form_widget(form.travelerNumbers) }}
+        {{ form_widget(form.costByTraveler) }}
+        {{ form_widget(form.location) }}
+        {{ form_widget(form.city) }}
+        {{ form_widget(form.country) }}
+
+        <div class="input-container content-100">
+            <label for="offer_description">{{ form_label(form.description) }}</label>
+            {{ form_widget(form.description) }}
+        </div>
+
+        <div class="container-submit">
+            <button class="btn waves-effect waves-light bnt-blue" type="submit" name="action">Enregistrer</button>
+        </div>
+        {{ form_end(form) }}
+    </div>
+
+    <div class="container">
+        <h2 class="block-title">Mes disponibilitées</h2>
+        <div class="document-container">
+            eazeaz
+        </div>
+    </div>
+{% endblock %}

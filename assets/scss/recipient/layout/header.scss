@@ -1,0 +1,21 @@
+.header-logo {
+  width: 50px;
+}
+
+.nav-wrapper {
+  background-color: $white-color;
+}
+
+.nav-vertical-center {
+  height: 100%;
+  display: flex;
+  align-items: center;
+}
+
+.checkbox-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: end;
+  margin-top: 22px;
+  border-bottom: 1px solid $input-border-color  ;
+}

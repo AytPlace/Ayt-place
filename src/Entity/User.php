@@ -78,8 +78,7 @@ class User implements UserInterface
     private $gender;
 
     /**
-     * @var string
-     * @ORM\Column(type="string", name="profile_picture", nullable=true)
+     * @ORM\OneToOne(targetEntity="Medium")
      */
     private $profilePicture;
 
@@ -339,7 +338,7 @@ class User implements UserInterface
     /**
      * @return string
      */
-    public function getProfilePicture(): ?string
+    public function getProfilePicture()
     {
         return $this->profilePicture;
     }
@@ -348,7 +347,7 @@ class User implements UserInterface
      * @param string $profilePicture
      * @return User
      */
-    public function setProfilePicture(string $profilePicture): User
+    public function setProfilePicture($profilePicture): User
     {
         $this->profilePicture = $profilePicture;
         return $this;

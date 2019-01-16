@@ -5,6 +5,7 @@ namespace App\Form;
 use App\Entity\Recipient;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
@@ -34,19 +35,25 @@ class RecipientType extends AbstractType
                 'label' => "Pays",
                 'required' => true
             ])
-            ->add('bornDate', DateTimeType::class, [
+            ->add('bornDate', TextType::class, [
                 'label' => "Date de naissance",
                 'required' => true,
-                'widget' => 'single_text',
             ])
             ->add('phoneNumber', TextType::class, [
                 'label' => "numéro de téléphone",
                 'required' => true
             ])
-            ->add('gender', CheckboxType::class, [
-                'label' => "Genre",
-                'required' => true,
-
+            ->add('gender', ChoiceType::class, [
+                'label' => false,
+                'label_attr' => [
+                    'class' => 'form__label'
+                ],
+                'expanded' => true,
+                'multiple' => false,
+                'choices' => [
+                    'monsieur' => 'M',
+                    'madame' => 'Mmme',
+                ]
             ])
             ->add('email', EmailType::class, [
                 'label' => "Email",

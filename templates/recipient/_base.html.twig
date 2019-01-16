@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}Welcome!{% endblock %}</title>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link href="//cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet">
+    <!-- Compiled and minified CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+    <link href="//cdn.quilljs.com/1.3.6/quill.bubble.css" rel="stylesheet">
+    {% block stylesheets %}
+        {{ encore_entry_link_tags('recipient') }}
+    {% endblock %}
+</head>
+<body>
+<nav>
+    <div class="nav-wrapper">
+        <a href="{{ path('recipient_index_home') }}" class="brand-logo">
+            <img src="{{ asset('logo-ex-7.png') }}" alt="" class="header-logo">
+        </a>
+        <ul id="nav-mobile" class="right hide-on-med-and-down nav-vertical-center">
+            <li><a  class="black-text" href="{{ path('recipient_profil_home') }}">Profil</a></li>
+            <li><a  class="black-text" href="">Demandes</a></li>
+            <li><a  class="black-text" href="{{ path('recipient_offer_index') }}">Offres</a></li>
+        </ul>
+    </div>
+</nav>
+{% block body %}
+{% endblock %}
+
+<script src="https://cdn.quilljs.com/1.3.6/quill.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+{% block javascripts %}
+
+{{ encore_entry_script_tags('recipient') }}
+
+{% endblock %}
+</body>
+</html>
