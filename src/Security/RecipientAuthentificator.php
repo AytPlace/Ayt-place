@@ -82,7 +82,7 @@ class RecipientAuthentificator extends AbstractFormLoginAuthenticator
 
     public function onAuthenticationSuccess(Request $request, TokenInterface $token, $providerKey)
     {
-        return new RedirectResponse($this->router->generate('recipient_index_home'));
+        return new RedirectResponse($this->router->generate('recipient_profil_home'));
     }
 
     protected function getLoginUrl()
