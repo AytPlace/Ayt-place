@@ -64,6 +64,7 @@
        {{ form_widget(form.firstname) }}
        {{ form_widget(form.lastname) }}
        {{ form_widget(form.city) }}
+       {{ form_widget(form.zipcode) }}
        {{ form_widget(form.country) }}
        {{ form_widget(form.bornDate) }}
        {{ form_widget(form.email) }}
@@ -157,7 +158,11 @@
     <script type="application/javascript">
         document.addEventListener('DOMContentLoaded', function() {
             var elems = document.querySelectorAll('.datepicker');
-            var instances = M.Datepicker.init(elems);
+            var instances = M.Datepicker.init(elems, {
+                format: 'dd/mm/yy',
+                autoClose: true,
+            });
+
         });
 
         document.addEventListener('DOMContentLoaded', function() {
@@ -167,7 +172,6 @@
 
 
         var update_form = document.getElementsByName('update_recipient');
-        console.log(update_form)
         update_form[0].addEventListener("submit",function () {
             var date_value = document.getElementById("update_recipient_bornDate").value;
             var date_parse = date_value.split('/');
@@ -175,8 +179,7 @@
 
             document.getElementById("update_recipient_bornDate").value = format_date;
             console.log(format_date)
-        })
-
+        });
     </script>
 {% endblock %}
 

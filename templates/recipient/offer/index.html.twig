@@ -1,6 +1,7 @@
 {% extends 'recipient/_base.html.twig' %}
 
 {% form_theme form 'recipient/_form/form_theme.html.twig' %}
+{% form_theme offerDateForm 'recipient/_form/form_theme.html.twig' %}
 {% block body %}
     <div class="background-container"></div>
 
@@ -25,9 +26,24 @@
     </div>
 
     <div class="container">
-        <h2 class="block-title">Mes disponibilitées</h2>
+        <h2 class="block-title">Mes dates de disponibilitées</h2>
         <div class="document-container">
-            eazeaz
+            {{ form_start(offerDateForm) }}
+                {{ form_row(offerDateForm) }}
+                <div class="container-submit">
+                    <button class="btn waves-effect waves-light bnt-blue" type="submit" name="action">Enregistrer</button>
+                </div>
+
+            {{ form_end(offerDateForm)}}
         </div>
     </div>
+{% endblock %}
+
+{% block javascripts %}
+    <script type="application/javascript">
+        document.addEventListener('DOMContentLoaded', function() {
+            var elems = document.querySelectorAll('.datepicker');
+            var instances = M.Datepicker.init(elems);
+        });
+    </script>
 {% endblock %}
