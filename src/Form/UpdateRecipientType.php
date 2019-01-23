@@ -47,6 +47,10 @@ class UpdateRecipientType extends AbstractType
                 'label' => "Ville",
                 'required' => true
             ])
+            ->add('zipcode', TextType::class, [
+                'label' => "Code postal",
+                'required' => true
+            ])
             ->add('country', TextType::class, [
                 'label' => "Pays",
                 'required' => true

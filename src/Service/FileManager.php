@@ -1,9 +1,4 @@
 <?php
-/**
- * @author Mari Doucet
- * Date: 14/08/18
- * Time: 11:24
- */
 
 namespace App\Service;
 

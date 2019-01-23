@@ -43,7 +43,7 @@ class OfferType extends AbstractType
             ->add('description', CKEditorType::class, [
                 'required' => true,
                 'label' => 'Description',
-                'config' => ['toolbar' => 'full']
+                'config' => ['toolbar' => 'standard']
             ])
         ;
     }

@@ -9,7 +9,6 @@ use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\OfferRepository")
- * @ORM\HasLifecycleCallbacks()
  */
 class Offer
 {
@@ -80,7 +79,7 @@ class Offer
     private $updatedAt;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\AvailabilityOffer", mappedBy="offer")
+     * @ORM\OneToMany(targetEntity="App\Entity\AvailabilityOffer", mappedBy="offer", cascade={"persist"})
      */
     private $availabilityOffers;
 
@@ -190,15 +189,6 @@ class Offer
         return $this;
     }
 
-    /**
-     * @ORM\PrePersist()
-     */
-    public function setCreatedAtValue() : self
-    {
-        $this->createdAt = new \DateTime();
-        return $this;
-    }
-
     public function getCreatedAt(): ?\DateTimeInterface
     {
         return $this->createdAt;
@@ -223,15 +213,6 @@ class Offer
         return $this;
     }
 
-    /**
-     * @ORM\PrePersist()
-     * @ORM\PreUpdate()
-     */
-    public function setUpdatedAtValue() : self
-    {
-        $this->updatedAt = new \DateTime();
-        return $this;
-    }
 
     /**
      * @return Collection|AvailabilityOffer[]
@@ -241,10 +222,15 @@ class Offer
         return $this->availabilityOffers;
     }
 
+    public function hasAvailabilityOffers(): bool
+    {
+        return (count($this->availabilityOffers) > 0) ? true : false;
+    }
+
     public function addAvailabilityOffer(AvailabilityOffer $availabilityOffer): self
     {
         if (!$this->availabilityOffers->contains($availabilityOffer)) {
-            $this->availabilityOffers[] = $availabilityOffer;
+            $this->availabilityOffers->add($availabilityOffer);
             $availabilityOffer->setOffer($this);
         }
 
@@ -254,11 +240,7 @@ class Offer
     public function removeAvailabilityOffer(AvailabilityOffer $availabilityOffer): self
     {
         if ($this->availabilityOffers->contains($availabilityOffer)) {
-            $this->availabilityOffers->removeElement($availabilityOffer);
-            // set the owning side to null (unless already changed)
-            if ($availabilityOffer->getOffer() === $this) {
-                $availabilityOffer->setOffer(null);
-            }
+            $this->availabilityOffers->remove($availabilityOffer);
         }
 
         return $this;

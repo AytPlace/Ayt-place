@@ -14,7 +14,6 @@ use Symfony\Component\Validator\Constraints as Assert;
  * @ORM\InheritanceType("JOINED")
  * @ORM\DiscriminatorColumn(name="discr", type="string")
  * @UniqueEntity(fields={"email"}, message="Cet email est déjà utilisé.")
- * @ORM\HasLifecycleCallbacks()
  */
 class User implements UserInterface
 {
@@ -51,6 +50,14 @@ class User implements UserInterface
 
     /**
      * @var string
+     * @ORM\Column(type="string", name="zipcode")
+     * @Assert\NotNull(message="form.notNull")
+     * @Assert\Length(min="5", max="5", minMessage="form.zipcode", maxMessage="form.zipcode")
+     */
+    private $zipcode;
+
+    /**
+     * @var string
      * @ORM\Column(type="string", name="country")
      * @Assert\NotNull(message="form.notNull")
      * @Assert\Length(min="1", max="255", minMessage="form.length.min", maxMessage="form.length.max")
@@ -60,6 +67,8 @@ class User implements UserInterface
     /**
      * @var string
      * @ORM\Column(type="datetime", name="born_date")
+     * @Assert\NotNull(message="form.notNull")
+     * @Assert\DateTime(format="d/m/y")
      */
     private $bornDate;
 
@@ -266,6 +275,22 @@ class User implements UserInterface
     /**
      * @return string
      */
+    public function getZipcode(): string
+    {
+        return $this->zipcode;
+    }
+
+    /**
+     * @param string $zipcode
+     */
+    public function setZipcode(string $zipcode): void
+    {
+        $this->zipcode = $zipcode;
+    }
+
+    /**
+     * @return string
+     */
     public function getCountry(): ?string
     {
         return $this->country;
@@ -372,15 +397,6 @@ class User implements UserInterface
     }
 
     /**
-     * @ORM\PrePersist()
-     */
-    public function setCreatedAtValue() : self
-    {
-        $this->createdAt = new \DateTime();
-        return $this;
-    }
-
-    /**
      * @return \DateTime
      */
     public function getUpdatedAt(): \DateTime
@@ -395,16 +411,6 @@ class User implements UserInterface
     public function setUpdatedAt(\DateTime $updatedAt): User
     {
         $this->updatedAt = $updatedAt;
-        return $this;
-    }
-
-    /**
-     * @ORM\PrePersist()
-     * @ORM\PreUpdate()
-     */
-    public function setUpdatedAtValue() : self
-    {
-        $this->updatedAt = new \DateTime();
         return $this;
     }
 

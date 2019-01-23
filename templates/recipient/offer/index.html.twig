@@ -2,6 +2,7 @@
 
 {% form_theme form 'recipient/_form/form_theme.html.twig' %}
 {% form_theme offerDateForm 'recipient/_form/form_theme.html.twig' %}
+
 {% block body %}
     <div class="background-container"></div>
 
@@ -29,7 +30,11 @@
         <h2 class="block-title">Mes dates de disponibilitées</h2>
         <div class="document-container">
             {{ form_start(offerDateForm) }}
-                {{ form_row(offerDateForm) }}
+                <ul class="availabilityOffers" id="availabilityOffers" data-prototype="{{ form_widget(offerDateForm.availabilityOffers.vars.prototype)|e }}">
+                    {% for availabilityOffer in offerDateForm.availabilityOffers %}
+                        <li>{{ form_row(availabilityOffer.startDate) }} {{ form_row(availabilityOffer.endDate) }}</li>
+                    {% endfor %}
+                </ul>
                 <div class="container-submit">
                     <button class="btn waves-effect waves-light bnt-blue" type="submit" name="action">Enregistrer</button>
                 </div>
@@ -41,9 +46,83 @@
 
 {% block javascripts %}
     <script type="application/javascript">
-        document.addEventListener('DOMContentLoaded', function() {
-            var elems = document.querySelectorAll('.datepicker');
-            var instances = M.Datepicker.init(elems);
+
+        var elems = document.querySelectorAll('.datepicker');
+        M.Datepicker.init(elems, {
+            format: 'dd/mm/yyyy',
+            autoClose: true,
         });
+
+        var $collectionHolder;
+        var $addTagButton = $('<button type="button" class="add_tag_link btn waves-effect waves-light bnt-blue">Ajouter une date</button>');
+        var $newLinkLi = $('<li></li>').append($addTagButton);
+
+        $collectionHolder = $('ul.availabilityOffers');
+        $collectionHolder.find('li').each(function() {
+            addTagFormDeleteLink($(this));
+        });
+
+
+        jQuery(document).ready(function() {
+            $collectionHolder = $('ul.availabilityOffers');
+            $collectionHolder.append($newLinkLi);
+            $collectionHolder.data('index', $collectionHolder.find(':input').length);
+            $addTagButton.on('click', function(e) {
+                addTagForm($collectionHolder, $newLinkLi);
+            });
+        });
+
+        // add element
+        function addTagForm($collectionHolder, $newLinkLi) {
+            var prototype = $collectionHolder.data('prototype');
+            var index = $collectionHolder.data('index');
+            var newForm = prototype;
+
+            newForm = newForm.replace(/__name__/g, index);
+            $collectionHolder.data('index', index + 1);
+            var $newFormLi = $('<li></li>').append(newForm);
+            $newLinkLi.before($newFormLi);
+
+            var elems = document.querySelectorAll('.datepicker');
+            M.Datepicker.init(elems, {
+                format: 'dd/mm/yyyy',
+                autoClose: true,
+            });
+
+
+            parseDatetime();
+            addTagFormDeleteLink($newFormLi);
+        }
+
+        // remove element
+        function addTagFormDeleteLink($tagFormLi) {
+            var $removeFormButton = $('<a class="btn-floating btn-medium waves-effect waves-light red"><i class="material-icons">close</i></a>');
+            $tagFormLi.append($removeFormButton);
+
+            $removeFormButton.on('click', function(e) {
+                $tagFormLi.remove();
+                parseDatetime();
+            });
+
+
+        }
+
+        function parseDatetime() {
+            var update_form = document.getElementsByName('offer_date');
+            update_form[0].addEventListener("submit",function () {
+                var $datepicker = $('.datepicker');
+                console.log($datepicker)
+                for (var i = 0 ;  i < $datepicker.length; i++) {
+                    var date_value = $datepicker[i].value
+                    console.log(date_value)
+                    var date_parse = date_value.split('/');
+                    var format_date = date_parse[2]+"-"+date_parse[1]+"-"+date_parse[0]+"T00:00:00";
+
+                    $datepicker[i].value = format_date;
+                }
+            });
+        }
     </script>
+
+
 {% endblock %}
