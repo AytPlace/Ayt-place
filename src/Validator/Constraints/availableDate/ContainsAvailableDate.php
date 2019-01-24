@@ -6,7 +6,7 @@
  * Time: 20:18
  */
 
-namespace App\Validator\Constraints;
+namespace App\Validator\Constraints\availableDate;
 
 
 use Symfony\Component\Validator\Constraint;

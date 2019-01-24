@@ -3,13 +3,12 @@
  * Created by PhpStorm.
  * User: elgrim
  * Date: 24/01/19
- * Time: 20:21
+ * Time: 21:16
  */
 
-namespace App\Validator\Constraints;
+namespace App\Validator\Constraints\dateInterval;
 
 
-use App\Entity\AvailabilityOffer;
 use App\Repository\OfferRepository;
 use App\Service\DateAvailableManager;
 use Doctrine\ORM\PersistentCollection;
@@ -18,9 +17,8 @@ use Symfony\Component\Validator\ConstraintValidator;
 use Symfony\Component\Validator\Exception\UnexpectedTypeException;
 use Symfony\Component\Validator\Exception\UnexpectedValueException;
 
-class ContainsAvailableDateValidator extends ConstraintValidator
+class ContainsDateIntervalValidator extends ConstraintValidator
 {
-
     private $offerRepository;
     private $dateAvailableManager;
 
@@ -32,8 +30,8 @@ class ContainsAvailableDateValidator extends ConstraintValidator
 
     public function validate($value, Constraint $constraint)
     {
-        if (!$constraint instanceof ContainsAvailableDate) {
-            throw new UnexpectedTypeException($constraint, ContainsAvailableDate::class);
+        if (!$constraint instanceof ContainsDateInterval) {
+            throw new UnexpectedTypeException($constraint, ContainsDateInterval::class);
         }
 
         if (null === $value || '' === $value) {
@@ -45,12 +43,8 @@ class ContainsAvailableDateValidator extends ConstraintValidator
         }
 
         foreach ($value as $availableDate) {
-            dump($availableDate);
-            if (is_null($availableDate->getId()) && !$this->dateAvailableManager->checkDateIntervale($availableDate)) {
-                $this->context->buildViolation($constraint->message)
-                    ->setParameters(['{{ startDate }}', $availableDate->getStartDate(), '{{ endDate }}', $availableDate->getEndDate()])
-                    ->addViolation()
-                ;
+            if (is_null($availableDate->getId()) && !$this->dateAvailableManager->checkDateInterval($availableDate)) {
+                $this->context->buildViolation($constraint->message)->addViolation();
             }
         }
     }

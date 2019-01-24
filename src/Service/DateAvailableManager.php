@@ -23,7 +23,7 @@ class DateAvailableManager
 
     // Date de début courante = ddc | Date de fin courante = dfc ;; Date dé début = dd | Date de fin = df
     // ( ddc >= dd & ddc <= df ) || (dfc => dd & dfc <= df) || (dd >= ddc & df <= dfc) ===> false
-    public function checkDateIntervale(AvailabilityOffer $availabilityOffer) : bool
+    public function checkDateAvailable(AvailabilityOffer $availabilityOffer) : bool
     {
         $availableDates = $this->availabilityOfferRepository->findAll();
         $available = true;
@@ -39,5 +39,10 @@ class DateAvailableManager
         }
 
         return $available;
+    }
+
+    public function checkDateInterval(AvailabilityOffer $availabilityOffer)
+    {
+        return ($availabilityOffer->getStartDate() > $availabilityOffer->getEndDate()) ? false : true;
     }
 }

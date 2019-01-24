@@ -6,7 +6,8 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
-use App\Validator\Constraints as AcmeAssert;
+use App\Validator\Constraints\availableDate as Interval;
+use App\Validator\Constraints\dateInterval as Date;
 /**
  * @ORM\Entity(repositoryClass="App\Repository\OfferRepository")
  */
@@ -80,7 +81,8 @@ class Offer
 
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\AvailabilityOffer", mappedBy="offer", cascade={"persist"})
-     * @AcmeAssert\ContainsAvailableDate
+     * @Date\ContainsDateInterval
+     * @Interval\ContainsAvailableDate
      */
     protected $availabilityOffers;
 
