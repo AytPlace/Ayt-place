@@ -9,7 +9,6 @@
 namespace App\Controller\recipient;
 
 
-use App\Entity\AvailabilityOffer;
 use App\Entity\Offer;
 use App\Form\OfferDateType;
 use App\Form\OfferType;
@@ -26,7 +25,7 @@ class OfferController extends AbstractController
     /**
      * @Route("prestataire/offre/", name="recipient_offer_index")
      */
-    public function indexAction(Request $request, DateAvailableManager $dateAvailableManager)
+    public function indexAction(Request $request)
     {
         $recipient= $this->getUser();
         $offer = $recipient->getOffers();
@@ -57,18 +56,10 @@ class OfferController extends AbstractController
         }
 
         if ($offerDateForm->isSubmitted() && $offerDateForm->isValid()) {
-
-            foreach ($offer->getAvailabilityOffers() as $availabilityOffer) {
-                if (!$originalDate->contains($availabilityOffer)) {
-                      $dateAvailableManager->checkDateIntervale($availabilityOffer);
-                }
-                //dump($originalDate->contains($availabilityOffer));
-            }
-            die;
-            foreach ($originalDate as $availabilityOffer) {
-                if (!$offer->getAvailabilityOffers()->contains($availabilityOffer)) {
-                    $offer->removeAvailabilityOffer($availabilityOffer);
-                    $em->remove($availabilityOffer);
+            foreach ($originalDate as $date) {
+                if (!$offer->getAvailabilityOffers()->contains($date)) {
+                    $offer->removeAvailabilityOffer($date);
+                    $em->remove($date);
                 }
             }
 
