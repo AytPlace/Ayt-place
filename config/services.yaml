@@ -28,6 +28,11 @@ services:
         tags:
             - { name: doctrine.event_listener, event: prePersist }
 
+
+    App\EventListener\RecipientListener:
+        tags:
+            - { name: doctrine.event_listener, event: prePersist }
+
     App\EventListener\EntityListener:
         tags:
             - { name: doctrine.event_listener, event: prePersist }

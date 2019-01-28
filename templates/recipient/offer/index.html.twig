@@ -5,7 +5,7 @@
 
 {% block body %}
     <div class="background-container"></div>
-
+    <div class="separation"></div>
     <div class="offer_container">
         {{ form_start(form) }}
         {{ form_widget(form.title) }}
@@ -13,6 +13,7 @@
         {{ form_widget(form.costByTraveler) }}
         {{ form_widget(form.location) }}
         {{ form_widget(form.city) }}
+        {{ form_widget(form.region) }}
         {{ form_widget(form.country) }}
 
         <div class="input-container content-100">
@@ -51,6 +52,10 @@
         M.Datepicker.init(elems, {
             format: 'dd/mm/yyyy',
             autoClose: true,
+        });
+
+        $(document).ready(function(){
+            $('select').formSelect();
         });
 
         var $collectionHolder;

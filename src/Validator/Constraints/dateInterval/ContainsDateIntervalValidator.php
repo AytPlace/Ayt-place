@@ -30,12 +30,12 @@ class ContainsDateIntervalValidator extends ConstraintValidator
 
     public function validate($value, Constraint $constraint)
     {
-        if (!$constraint instanceof ContainsDateInterval) {
-            throw new UnexpectedTypeException($constraint, ContainsDateInterval::class);
+        if (count($value->toArray()) < 1) {
+            return;
         }
 
-        if (null === $value || '' === $value) {
-            return;
+        if (!$constraint instanceof ContainsDateInterval) {
+            throw new UnexpectedTypeException($constraint, ContainsDateInterval::class);
         }
 
         if (!$value instanceof PersistentCollection) {

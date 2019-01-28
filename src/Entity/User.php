@@ -283,9 +283,11 @@ class User implements UserInterface
     /**
      * @param string $zipcode
      */
-    public function setZipcode(string $zipcode): void
+    public function setZipcode(string $zipcode): self
     {
         $this->zipcode = $zipcode;
+
+        return $this;
     }
 
     /**

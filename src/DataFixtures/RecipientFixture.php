@@ -1,15 +1,21 @@
 <?php
+/**
+ * Created by PhpStorm.
+ * User: elgrim
+ * Date: 28/01/19
+ * Time: 15:50
+ */
 
 namespace App\DataFixtures;
 
-use App\Entity\Client;
-use App\Entity\User;
+
+use App\Entity\Recipient;
 use App\Service\RandomStringGenerator;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\Persistence\ObjectManager;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
-class UserFixtures extends Fixture
+class RecipientFixture extends Fixture
 {
     private $userPasswordEncoder;
 
@@ -23,7 +29,7 @@ class UserFixtures extends Fixture
 
     public function load( ObjectManager $manager)
     {
-        $user = new Client();
+        $user = new Recipient();
         $user->setFirstname("alexandre")
             ->setLastname("vagnair")
             ->setCity("Paris")
@@ -32,9 +38,10 @@ class UserFixtures extends Fixture
             ->setPhoneNumber("0660566104")
             ->setGender("monsieur")
             ->setZipcode("75013")
-            ->setEmail("alexandre.vagnair@hetic.net")
+            ->setSiren("111111111")
+            ->setEmail("alexandre.vagnair@sooyoos.com")
             ->setPassword($this->userPasswordEncoder->encodePassword($user, 'root'))
-            ->setRoles(["ROLE_CLIENT"]);
+            ->setRoles(["ROLE_RECIPIENT"]);
 
         $manager->persist($user);
         $manager->flush();

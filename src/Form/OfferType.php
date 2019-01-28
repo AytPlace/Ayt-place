@@ -5,6 +5,7 @@ namespace App\Form;
 use App\Entity\Offer;
 use FOS\CKEditorBundle\Form\Type\CKEditorType;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\NumberType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
@@ -35,6 +36,9 @@ class OfferType extends AbstractType
             ->add('city', TextType::class, [
                 'required' => true,
                 'label' => 'Ville'
+            ])
+            ->add('region', ChoiceType::class, [
+                'choices' => Offer::REGION,
             ])
             ->add('country', TextType::class, [
                 'required' => true,

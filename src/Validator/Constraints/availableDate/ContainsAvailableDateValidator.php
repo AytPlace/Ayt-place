@@ -31,12 +31,12 @@ class ContainsAvailableDateValidator extends ConstraintValidator
 
     public function validate($value, Constraint $constraint)
     {
-        if (!$constraint instanceof ContainsAvailableDate) {
-            throw new UnexpectedTypeException($constraint, ContainsAvailableDate::class);
+        if (count($value->toArray()) < 1) {
+            return;
         }
 
-        if (null === $value || '' === $value) {
-            return;
+        if (!$constraint instanceof ContainsAvailableDate) {
+            throw new UnexpectedTypeException($constraint, ContainsAvailableDate::class);
         }
 
         if (!$value instanceof PersistentCollection) {
@@ -44,7 +44,6 @@ class ContainsAvailableDateValidator extends ConstraintValidator
         }
 
         foreach ($value as $availableDate) {
-            dump($availableDate);
             if (is_null($availableDate->getId()) && !$this->dateAvailableManager->checkDateAvailable($availableDate)) {
                 $this->context->buildViolation($constraint->message)
                     ->setParameters(['{{ startDate }}', $availableDate->getStartDate(), '{{ endDate }}', $availableDate->getEndDate()])

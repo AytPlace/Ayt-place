@@ -11,6 +11,7 @@ namespace App\EventListener;
 
 use App\Entity\AvailabilityOffer;
 use App\Entity\Offer;
+use App\Entity\Request;
 use App\Entity\User;
 use Doctrine\ORM\Event\LifecycleEventArgs;
 
@@ -20,7 +21,7 @@ class EntityListener
     {
         $entity = $args->getEntity();
 
-        if ($entity instanceof User || $entity instanceof Offer || $entity instanceof AvailabilityOffer) {
+        if ($entity instanceof User || $entity instanceof Offer || $entity instanceof AvailabilityOffer || $entity instanceof Request) {
             $entity->setCreatedAt(new \DateTime());
             $entity->setUpdatedAt(new \DateTime());
         }
@@ -28,7 +29,7 @@ class EntityListener
 
     public function preUpdate(LifecycleEventArgs $args) {
         $entity = $args->getEntity();
-        if ($entity instanceof User || $entity instanceof Offer || $entity instanceof AvailabilityOffer) {
+        if ($entity instanceof User || $entity instanceof Offer || $entity instanceof AvailabilityOffer || $entity instanceof Request) {
             $entity->setUpdatedAt(new \DateTime());
         }
     }

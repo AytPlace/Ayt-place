@@ -13,6 +13,32 @@ use App\Validator\Constraints\dateInterval as Date;
  */
 class Offer
 {
+    const REGION = [
+        'Séléctionner une région' => '',
+        'Rhône-Alpes' =>  0,
+        'Alsace' =>  1,
+        'Aquitaine' =>  2,
+        'Auvergne' =>  3,
+        'Basse-Normandie' =>  4,
+        'Bourgogne' =>  5,
+        'Bretagne' =>  6,
+        'Centre' =>  7,
+        'Champagne' =>  8,
+        'Corse' =>  9,
+        'Franche-Comté' =>  10,
+        'Haute-Normandie' =>  11,
+        'Ile-de-France' =>  12,
+        'Languedoc' =>  13,
+        'Limousin' =>  14,
+        'Lorraine' =>  15,
+        'Midi-Pyrénées' =>  16,
+        'Nord' =>  17,
+        'Normandie' =>  18,
+        'Pays-de-la-Loire' =>  19,
+        'Picardie' =>  20,
+        'Poitou-Charente' =>  21,
+        'Provence-Alpes-Côte d\'Azur' =>  22,
+    ];
     /**
      * @ORM\Id()
      * @ORM\GeneratedValue()
@@ -25,6 +51,12 @@ class Offer
      * @ORM\JoinColumn(name="offer", referencedColumnName="id")
      */
     private $recipient;
+
+    /**
+     * @ORM\ManyToMany(targetEntity="Request", inversedBy="offer")
+     * @ORM\JoinTable(name="offers_requests")
+     */
+    private $requests;
 
     /**
      * @ORM\Column(type="string", length=255)
@@ -69,6 +101,13 @@ class Offer
      */
     private $description;
 
+
+    /**
+     * @ORM\Column(type="text", nullable=false)
+     * @Assert\NotNull(message="form.notNull")
+     */
+    private $region;
+
     /**
      * @ORM\Column(type="datetime")
      */
@@ -89,6 +128,7 @@ class Offer
     public function __construct()
     {
         $this->availabilityOffers = new ArrayCollection();
+        $this->requests = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -104,6 +144,32 @@ class Offer
     public function setRecipient(?Recipient $recipient): self
     {
         $this->recipient = $recipient;
+
+        return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getRequest()
+    {
+        return $this->requests;
+    }
+
+    public function addRequest(Request $request) :self
+    {
+        if (!$this->requests->contains($request)) {
+            $this->requests->add($request);
+        }
+
+        return $this;
+    }
+
+    public function removeRequest(Request $request) :self
+    {
+        if ($this->requests->contains($request)) {
+            $this->requests->removeElement($request);
+        }
 
         return $this;
     }
@@ -190,6 +256,22 @@ class Offer
         $this->description = $description;
 
         return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getRegion()
+    {
+        return $this->region;
+    }
+
+    /**
+     * @param mixed $region
+     */
+    public function setRegion($region): void
+    {
+        $this->region = $region;
     }
 
     public function getCreatedAt(): ?\DateTimeInterface

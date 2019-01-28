@@ -19,32 +19,26 @@ class OfferRepository extends ServiceEntityRepository
         parent::__construct($registry, Offer::class);
     }
 
-    // /**
-    //  * @return Offer[] Returns an array of Offer objects
-    //  */
-    /*
-    public function findByExampleField($value)
+    public function searchOffer(?string $title = null, ?string $region = null)
     {
-        return $this->createQueryBuilder('o')
-            ->andWhere('o.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('o.id', 'ASC')
-            ->setMaxResults(10)
-            ->getQuery()
-            ->getResult()
+        $query = $this->createQueryBuilder('o')
+            ->leftJoin('o.recipient', 'r')->addSelect('r')
+            ->where('r.status = 1')
+            ->orderBy('o.updatedAt', 'DESC')
         ;
-    }
-    */
 
-    /*
-    public function findOneBySomeField($value): ?Offer
-    {
-        return $this->createQueryBuilder('o')
-            ->andWhere('o.exampleField = :val')
-            ->setParameter('val', $value)
-            ->getQuery()
-            ->getOneOrNullResult()
-        ;
+        if (!empty($title)) {
+            $query->andWhere('o.title LIKE :title')
+                ->setParameter('title', '%'.$title.'%')
+            ;
+        }
+
+        if (!empty($region)) {
+            $query->andWhere('o.region = :region')
+                ->setParameter('region', $region)
+            ;
+        }
+
+        return $query->getQuery()->getResult();
     }
-    */
 }

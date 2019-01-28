@@ -1,8 +1,15 @@
 .background-container {
   height: 410px;
   background :url("/top_profile_header_bg.png") top center no-repeat $main-color;
-  position: relative;
-  padding: 25px 20px 0;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: -1;
+}
+
+.separation {
+  height: 30px;
 }
 .container {
   max-width: 1200px;
@@ -15,7 +22,6 @@
   min-height: 330px;
   max-width: 1200px;
   margin: 0 auto;
-  margin-top: 80px;
   background-color: $white-color;
   display: flex;
   flex-direction: row;

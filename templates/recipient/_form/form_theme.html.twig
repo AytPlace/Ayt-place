@@ -43,22 +43,19 @@
 
 {% block choice_widget %}
     <div class="input-container">
-        <label for="{{ form.vars.id }}">{{ form.vars.label }}</label>
-        <div class="checkbox-container">
-            {% for var in form.vars.choices %}
-                <p>
-                    <label>
-                        <input {{ block('widget_attributes') }} type="radio" {% if var.value == form.vars.value %} checked {% endif %} value="{{ var.value }}" class="{% if form.vars.errors|length > 0  %} invalid {% endif %}"/>
-                        <span>{{ var.label }}</span>
-                    </label>
-                </p>
-            {% endfor %}
-            {% if form.vars.errors %}
-                {% for error in form.vars.errors %}
-                    <span class="helper-text" data-error="{{ error.message }}" data-success="right"></span>
-                {% endfor %}
-            {% endif %}
-        </div>
+        <div class="input-field">
+                <select {{ block('widget_attributes') }} class="{% if form.vars.errors|length > 0  %} invalid {% endif %}">
+                    {% for var in form.vars.choices %}
+                        <option value="{{ var.value }}" {% if var.value == form.vars.value %} selected {% endif %} >{{ var.label }}</option>
+                    {% endfor %}
+                </select>
+                <label for="{{ form.vars.id }}">{{ form.vars.label }}</label>
+                {% if form.vars.errors %}
+                    {% for error in form.vars.errors %}
+                        <span class="helper-text" data-error="{{ error.message }}" data-success="right"></span>
+                    {% endfor %}
+                {% endif %}
+            </div>
     </div>
 
 {% endblock %}

@@ -1,0 +1,19 @@
+{% extends 'recipient/_base.html.twig' %}
+
+{% block body %}
+    {{ dump(request) }}
+    <div class="background-container"></div>
+    <div class="separation"></div>
+    <div class="demande__container">
+        <h1 class="demande__container-title">Liste des demandes</h1>
+        <div class="demande__container-list">
+            <div class="collection">
+                {% for event in request %}
+                    {{ dump( event.clients ) }}
+                    <a href="#!" class="collection-item">Demande de : </a>
+                {% endfor %}
+            </div>
+        </div>
+
+    </div>
+{% endblock %}

@@ -24,6 +24,17 @@ class Request
     private $description;
 
     /**
+     * @ORM\ManyToMany(targetEntity="Offer", inversedBy="request")
+     *
+     */
+    private $offers;
+
+    /**
+     * @ORM\ManyToMany(targetEntity="Client", inversedBy="requests")
+     */
+    private $clients;
+
+    /**
      * @ORM\Column(type="datetime")
      */
     private $createdAt;
@@ -47,6 +58,8 @@ class Request
     public function __construct()
     {
         $this->responses = new ArrayCollection();
+        $this->offers = new ArrayCollection();
+        $this->clients = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -62,6 +75,58 @@ class Request
     public function setDescription(string $description): self
     {
         $this->description = $description;
+
+        return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getOffers()
+    {
+        return $this->offers;
+    }
+
+    public function addOffer(Offer $offer) : self
+    {
+        if (!$this->offers->contains($offer)) {
+            $this->offers->add($offer);
+        }
+
+        return $this;
+    }
+
+    public function deleteOffer(Offer $offer) : self
+    {
+        if ($this->offers->contains($offer)) {
+            $this->offers->removeElement($offer);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getClient()
+    {
+        return $this->clients;
+    }
+
+    public function addClients(Client $client) : self
+    {
+        if (!$this->clients->contains($client)) {
+            $this->clients->add($client);
+        }
+
+        return $this;
+    }
+
+    public function deleteClients(Client $client) : self
+    {
+        if ($this->clients->contains($client)) {
+            $this->clients->removeElement($client);
+        }
 
         return $this;
     }

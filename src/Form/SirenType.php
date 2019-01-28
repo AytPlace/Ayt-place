@@ -23,6 +23,9 @@ class SirenType extends AbstractType
                     'mimeTypes' => ['application/pdf', 'application/x-pdf'],
                     'mimeTypesMessage' => "form.file.types"
                 ],
+                'attr' => [
+                    'accept' => '.pdf'
+                ]
             ])
             ->add('identityCardPicture', FileType::class, [
                 'label' => "Justificatif carte d'identité",
@@ -34,6 +37,9 @@ class SirenType extends AbstractType
                     'mimeTypes' => ['application/pdf', 'application/x-pdf'],
                     'mimeTypesMessage' => "form.file.types"
                 ],
+                'attr' => [
+                    'accept' => '.pdf'
+                ]
             ])
         ;
     }
