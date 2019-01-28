@@ -16,12 +16,24 @@ class SirenType extends AbstractType
             ->add('sirenPicture', FileType::class, [
                 'label' => 'Justificatif Siren',
                 'required' => false,
-                'mapped' => false
+                'mapped' => false,
+                'constraints' => [
+                    'maxSize' => '500MO',
+                    'maxSizeMessage' => 'form.file.size',
+                    'mimeTypes' => ['application/pdf', 'application/x-pdf'],
+                    'mimeTypesMessage' => "form.file.types"
+                ],
             ])
             ->add('identityCardPicture', FileType::class, [
                 'label' => "Justificatif carte d'identité",
                 'required' => false,
-                'mapped' => false
+                'mapped' => false,
+                'constraints' => [
+                    'maxSize' => '500MO',
+                    'maxSizeMessage' => 'form.file.size',
+                    'mimeTypes' => ['application/pdf', 'application/x-pdf'],
+                    'mimeTypesMessage' => "form.file.types"
+                ],
             ])
         ;
     }

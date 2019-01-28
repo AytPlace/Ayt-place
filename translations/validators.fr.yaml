@@ -7,3 +7,6 @@ form:
   email: "Veuillez entrer une adresse email valide"
   zipcode: "Code postal invalide"
   borndate: "Format de date invalide, le format valide est jour/mois/année"
+  file:
+    types: "Ce format nest pas accepter, seul les formats suivant son accepter {{ types }}"
+    size: "Fichier trop lourd, taille maximal accepter {{ limit }}"
