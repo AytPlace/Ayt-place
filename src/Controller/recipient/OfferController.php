@@ -47,8 +47,6 @@ class OfferController extends AbstractController
         $offerDateForm->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $offer->setRecipient($recipient); /*TODO mettre dans un listener*/
-
             $em->persist($offer);
             $em->flush();
 

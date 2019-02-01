@@ -2,6 +2,8 @@
 
 namespace App\Controller;
 
+use App\Entity\Offer;
+use App\Entity\Recipient;
 use App\Form\SearchOfferType;
 use App\Repository\OfferRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -13,7 +15,7 @@ class HomeController extends AbstractController
     /**
      * @Route("/", name="app_index")
      */
-    public function indexAction(Request $request)
+    public function indexAction()
     {
         $form = $this->createForm(SearchOfferType::class);
         $form->handleRequest($request);
@@ -29,12 +31,31 @@ class HomeController extends AbstractController
         ]);
     }
 
+
     /**
      * @Route("/recherche-resultat/{data]", name="app_search_result")
+     * @param null $data
+     * @param OfferRepository $offerRepository
+     * @return \Symfony\Component\HttpFoundation\Response
      */
     public function ResultSearchAction($data = null, OfferRepository $offerRepository)
     {
         $offers = $offerRepository->searchOffer($data['name'], $data['region']);
-        dump($offers);die;
+
+        return $this->render('home/result.html.twig', [
+            'offers' => $offers
+        ]);
+    }
+
+    /**
+     * @Route("/offre/{offer}", name="app_detail_offer")
+     * @param Recipient $recipient
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    public function detailAction(Offer $offer)
+    {
+        return $this->render('home/detail.html.twig', [
+            'offer' => $offer
+        ]);
     }
 }
