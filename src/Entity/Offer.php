@@ -330,4 +330,10 @@ class Offer
 
         return $this;
     }
+
+    public function getRegionName( string $key) : string
+    {
+        return array_search($key, self::REGION);
+    }
+
 }

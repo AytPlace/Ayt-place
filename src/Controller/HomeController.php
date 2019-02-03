@@ -6,6 +6,7 @@ use App\Entity\Offer;
 use App\Form\SearchOfferType;
 use App\Repository\OfferRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 
@@ -16,7 +17,6 @@ class HomeController extends AbstractController
      */
     public function indexAction(Request $request, OfferRepository $offerRepository)
     {
-        $offers = [];
 
         $form = $this->createForm(SearchOfferType::class);
         $form->handleRequest($request);
@@ -33,7 +33,6 @@ class HomeController extends AbstractController
 
         return $this->render('home/index.html.twig', [
             'form' => $form->createView(),
-            'offers' => $offers
         ]);
     }
 
@@ -42,6 +41,24 @@ class HomeController extends AbstractController
      */
     public function detailAction(Offer $offer)
     {
-        dump($offer);die;
+        return $this->render('home/detail.html.twig', [
+            'offer' => $offer,
+        ]);
+    }
+
+    /**
+     * @param Offer $offer
+     * @Route("/date-offre/{offer}", name="app_index_get_available_date")
+     */
+    public function getAvailableOfferDates(Offer $offer)
+    {
+        $data = [];
+        foreach ($offer->getAvailabilityOffers() as $availabilityOffer) {
+            $data[] = ["startDate" => $availabilityOffer->getStartDate(), "endDate" => $availabilityOffer->getEndDate()];
+        }
+
+        return new JsonResponse([
+            'dates' => $data
+        ]);
     }
 }

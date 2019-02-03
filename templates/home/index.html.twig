@@ -18,19 +18,21 @@
 
     <div id="offer-result">
         <div class="offer__container">
-            {% for offer in offers %}
-                <a href="{{ path('app_index_detail_offer', {'offer' : offer.id}) }}">
-                    <div class="offer__item">
-                        <div class="offer__item-info">
-                            <h3>{{ offer.title }}</h3>
-                            <p>{{ offer.location }}, {{ offer.city }} {{ offer.country }}</p>
-                            <span>{{ offer.costByTraveler }}/€</span>
+            {% if offers is defined %}
+                {% for offer in offers %}
+                    <a href="{{ path('app_index_detail_offer', {'offer' : offer.id}) }}">
+                        <div class="offer__item">
+                            <div class="offer__item-info">
+                                <h3>{{ offer.title }}</h3>
+                                <p>{{ offer.location }}, {{ offer.city }} {{ offer.country }}</p>
+                                <span>{{ offer.costByTraveler }}/€</span>
+                            </div>
                         </div>
-                    </div>
-                </a>
-            {% else %}
-                <p>Malheureusement aucun lieux ne correspond à votre recherche</p>
-            {% endfor %}
+                    </a>
+                {% else %}
+                    <p>Malheureusement aucun lieux ne correspond à votre recherche</p>
+                {% endfor %}
+            {% endif %}
         </div>
     </div>
 {% endblock %}

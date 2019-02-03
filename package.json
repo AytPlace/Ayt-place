@@ -15,6 +15,7 @@
     "build": "encore production --progress"
   },
   "dependencies": {
+    "air-datepicker": "^2.2.3",
     "jquery": "^3.3.1",
     "moment": "^2.23.0"
   }

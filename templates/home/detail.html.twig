@@ -1,0 +1,92 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+<style>
+    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
+    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
+</style>
+
+    <div class="offer__container">
+        <p>{{ offer.title }}</p>
+        <p>       {{ offer.travelerNumbers }}</p>
+        <p>   {{ offer.costByTraveler }}</p>
+        <p> {{ offer.location }}</p>
+        <p>     {{ offer.city }}</p>
+        <p>   {{ offer.country }}</p>
+        <p>{{ offer.getRegionName(offer.region) }}</p>
+        {{ offer.description|raw }}
+
+
+        <input type="text"
+               id="test-date"
+               data-range="true"
+               data-multiple-dates-separator=" - "
+               data-language="en"
+               class="datepicker-here"/>
+
+    </div>
+{% endblock %}
+{% block javascripts %}
+    <script type="application/javascript">
+        var $picker = $('#test-date');
+
+        $.ajax({
+            type: "POST",
+            url : "{{ path('app_index_get_available_date', {'offer' : offer.id}) }}",
+            success: function (response) {
+                var dates = response.dates;
+                var hasDisable = [];
+                $picker.datepicker({
+                    language: 'fr',
+                    onRenderCell: function (date, cellType) {
+                        console.log(dates)
+                        startDate = new Date(dates[2].startDate.date);
+                        endDate = new Date(dates[2].endDate.date);
+
+                        if (startDate <= date && date <= endDate) {
+                        } else {
+                            return {
+                                disabled: true
+                            }
+                        }
+                    }
+                })
+/*                $('#test-date').datepicker({
+                    language: 'fr',
+                    onRenderCell: function (date, cellType) {
+                        dates.forEach(function (currentDate) {
+                            console.log(dates)
+                            startDate = new Date(currentDate.startDate.date);
+                            endDate = new Date(currentDate.endDate.date);
+
+                            if (startDate <= date && date <= endDate) {
+                            }
+                            else {
+                                console.log(date)
+                                hasDisable.push(date)
+                            }
+                        })
+
+                        var day = date,
+                        isDisabled = hasDisable.indexOf(day) != -1;
+        console.log(isDisabled)
+
+                        return {
+                            disabled: isDisabled
+                        }
+
+                        /!*if (cellType == 'day') {
+                            var day = date.getDay(),
+                                isDisabled = disabledDays.indexOf(day) != -1;
+                            return {
+                                disabled: isDisabled
+                            }
+                        }*!/
+                    }
+                })*/
+                $picker.data('datepicker')
+            }
+
+        });
+    </script>
+{% endblock %}
