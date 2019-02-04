@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Offer;
 use App\Form\SearchOfferType;
+use App\Form\SelectDateType;
 use App\Repository\OfferRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -39,16 +40,25 @@ class HomeController extends AbstractController
     /**
      * @Route("/offre/{offer}", name="app_index_detail_offer")
      */
-    public function detailAction(Offer $offer)
+    public function detailAction(Offer $offer, Request $request)
     {
+        $form = $this->createForm(SelectDateType::class);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            dump($form);die;
+        }
+
         return $this->render('home/detail.html.twig', [
             'offer' => $offer,
+            'form' => $form->createView()
         ]);
     }
 
     /**
      * @param Offer $offer
      * @Route("/date-offre/{offer}", name="app_index_get_available_date")
+     * @return JsonResponse
      */
     public function getAvailableOfferDates(Offer $offer)
     {

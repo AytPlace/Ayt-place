@@ -24,7 +24,7 @@ use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 class SecurityController extends AbstractController
 {
     /**
-     * @Route("/client/connexion", name="app_login")
+     * @Route("/connexion", name="app_login")
      *
      */
     public function login(AuthenticationUtils $authenticationUtils): Response
@@ -37,22 +37,9 @@ class SecurityController extends AbstractController
         return $this->render('security/login.html.twig', ['last_username' => $lastUsername, 'error' => $error]);
     }
 
-    /**
-     * @Route("/prestataire/connexion", name="recipient_login")
-     * @param AuthenticationUtils $authenticationUtils
-     * @return Response
-     */
-    public function recipientLogin(AuthenticationUtils $authenticationUtils)
-    {
-        $error = $authenticationUtils->getLastAuthenticationError();
-        // last username entered by the user
-        $lastUsername = $authenticationUtils->getLastUsername();
-
-        return $this->render('security/recipient-login.html.tiwg', ['last_username' => $lastUsername, 'error' => $error]);
-    }
 
     /**
-     * @Route("/inscription", name="app_registration")
+     * @Route("/inscription", name="app_client_registration")
      */
     public function registrationAction(Request $request, UserPasswordEncoderInterface $userPasswordEncoder, RegisterManager $registerManager)
     {
@@ -193,22 +180,5 @@ class SecurityController extends AbstractController
         return $this->render('security/client-update-password.html.twig', [
             'form' => $form->createView()
         ]);
-    }
-
-
-    /**
-     * @Route("/client/deconnexion", name="client_logout")
-     */
-    public function clientLogout()
-    {
-        return $this->redirectToRoute('app_login');
-    }
-
-    /**
-     * @Route("/prestataire/deconnexion", name="recipient_logout")
-     */
-    public function recipientLogout()
-    {
-        return $this->redirectToRoute('recipient_login');
     }
 }

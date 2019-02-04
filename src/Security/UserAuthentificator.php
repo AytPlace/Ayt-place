@@ -2,6 +2,8 @@
 
 namespace App\Security;
 
+use App\Entity\Client;
+use App\Entity\Recipient;
 use App\Entity\User;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
@@ -81,7 +83,15 @@ class UserAuthentificator extends AbstractFormLoginAuthenticator
 
     public function onAuthenticationSuccess(Request $request, TokenInterface $token, $providerKey)
     {
-        return new RedirectResponse($this->router->generate('app_index_home'));
+        $user = $token->getUser();
+        if ($user instanceof User) {
+
+            return new RedirectResponse($this->router->generate('app_index'));
+        }
+
+        if ($user instanceof Recipient) {
+            return new RedirectResponse($this->router->generate('recipient_index_home'));
+        }
     }
 
     protected function getLoginUrl()
