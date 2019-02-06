@@ -26,6 +26,10 @@ class AvailbilityOfferType extends AbstractType
         ;
     }
 
+    public function getBlockPrefix()
+    {
+        return 'availability_offer';
+    }
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([

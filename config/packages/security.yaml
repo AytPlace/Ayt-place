@@ -20,7 +20,7 @@ security:
             pattern: ^/
             provider: app_user_provider
             form_login:
-              login_path: app_loin
+              login_path: app_login
               check_path: app_login
               default_target_path: app_index_home
             guard:
