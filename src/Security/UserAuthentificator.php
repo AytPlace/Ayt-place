@@ -84,7 +84,8 @@ class UserAuthentificator extends AbstractFormLoginAuthenticator
     public function onAuthenticationSuccess(Request $request, TokenInterface $token, $providerKey)
     {
         $user = $token->getUser();
-        if ($user instanceof User) {
+
+        if ($user instanceof User && $user->getRoles()[0] === "ROLE_CLIENT") {
 
             return new RedirectResponse($this->router->generate('app_index'));
         }

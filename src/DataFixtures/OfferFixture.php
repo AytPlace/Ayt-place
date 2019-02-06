@@ -13,15 +13,12 @@ use App\Entity\Offer;
 use App\Entity\Request;
 use App\Repository\ClientRepository;
 use App\Repository\OfferRepository;
-use App\Repository\RecipientRepository;
-use App\Repository\StatusRepository;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\Persistence\ObjectManager;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 
 class OfferFixture extends Fixture implements DependentFixtureInterface
 {
-    private $statusRepository;
 
     private $clientRepository;
 
@@ -29,9 +26,8 @@ class OfferFixture extends Fixture implements DependentFixtureInterface
 
     private $recipientRepository;
 
-    public function __construct(StatusRepository $statusRepository, ClientRepository $clientRepository, OfferRepository $offerRepository, RecipientRepository $recipientRepository)
+    public function __construct( ClientRepository $clientRepository, OfferRepository $offerRepository, RecipientRepository $recipientRepository)
     {
-        $this->statusRepository = $statusRepository;
         $this->clientRepository = $clientRepository;
         $this->offerRepository = $offerRepository;
         $this->recipientRepository = $recipientRepository;
@@ -72,7 +68,6 @@ class OfferFixture extends Fixture implements DependentFixtureInterface
     public function getDependencies()
     {
         return array(
-            StatusFixtures::class,
             UserFixtures::class,
             RecipientFixture::class,
         );

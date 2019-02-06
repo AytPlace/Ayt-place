@@ -85,7 +85,7 @@
 
             newForm = newForm.replace(/__name__/g, index);
             $collectionHolder.data('index', index + 1);
-            var $newFormLi = $('<li></li>').append(newForm);
+            var $newFormLi = $('<li class="available__offer collection__available-container"></li>').append(newForm);
             $newLinkLi.before($newFormLi);
 
             var elems = document.querySelectorAll('.datepicker');

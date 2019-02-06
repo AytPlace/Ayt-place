@@ -43,12 +43,25 @@ class HomeController extends AbstractController
      */
     public function detailAction(Offer $offer, Request $request, DateAvailableManager $dateAvailableManager)
     {
-        $form = $this->createForm(SelectDateType::class);
+        $bookingRequest = new Request();
+        $form = $this->createForm(SelectDateType::class, $bookingRequest);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $dates = explode(' - ',  $form->getData()["intervalDate"]);
-            $dateAvailableManager->checkBooking($dates[0], $dates[1]);
+
+            $dateInterval = $dateAvailableManager->checkBooking($form);
+
+            if (is_null($dateInterval)) {
+                $this->addFlash('error', "Cette date n'est pas valide");
+
+                return $this->render('home/detail.html.twig', [
+                    'offer' => $offer,
+                    'form' => $form->createView()
+                ]);
+            }
+
+            $dateInterval->setAvailable(false);
+            $request = new Request();
         }
 
         return $this->render('home/detail.html.twig', [

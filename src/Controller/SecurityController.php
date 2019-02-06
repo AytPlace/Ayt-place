@@ -52,16 +52,11 @@ class SecurityController extends AbstractController
             $em = $this->getDoctrine()->getManager();
 
             if ($registerManager->getDuplicateEmail($user->getEmail())) {
-                $form->addError(new FormError("Cette email est dèjà utiliser"));
 
                 return $this->render('security/registration.html.twig', [
                     "form" => $form->createView()
                 ]);
             }
-
-            $user->setRoles(['ROLE_CLIENT']);
-            $user->setPassword($userPasswordEncoder->encodePassword($user, $user->getPassword()));
-
             $em->persist($user);
             $em->flush();
 
@@ -86,24 +81,10 @@ class SecurityController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $em = $this->getDoctrine()->getManager();
 
-            if ($registerManager->getDuplicateEmail($recipient->getEmail())) {
-                $form->addError(new FormError("Cette email est dèjà utiliser"));
-
-                return $this->render('security/registration.html.twig', [
-                    "form" => $form->createView()
-                ]);
-            }
-
-            $status = $em->getRepository(Status::class)->findOneBy(['name' => 'a valider']);
-
-            $recipient->setStatus($status);
-            $recipient->setRoles(['ROLE_RECIPIENT']);
-            $recipient->setPassword($userPasswordEncoder->encodePassword($recipient, $recipient->getPassword()));
-
             $em->persist($recipient);
             $em->flush();
 
-            return $this->redirectToRoute('recipient_login');
+            return $this->redirectToRoute('app_login');
         }
 
         return $this->render('security/registration.html.twig', [
