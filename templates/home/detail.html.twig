@@ -49,6 +49,7 @@
     <div class="available_date">
         {{ form_start(form) }}
             {{ form_widget(form.intervalDate) }}
+            {{ form_widget(form.description) }}
             <button type="submit">valider</button>
         {{ form_end(form) }}
     </div>
@@ -67,8 +68,8 @@
                     language: 'fr',
                     onRenderCell: function (date, cellType) {
                         console.log(dates)
-                        startDate = new Date(dates[2].startDate.date);
-                        endDate = new Date(dates[2].endDate.date);
+                        startDate = new Date(dates[0].startDate.date);
+                        endDate = new Date(dates[0].endDate.date);
 
                         if (startDate <= date && date <= endDate) {
                         } else {

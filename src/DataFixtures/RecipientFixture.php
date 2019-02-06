@@ -40,7 +40,7 @@ class RecipientFixture extends Fixture
             ->setZipcode("75013")
             ->setSiren("111111111")
             ->setEmail("alexandre.vagnair@sooyoos.com")
-            ->setPassword($this->userPasswordEncoder->encodePassword($user, 'root'))
+            ->setPassword('root')
             ->setRoles(["ROLE_RECIPIENT"]);
 
         $manager->persist($user);

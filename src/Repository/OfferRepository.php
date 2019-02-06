@@ -23,7 +23,7 @@ class OfferRepository extends ServiceEntityRepository
     {
         $query = $this->createQueryBuilder('o')
             ->leftJoin('o.recipient', 'r')->addSelect('r')
-            ->where('r.status = 4')
+            ->where('r.status = 1')
             ->orderBy('o.updatedAt', 'DESC')
         ;
 
