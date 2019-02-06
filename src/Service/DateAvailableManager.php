@@ -45,4 +45,21 @@ class DateAvailableManager
     {
         return ($availabilityOffer->getStartDate() > $availabilityOffer->getEndDate()) ? false : true;
     }
+
+    private function parseDateInterval($form)
+    {
+        return explode(' - ',  $form->getData()["intervalDate"]);
+    }
+
+    public function checkBooking($form)
+    {
+        $dates = $this->parseDateInterval($form);
+
+        $startDate = new \Datetime(date('Y-m-d H:i:s',strtotime($dates[0])));
+        $endDate = new \Datetime(date('Y-m-d H:i:s',strtotime($dates[1])));
+
+        $availableOffer = $this->availabilityOfferRepository->checkBookingOffer($startDate, $endDate);
+
+        return (!is_null($availableOffer)) ? $availableOffer[0] : null;
+    }
 }

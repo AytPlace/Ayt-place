@@ -29,7 +29,7 @@ services:
             - { name: doctrine.event_listener, event: prePersist }
 
 
-    App\EventListener\RecipientListener:
+    App\EventListener\UserListener:
         tags:
             - { name: doctrine.event_listener, event: prePersist }
 

@@ -50,8 +50,7 @@ class Request
     private $responses;
 
     /**
-     * @ORM\OneToOne(targetEntity="App\Entity\Status", cascade={"persist", "remove"})
-     * @ORM\JoinColumn(nullable=false)
+     * @ORM\Column(name="status", type="string")
      */
     private $status;
 

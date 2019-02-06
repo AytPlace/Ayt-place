@@ -32,8 +32,7 @@ class Recipient extends User
     private $offers;
 
     /**
-     * @ORM\OneToOne(targetEntity="App\Entity\Status", cascade={"persist", "remove"})
-     * @ORM\JoinColumn(name="status", referencedColumnName="id")
+     * @ORM\Column(type="status", type="string")
      */
     private $status;
 
@@ -97,12 +96,12 @@ class Recipient extends User
         return $this;
     }
 
-    public function getStatus(): ?Status
+    public function getStatus(): ?string
     {
         return $this->status;
     }
 
-    public function setStatus(Status $status): self
+    public function setStatus( string $status): self
     {
         $this->status = $status;
 
