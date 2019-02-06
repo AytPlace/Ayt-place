@@ -33,6 +33,10 @@ services:
         tags:
             - { name: doctrine.event_listener, event: prePersist }
 
+    App\EventListener\BookingRequestListener:
+        tags:
+            - { name: doctrine.event_listener, event: prePersist }
+
     App\EventListener\EntityListener:
         tags:
             - { name: doctrine.event_listener, event: prePersist }

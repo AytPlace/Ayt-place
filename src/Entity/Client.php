@@ -19,7 +19,7 @@ class Client extends User
 {
     /**
      * @ORM\ManyToMany(targetEntity="Request", inversedBy="clients")
-     * @ORM\JoinTable(name="clients_requests")
+     * @ORM\JoinTable(name="users_requests")
      */
     private $requests;
 
