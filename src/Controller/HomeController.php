@@ -6,6 +6,7 @@ use App\Entity\Offer;
 use App\Form\SearchOfferType;
 use App\Form\SelectDateType;
 use App\Repository\OfferRepository;
+use App\Service\DateAvailableManager;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -40,13 +41,14 @@ class HomeController extends AbstractController
     /**
      * @Route("/offre/{offer}", name="app_index_detail_offer")
      */
-    public function detailAction(Offer $offer, Request $request)
+    public function detailAction(Offer $offer, Request $request, DateAvailableManager $dateAvailableManager)
     {
         $form = $this->createForm(SelectDateType::class);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            dump($form);die;
+            $dates = explode(' - ',  $form->getData()["intervalDate"]);
+            $dateAvailableManager->checkBooking($dates[0], $dates[1]);
         }
 
         return $this->render('home/detail.html.twig', [
