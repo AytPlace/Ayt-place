@@ -22,6 +22,7 @@ class SelectDateType extends AbstractType
                     'data-range' => "true",
                     'data-multiple-dates-separator' => ' - ',
                     'data-language' => 'fr',
+                    'data-date-format' => "yyyy/mm/dd",
                     'class' => 'datepicker-here'
                 ],
                 'mapped' => false,

@@ -16,13 +16,17 @@ class OfferDateType extends AbstractType
         $builder
             ->add('availabilityOffers', CollectionType::class, [
                 'entry_type' => AvailbilityOfferType::class,
-                    'entry_options' => ['label' => false],
+                'entry_options' => ['label' => false],
                 'allow_add' => true,
                 'allow_delete' => true,
             ])
         ;
     }
 
+    public function getBlockPrefix()
+    {
+        return 'offer_date';
+    }
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([

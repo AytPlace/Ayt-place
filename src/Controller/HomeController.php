@@ -48,9 +48,20 @@ class HomeController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $dates = explode(' - ',  $form->getData()["intervalDate"]);
-            $bookingDate = $dateAvailableManager->checkBooking($dates[0], $dates[1]);
-            dump($bookingRequest);die;
+
+            $dateInterval = $dateAvailableManager->checkBooking($form);
+
+            if (is_null($dateInterval)) {
+                $this->addFlash('error', "Cette date n'est pas valide");
+
+                return $this->render('home/detail.html.twig', [
+                    'offer' => $offer,
+                    'form' => $form->createView()
+                ]);
+            }
+
+            $dateInterval->setAvailable(false);
+            $request = new Request();
         }
 
         return $this->render('home/detail.html.twig', [
