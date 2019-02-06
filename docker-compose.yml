@@ -50,7 +50,6 @@ services:
             PMA_HOST: mysql
             PMA_USER: root
             PMA_PASSWORD: root
-        container_name: phpmyadmin1
 
     maildev:
         image: djfarrelly/maildev
