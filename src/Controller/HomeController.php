@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Offer;
+use App\Entity\Request as BookingRequest;
 use App\Form\SearchOfferType;
 use App\Form\SelectDateType;
 use App\Repository\OfferRepository;
@@ -43,12 +44,12 @@ class HomeController extends AbstractController
      */
     public function detailAction(Offer $offer, Request $request, DateAvailableManager $dateAvailableManager)
     {
-        $bookingRequest = new Request();
+        $bookingRequest = new BookingRequest();
         $form = $this->createForm(SelectDateType::class, $bookingRequest);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-
+            dump($request->request);die;
             $dateInterval = $dateAvailableManager->checkBooking($form);
 
             if (is_null($dateInterval)) {
@@ -61,7 +62,6 @@ class HomeController extends AbstractController
             }
 
             $dateInterval->setAvailable(false);
-            $request = new Request();
         }
 
         return $this->render('home/detail.html.twig', [

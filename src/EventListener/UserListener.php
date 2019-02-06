@@ -34,7 +34,7 @@ class UserListener
             $entity->setPassword($this->userPasswordEncoder->encodePassword($entity, $entity->getPassword()));
 
             if ($entity instanceof Recipient) {
-                $entity->setStatus(User::STATUS[0]);
+                $entity->setStatus(User::STATUS["A valider"]);
                 $entity->setRoles(['ROLE_RECIPIENT']);
             }
 

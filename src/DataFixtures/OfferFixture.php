@@ -13,6 +13,7 @@ use App\Entity\Offer;
 use App\Entity\Request;
 use App\Repository\ClientRepository;
 use App\Repository\OfferRepository;
+use App\Repository\RecipientRepository;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\Persistence\ObjectManager;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;

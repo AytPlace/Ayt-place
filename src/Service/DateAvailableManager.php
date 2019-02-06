@@ -10,6 +10,7 @@ namespace App\Service;
 
 
 use App\Entity\AvailabilityOffer;
+use App\Entity\Request;
 use App\Repository\AvailabilityOfferRepository;
 
 class DateAvailableManager
@@ -46,7 +47,7 @@ class DateAvailableManager
         return ($availabilityOffer->getStartDate() > $availabilityOffer->getEndDate()) ? false : true;
     }
 
-    private function parseDateInterval($form)
+    private function parseDateInterval(Request $bookingRequest)
     {
         return explode(' - ',  $form->getData()["intervalDate"]);
     }
