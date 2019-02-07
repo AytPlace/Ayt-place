@@ -54,7 +54,7 @@ class AtyplaceCreateUserCommand extends Command
         $questionGender= new ChoiceQuestion("Are you a man or a women  ? ",['man', 'women']);
         $questionGender->setErrorMessage("User gender is invalide");
 
-        $user = $helper->ask($input, $output, $questionGender);
+        $gender = $helper->ask($input, $output, $questionGender);
 
 
         $questionFirstName = new Question("what's is the first name for user :");
@@ -89,14 +89,6 @@ class AtyplaceCreateUserCommand extends Command
         $questionSiren= new Question("what is your siren? ");
         $siren= $helper->ask($input, $output, $questionSiren);
 
-
-
-
-
-
-
-
-
         if ($user === "recipient") {
 
 
@@ -107,9 +99,9 @@ class AtyplaceCreateUserCommand extends Command
                     ->setCity($city)
                     ->setZipcode($zipcode)
                     ->setCountry($country)
-                    ->setBorndate(new \DateTime(strftime($borndate)))
+                    ->setBorndate(new \DateTime($borndate))
                     ->setPhonenumber($phonenumber)
-                    ->setGender($questionGender)
+                    ->setGender($gender)
                     ->setEmail($email)
                     ->setPassword($password)
                     ->setSiren($siren)
@@ -123,16 +115,16 @@ class AtyplaceCreateUserCommand extends Command
                 ->setCity($city)
                 ->setZipcode($zipcode)
                 ->setCountry($country)
-                ->setBorndate($borndate)
+                ->setBorndate(new \DateTime($borndate))
                 ->setPhonenumber($phonenumber)
-                ->setGender($questionGender)
+                ->setGender($gender)
                 ->setEmail($email)
                 ->setPassword($password)
             ;
         }
 
         $this->em->persist($newUser);
-        $this->flush();
+        $this->em->flush();
 
     }
 }
