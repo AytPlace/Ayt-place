@@ -24,13 +24,22 @@ class Request
     private $description;
 
     /**
-     * @ORM\ManyToMany(targetEntity="Offer", inversedBy="request")
-     *
+     * @ORM\Column(name="start_date", type="datetime")
      */
-    private $offers;
+    private $startDate;
 
     /**
-     * @ORM\ManyToMany(targetEntity="Client", inversedBy="requests")
+     * @ORM\Column(name="end_date", type="datetime")
+     */
+    private $endDate;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="AvailabilityOffer", inversedBy="requests")
+     */
+    private $availabilityOffer;
+
+    /**
+     * @ORM\ManyToMany(targetEntity="Client", mappedBy="requests")
      */
     private $clients;
 
@@ -57,7 +66,6 @@ class Request
     public function __construct()
     {
         $this->responses = new ArrayCollection();
-        $this->offers = new ArrayCollection();
         $this->clients = new ArrayCollection();
     }
 
@@ -81,33 +89,52 @@ class Request
     /**
      * @return mixed
      */
-    public function getOffers()
+    public function getStartDate()
     {
-        return $this->offers;
+        return $this->startDate;
     }
 
-    public function addOffer(Offer $offer) : self
+    /**
+     * @param mixed $startDate
+     */
+    public function setStartDate($startDate): void
     {
-        if (!$this->offers->contains($offer)) {
-            $this->offers->add($offer);
-        }
-
-        return $this;
-    }
-
-    public function deleteOffer(Offer $offer) : self
-    {
-        if ($this->offers->contains($offer)) {
-            $this->offers->removeElement($offer);
-        }
-
-        return $this;
+        $this->startDate = $startDate;
     }
 
     /**
      * @return mixed
      */
-    public function getClient()
+    public function getEndDate()
+    {
+        return $this->endDate;
+    }
+
+    /**
+     * @param mixed $endDate
+     */
+    public function setEndDate($endDate): void
+    {
+        $this->endDate = $endDate;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getAvailableOffer()
+    {
+        return $this->availabilityOffer;
+    }
+
+    public function setAvailableOffer(AvailabilityOffer $availabilityOffer)
+    {
+        $this->availabilityOffer = $availabilityOffer;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getClients()
     {
         return $this->clients;
     }
@@ -182,12 +209,12 @@ class Request
         return $this;
     }
 
-    public function getStatus(): ?Status
+    public function getStatus(): ?string
     {
         return $this->status;
     }
 
-    public function setStatus(Status $status): self
+    public function setStatus(string $status): self
     {
         $this->status = $status;
 

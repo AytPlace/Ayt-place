@@ -6,6 +6,7 @@ use App\Entity\Offer;
 use App\Entity\Request as BookingRequest;
 use App\Form\SearchOfferType;
 use App\Form\SelectDateType;
+use App\Repository\AvailabilityOfferRepository;
 use App\Repository\OfferRepository;
 use App\Service\DateAvailableManager;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -18,9 +19,8 @@ class HomeController extends AbstractController
     /**
      * @Route("/", name="app_index")
      */
-    public function indexAction(Request $request, OfferRepository $offerRepository)
+    public function indexAction(Request $request, OfferRepository $offerRepository, DateAvailableManager $dateAvailableManager)
     {
-
         $form = $this->createForm(SearchOfferType::class);
         $form->handleRequest($request);
 
@@ -44,13 +44,14 @@ class HomeController extends AbstractController
      */
     public function detailAction(Offer $offer, Request $request, DateAvailableManager $dateAvailableManager)
     {
+        $dateAvailableManager->getUnbookDate($offer);
         $bookingRequest = new BookingRequest();
         $form = $this->createForm(SelectDateType::class, $bookingRequest);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            dump($request->request);die;
-            $dateInterval = $dateAvailableManager->checkBooking($form);
+            $dateInput = $request->request->get('select_date');
+            $dateInterval = $dateAvailableManager->checkBooking($dateInput);
 
             if (is_null($dateInterval)) {
                 $this->addFlash('error', "Cette date n'est pas valide");
@@ -61,7 +62,20 @@ class HomeController extends AbstractController
                 ]);
             }
 
-            $dateInterval->setAvailable(false);
+            $this->getUser()->addRequest($bookingRequest);
+
+            $dates = $dateAvailableManager->parseDateInterval($dateInput);
+
+            $bookingRequest->setAvailableOffer($dateInterval);
+            $dateInterval->addRequest($bookingRequest);
+            $bookingRequest->setStartDate($dates["startDate"]);
+            $bookingRequest->setEndDate($dates["endDate"]);
+
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($bookingRequest);
+            $em->flush();
+
+            return $this->redirectToRoute('app_index_booking_offer');
         }
 
         return $this->render('home/detail.html.twig', [
@@ -75,15 +89,10 @@ class HomeController extends AbstractController
      * @Route("/date-offre/{offer}", name="app_index_get_available_date")
      * @return JsonResponse
      */
-    public function getAvailableOfferDates(Offer $offer)
+    public function getAvailableOfferDates(Offer $offer, DateAvailableManager $dateAvailableManager)
     {
-        $data = [];
-        foreach ($offer->getAvailabilityOffers() as $availabilityOffer) {
-            $data[] = ["startDate" => $availabilityOffer->getStartDate(), "endDate" => $availabilityOffer->getEndDate()];
-        }
-
         return new JsonResponse([
-            'dates' => $data
+            'dates' => $dateAvailableManager->getUnbookDate($offer)
         ]);
     }
 }

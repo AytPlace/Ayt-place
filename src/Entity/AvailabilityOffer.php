@@ -2,6 +2,8 @@
 
 namespace App\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -20,6 +22,11 @@ class AvailabilityOffer
      * @ORM\ManyToOne(targetEntity="App\Entity\Offer", inversedBy="availabilityOffers")
      */
     private $offer;
+
+    /**
+     * @ORM\OneToMany(targetEntity="Request", mappedBy="availabilityOffer")
+     */
+    private $requests;
 
     /**
      * @ORM\Column(type="datetime", name="start_date")
@@ -46,6 +53,11 @@ class AvailabilityOffer
      */
     private $updatedAt;
 
+    public function __construct()
+    {
+        $this->requests = new ArrayCollection();
+    }
+
     public function getId(): ?int
     {
         return $this->id;
@@ -62,6 +74,33 @@ class AvailabilityOffer
 
         return $this;
     }
+
+    /**
+     * @return mixed
+     */
+    public function getRequests(): Collection
+    {
+        return $this->requests;
+    }
+
+    public function addRequest(Request $request) : self
+    {
+        if (!$this->requests->contains($request)) {
+            $this->requests->add($request);
+        }
+
+        return $this;
+    }
+
+    public function deleteRequest(Request $request) : self
+    {
+        if ($this->requests->contains($request)) {
+            $this->requests->removeElement($request);
+        }
+
+        return $this;
+    }
+
 
     public function getStartDate(): ?\DateTimeInterface
     {
