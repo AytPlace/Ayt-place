@@ -54,6 +54,8 @@ class AtyplaceCreateUserCommand extends Command
         $questionGender= new ChoiceQuestion("Are you a man or a women  ? ",['man', 'women']);
         $questionGender->setErrorMessage("User gender is invalide");
 
+        $user = $helper->ask($input, $output, $questionGender);
+
 
         $questionFirstName = new Question("what's is the first name for user :");
         $firstname = $helper->ask($input, $output, $questionFirstName);
@@ -72,6 +74,7 @@ class AtyplaceCreateUserCommand extends Command
 
         $questionBornDate= new Question("what is your birthday ? ");
         $borndate= $helper->ask($input, $output, $questionBornDate);
+
 
         $questionPhoneNumber= new Question("what is your telephone Number  ? ");
         $phonenumber= $helper->ask($input, $output, $questionPhoneNumber);
@@ -92,10 +95,7 @@ class AtyplaceCreateUserCommand extends Command
 
 
 
-
-
         if ($user === "recipient") {
-
 
 
             $newUser = new Recipient();
@@ -105,24 +105,13 @@ class AtyplaceCreateUserCommand extends Command
                     ->setCity($city)
                     ->setZipcode($zipcode)
                     ->setCountry($country)
-                    ->setBorndate($borndate)
+                    ->setBorndate(new \DateTime(strftime($borndate)))
                     ->setPhonenumber($phonenumber)
                     ->setGender($questionGender)
                     ->setEmail($email)
-                    ->setRole(["ROLE_RECIPIENT"])
                     ->setPassword($password)
                     ->setSiren($siren)
-
-
-
             ;
-
-
-
-
-
-
-
 
         }else {
             $newUser = new Client();
@@ -136,14 +125,12 @@ class AtyplaceCreateUserCommand extends Command
                 ->setPhonenumber($phonenumber)
                 ->setGender($questionGender)
                 ->setEmail($email)
-                ->setRole(["ROLE_RECIPIENT"])
-                ->setPassword($password);
-
-
-
-
-
+                ->setPassword($password)
+            ;
         }
+
+        $this->em->persist($newUser);
+        $this->flush();
 
     }
 }
