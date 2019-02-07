@@ -96,6 +96,8 @@ class DateAvailableManager
     /**
      * Récupére les dates qui son encore disponible pour une offre
      * @param Offer $offer
+     * @return array
+     * @throws \Exception
      */
     public function getUnbookDate(Offer $offer)
     {
