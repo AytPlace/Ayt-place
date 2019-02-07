@@ -56,7 +56,6 @@ class AtyplaceCreateUserCommand extends Command
 
         $user = $helper->ask($input, $output, $questionGender);
 
-
         $questionFirstName = new Question("what's is the first name for user :");
         $firstname = $helper->ask($input, $output, $questionFirstName);
 
