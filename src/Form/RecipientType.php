@@ -31,13 +31,18 @@ class RecipientType extends AbstractType
                 'label' => "Ville",
                 'required' => true
             ])
+            ->add('zipcode', TextType::class, [
+                'label' => "Code postal",
+                'required' => true
+            ])
             ->add('country', TextType::class, [
                 'label' => "Pays",
                 'required' => true
             ])
-            ->add('bornDate', TextType::class, [
+            ->add('bornDate', DateTimeType::class, [
                 'label' => "Date de naissance",
                 'required' => true,
+                'widget' => 'single_text'
             ])
             ->add('phoneNumber', TextType::class, [
                 'label' => "numéro de téléphone",
