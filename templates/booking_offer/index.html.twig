@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello {{ controller_name }}!{% endblock %}
+{% block title %}Demande de réservation{% endblock %}
 
 {% block body %}
 <style>
@@ -18,7 +18,7 @@
                 Titre : {{ offer.title }}
                 Description: {{ request.description }}
                 du : {{ request.startDate|date('d/m/y') }} au {{ request.endDate|date('d/m/y') }}
-                Statut: {{ request.status }}
+                Statut: {{ request.status|statut(request.status)}}
             </div>
         {% endfor %}
     </div>

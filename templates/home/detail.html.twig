@@ -78,6 +78,7 @@
                         var formatted = dateToYMD(date);
                         console.log(dates.indexOf(formatted));
                         if (cellType == 'day') {
+                            console.log(formatted)
                             var day = date.getDay(),
                                 isDisabled = dates.indexOf(formatted) === -1;
 

@@ -22,7 +22,7 @@
             <div class="name-container">
                 <h1>{{ recipient.firstname }}  {{ recipient.lastname }}</h1>
                 {% if recipient.status %}
-                    <span class="status-container" style="background-color: {{ recipient.status.color }};">{{ recipient.status.name }}</span>
+                    <span class="status-container">{{ recipient.status }}</span>
                 {% endif %}
             </div>
 
