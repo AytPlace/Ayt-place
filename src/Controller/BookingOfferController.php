@@ -19,9 +19,7 @@ class BookingOfferController extends AbstractController
 
         $requests = $requestRepository->findAll();
         return $this->render('booking_offer/index.html.twig', [
-            'controller_name' => 'BookingOfferController',
             'requests' => $requests,
-            'status' => User::STATUS
         ]);
     }
 }

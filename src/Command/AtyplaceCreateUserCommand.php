@@ -85,26 +85,23 @@ class AtyplaceCreateUserCommand extends Command
         $questionPassword= new Question("what is your password  ? ");
         $password= $helper->ask($input, $output, $questionPassword);
 
-
-        $questionSiren= new Question("what is your siren? ");
-        $siren= $helper->ask($input, $output, $questionSiren);
-
         if ($user === "recipient") {
-
+            $questionSiren= new Question("what is your siren? ");
+            $siren= $helper->ask($input, $output, $questionSiren);
 
             $newUser = new Recipient();
             $newUser->setFirstname($firstname)
-                    ->setLastname($lastname)
-                    ->setZipcode($zipcode)
-                    ->setCity($city)
-                    ->setZipcode($zipcode)
-                    ->setCountry($country)
-                    ->setBorndate(new \DateTime($borndate))
-                    ->setPhonenumber($phonenumber)
-                    ->setGender($gender)
-                    ->setEmail($email)
-                    ->setPassword($password)
-                    ->setSiren($siren)
+                ->setLastname($lastname)
+                ->setZipcode($zipcode)
+                ->setCity($city)
+                ->setZipcode($zipcode)
+                ->setCountry($country)
+                ->setBorndate(new \DateTime($borndate))
+                ->setPhonenumber($phonenumber)
+                ->setGender($gender)
+                ->setEmail($email)
+                ->setPassword($password)
+                ->setSiren($siren)
             ;
 
         }else {
