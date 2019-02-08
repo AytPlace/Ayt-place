@@ -1,10 +1,40 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-<style>
-    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
-    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
-</style>
+    <div class="main-cover__container"></div>
+    <div class="secondary-cover__container">
+        <div class="tipical-place__container">
+            <h2>Lieux <br>Atypique</h2>
+            <p>Location disponible dans toute la france</p>
+            <button class="btn"><a href="">Découvrir</a></button>
+        </div>
+    </div>
+    <img src="{{ asset('logo.png') }}" alt="atyplace" class="logo">
+
+    <div class="place__container">
+        <div class="place-item">
+            <img src="{{ asset('foret.png') }}" alt="image de foret" class="place-item__img">
+            <div class="place__content-container">
+                <h4 class="place-item__title">Des Endroits Hors Du Commun</h4>
+                <button class="btn"><a href="">Découvrir</a></button>
+            </div>
+        </div>
+        <div class="pink__container"></div>
+        <div class="place-item second">
+            <img src="{{ asset('foret.png') }}" alt="image de foret" class="place-item__img">
+            <div class="place__content-container">
+                <h4 class="place-item__title">Decouvrez les plus belles endroits cachés</h4>
+                <button class="btn"><a href="">Découvrir</a></button>
+                <p class="place-item__text">Nous avons parcouru toute la france afin de trouver lees plus belles endroits </p>
+            </div>
+        </div>
+    </div>
+
+    <div class="booking-enable__container">
+        <h2 class="booking-enable__title">Dernière Locations Disponibles</h2>
+    </div>
+
+
 
     <div class="example-wrapper">
         <div id="search">

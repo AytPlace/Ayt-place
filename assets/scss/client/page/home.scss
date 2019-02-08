@@ -1,0 +1,106 @@
+.main-cover__container {
+  width: 100%;
+  height: 540px;
+  background-image: url("../cover-main.jpg");
+  background-size: cover;
+  background-position: center;
+  margin: 50px 0;
+}
+
+.secondary-cover__container {
+  width: 100%;
+  background-image: url("../secondary-cover.jpg");
+  background-size: cover;
+  background-position: center;
+  padding: 110px 0;
+  margin-bottom: 70px;
+
+  .tipical-place__container {
+    background-color: #fff;
+    display: flex;
+    flex-flow: column wrap;
+    margin: 0 auto;
+    align-items: center;
+    width: 50%;
+    font-size: 18px;
+    padding-top: 110px;
+
+    h2 {
+      font-size: 36px;
+      color: $second-color-front;
+      margin-bottom: 50px;
+      text-align: center;
+    }
+
+    p {
+      margin-bottom: 50px;
+    }
+
+    button {
+      margin-bottom: 110px;
+    }
+  }
+}
+
+.logo {
+  width: 25%;
+  display: block;
+  margin: 0 auto;
+}
+
+.place__container {
+  margin-top: 50px;
+  display: flex;
+  flex-flow: wrap column;
+  align-items: center;
+  position: relative;
+
+  .place-item {
+    display: flex;
+    flex-flow: row wrap;
+    align-items: center;
+
+    &.second {
+      flex-flow: row-reverse wrap;
+      margin-top: 200px;
+    }
+
+    .place__content-container {
+      display: flex;
+      flex-flow: column;
+      align-items: center;
+      margin-left: 100px;
+
+      .place-item__title {
+        font-size: 48px;
+        text-align: center;
+        margin-bottom: 80px;
+        width: 70%;
+      }
+
+      .place-item__text {
+        width: 70%;
+        font-size: 22px;
+        margin-top: 110px;
+      }
+    }
+  }
+}
+
+.pink__container {
+  width: 100%;
+  height: 525px;
+  background-color: $main-color-front;
+  top: 416px;
+  position: absolute;
+  z-index: -1;
+}
+
+.booking-enable__container {
+  padding: 0 20%;
+
+  .booking-enable__title {
+    font-size: 48px;
+    margin-top: 80px;
+  }
+}
