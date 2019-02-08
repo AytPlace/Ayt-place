@@ -17,6 +17,7 @@
 
                 Titre : {{ offer.title }}
                 Description: {{ request.description }}
+                du : {{ request.startDate|date('d/m/y') }} au {{ request.endDate|date('d/m/y') }}
                 Statut: {{ request.status }}
             </div>
         {% endfor %}

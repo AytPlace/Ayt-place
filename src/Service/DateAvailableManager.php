@@ -99,7 +99,7 @@ class DateAvailableManager
      * @return array
      * @throws \Exception
      */
-    public function getUnbookDate(Offer $offer)
+    public function getUnbookDate(Offer $offer): array
     {
         $availableDates = $this->availabilityOfferRepository->findBy(['offer' => $offer]);
         $data = [];
