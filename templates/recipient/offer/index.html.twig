@@ -28,9 +28,10 @@
     </div>
 
     <div class="container">
-        <h2 class="block-title">Mes dates de disponibilitées</h2>
-        <div class="document-container">
-            {{ form_start(offerDateForm) }}
+        {% if recipient.offers is not null%}
+            <h2 class="block-title">Mes dates de disponibilitées</h2>
+            <div class="document-container">
+                {{ form_start(offerDateForm) }}
                 <ul class="availabilityOffers" id="availabilityOffers" data-prototype="{{ form_widget(offerDateForm.availabilityOffers.vars.prototype)|e }}">
                     {% for availabilityOffer in offerDateForm.availabilityOffers %}
                         <li>{{ form_row(availabilityOffer.startDate) }} {{ form_row(availabilityOffer.endDate) }}</li>
@@ -40,8 +41,12 @@
                     <button class="btn waves-effect waves-light bnt-blue" type="submit" name="action">Enregistrer</button>
                 </div>
 
-            {{ form_end(offerDateForm)}}
-        </div>
+                {{ form_end(offerDateForm)}}
+            </div>
+        {% else %}
+            <h2 class="block-title demo">Ajouter une offre, avant d'ajouter des dates</h2>
+        {% endif %}
+
     </div>
 {% endblock %}
 

@@ -29,21 +29,24 @@ class RecipientFixture extends Fixture
 
     public function load( ObjectManager $manager)
     {
-        $user = new Recipient();
-        $user->setFirstname("alexandre")
-            ->setLastname("vagnair")
-            ->setCity("Paris")
-            ->setCountry("France")
-            ->setBornDate(new \DateTime('1998-01-26'))
-            ->setPhoneNumber("0660566104")
-            ->setGender("monsieur")
-            ->setZipcode("75013")
-            ->setSiren("111111111")
-            ->setEmail("alexandre.vagnair@sooyoos.com")
-            ->setPassword('root')
-            ->setRoles(["ROLE_RECIPIENT"]);
+        for ($i = 0; $i <= 10; $i++) {
+            $user = new Recipient();
+            $user->setFirstname("alexandre")
+                ->setLastname("vagnair")
+                ->setCity("Paris")
+                ->setCountry("France")
+                ->setBornDate(new \DateTime('1998-01-26'))
+                ->setPhoneNumber("0660566104")
+                ->setGender("monsieur")
+                ->setZipcode("75013")
+                ->setSiren("111111111")
+                ->setEmail("alexandre.vagnair+$i@sooyoos.com")
+                ->setPassword('root')
+                ->setRoles(["ROLE_RECIPIENT"]);
 
-        $manager->persist($user);
+            $manager->persist($user);
+        }
+
         $manager->flush();
     }
 }
