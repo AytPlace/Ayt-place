@@ -2,7 +2,7 @@
 
 namespace App\Form;
 
-use App\Entity\Recipient;
+use App\Entity\User;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -24,7 +24,7 @@ class ProfilePictureType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
-            'data_class' => Recipient::class,
+            'data_class' => User::class,
         ]);
     }
 }

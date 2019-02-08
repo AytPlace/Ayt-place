@@ -281,7 +281,7 @@ class User implements UserInterface
     /**
      * @return string
      */
-    public function getZipcode(): string
+    public function getZipcode(): ?string
     {
         return $this->zipcode;
     }
