@@ -41,4 +41,15 @@ class OfferRepository extends ServiceEntityRepository
 
         return $query->getQuery()->getResult();
     }
+
+    public function getLastOffer($limit = 2)
+    {
+        return $this->createQueryBuilder('o')
+            ->innerJoin('o.recipient', 'r')
+            ->where('r.status = 1')
+            ->orderBy('o.updatedAt', 'DESC')
+            ->setMaxResults($limit)
+            ->getQuery()->getResult()
+        ;
+    }
 }

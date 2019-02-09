@@ -104,3 +104,32 @@
     margin-top: 80px;
   }
 }
+
+.last-offer__container {
+  margin-top: 80px;
+  display: inline-flex;
+  flex-flow: row wrap;
+
+  a {
+    color: #000;
+    text-decoration: none;
+  }
+}
+
+.offer-item {
+  width: 45%;
+  transition: all 0.75s;
+  img {
+    width: 60%;
+  }
+
+  p {
+    text-align: center;
+    width: 50%;
+    font-size:20px;
+  }
+
+  &:hover {
+    opacity: 0.7;
+  }
+}

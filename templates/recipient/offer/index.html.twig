@@ -1,6 +1,7 @@
 {% extends 'recipient/_base.html.twig' %}
 
 {% form_theme form 'recipient/_form/form_theme.html.twig' %}
+{% form_theme offerImageForm 'recipient/_form/form_theme.html.twig' %}
 {% form_theme offerDateForm 'recipient/_form/form_theme.html.twig' %}
 
 {% block body %}
@@ -29,6 +30,26 @@
 
     <div class="container">
         {% if recipient.offers is not null%}
+            <h2 class="block-title">Mes images</h2>
+            {% if recipient.offers.image is not null %}
+                <div class="offer-image__container" style="background-image: url({{ recipient.offers.image.path }});"></div>
+            {% endif %}
+            <div class="document-container">
+                {{ form_start(offerImageForm) }}
+                    {{ form_widget(offerImageForm.image) }}
+                    <div class="container-submit">
+                        <button class="btn waves-effect waves-light bnt-blue" type="submit" name="action">Enregistrer</button>
+                    </div>
+                {{ form_end(offerImageForm)}}
+            </div>
+        {% else %}
+            <h2 class="block-title demo">Ajouter une offre, avant d'ajouter des dates</h2>
+        {% endif %}
+
+    </div>
+
+    <div class="container">
+        {% if recipient.offers is not null%}
             <h2 class="block-title">Mes dates de disponibilitées</h2>
             <div class="document-container">
                 {{ form_start(offerDateForm) }}
@@ -44,7 +65,7 @@
                 {{ form_end(offerDateForm)}}
             </div>
         {% else %}
-            <h2 class="block-title demo">Ajouter une offre, avant d'ajouter des dates</h2>
+                <h2 class="block-title demo">Ajouter une offre, avant d'ajouter des dates</h2>
         {% endif %}
 
     </div>
@@ -72,7 +93,6 @@
             addTagFormDeleteLink($(this));
         });
 
-
         jQuery(document).ready(function() {
             $collectionHolder = $('ul.availabilityOffers');
             $collectionHolder.append($newLinkLi);
@@ -99,12 +119,10 @@
                 autoClose: true,
             });
 
-
             parseDatetime();
             addTagFormDeleteLink($newFormLi);
         }
 
-        // remove element
         function addTagFormDeleteLink($tagFormLi) {
             var $removeFormButton = $('<a class="btn-floating btn-medium waves-effect waves-light red"><i class="material-icons">close</i></a>');
             $tagFormLi.append($removeFormButton);
@@ -113,8 +131,6 @@
                 $tagFormLi.remove();
                 parseDatetime();
             });
-
-
         }
 
         function parseDatetime() {

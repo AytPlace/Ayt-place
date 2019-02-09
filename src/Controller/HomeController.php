@@ -20,7 +20,22 @@ class HomeController extends AbstractController
     /**
      * @Route("/", name="app_index")
      */
-    public function indexAction(Request $request, OfferRepository $offerRepository)
+    public function indexAction(OfferRepository $offerRepository)
+    {
+        $offers = $offerRepository->getLastOffer();
+        dump($offers);
+        return $this->render('home/index.html.twig', [
+            'offers' => $offers
+        ]);
+    }
+
+    /**
+     * @param Request $request
+     * @param OfferRepository $offerRepository
+     * @return \Symfony\Component\HttpFoundation\Response
+     * @Route("/recherche", name="app_index_search")
+     */
+    public function searchAction(Request $request, OfferRepository $offerRepository)
     {
         $form = $this->createForm(SearchOfferType::class);
         $form->handleRequest($request);
@@ -34,10 +49,6 @@ class HomeController extends AbstractController
                 'offers' => $offers
             ]);
         }
-
-        return $this->render('home/index.html.twig', [
-            'form' => $form->createView(),
-        ]);
     }
 
     /**

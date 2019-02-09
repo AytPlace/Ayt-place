@@ -71,3 +71,15 @@
         {% endif %}
     </div>
 {% endblock %}
+
+{% block file_widget %}
+    <div class="file-field input-field">
+        <div class="btn">
+            <span>{{ form.vars.label }}</span>
+            <input type="file" {{ block('widget_attributes') }} id="{{ form.vars.id }}">
+        </div>
+        <div class="file-path-wrapper">
+            <input class="file-path validate" type="text">
+        </div>
+    </div>
+{% endblock %}

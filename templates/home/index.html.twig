@@ -1,7 +1,7 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-    <div class="main-cover__container"></div>
+
     <div class="secondary-cover__container">
         <div class="tipical-place__container">
             <h2>Lieux <br>Atypique</h2>
@@ -32,11 +32,22 @@
 
     <div class="booking-enable__container">
         <h2 class="booking-enable__title">Dernière Locations Disponibles</h2>
+        <div class="last-offer__container">
+            {% for offer in offers %}
+                <a href="{{ path('app_index_detail_offer', { 'offer' : offer.id }) }}">
+                    <div class="offer-item">
+                        <img src="{{ offer.image.path }}" alt="">
+                        <p>{{ offer.city }}, {{ offer.location }}</p>
+                    </div>
+                </a>
+
+            {% endfor %}
+        </div>
     </div>
 
 
 
-    <div class="example-wrapper">
+    {#<div class="example-wrapper">
         <div id="search">
             {{ include('includes/searchForm.html.twig',
                 {
@@ -64,5 +75,5 @@
                 {% endfor %}
             {% endif %}
         </div>
-    </div>
+    </div>#}
 {% endblock %}
