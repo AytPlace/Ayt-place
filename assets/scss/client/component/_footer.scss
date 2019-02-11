@@ -1,0 +1,36 @@
+footer {
+  width: 100%;
+  background-color: $second-color-front;
+  color: #BDBDBD;
+}
+
+.social-media__container {
+  display: flex;
+  flex-flow: wrap row;
+  justify-content: center;
+
+  a {
+    padding: 20px 10px;
+  }
+}
+
+.legal__container {
+  margin-top: 20px;
+
+  h2 {
+    font-size: 36px;
+    text-align: center;
+  }
+
+  span {
+    font-size: 24px;
+    text-align: center;
+    width: 100%;
+    display: block;
+  }
+}
+
+
+.white-line {
+  color: #EFF3F7;
+}
