@@ -9,11 +9,14 @@
 namespace App\Controller\recipient;
 
 
+use App\Entity\Medium;
 use App\Entity\Offer;
 use App\Form\OfferDateType;
+use App\Form\OfferImageType;
 use App\Form\OfferType;
 use App\Repository\RecipientRepository;
 use App\Service\DateAvailableManager;
+use App\Service\FileManager;
 use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -25,7 +28,7 @@ class OfferController extends AbstractController
     /**
      * @Route("prestataire/offre/", name="recipient_offer_index")
      */
-    public function indexAction(Request $request)
+    public function indexAction(Request $request, FileManager $fileManager)
     {
         $recipient= $this->getUser();
         $offer = $recipient->getOffers();
@@ -38,6 +41,9 @@ class OfferController extends AbstractController
         $form = $this->createForm(OfferType::class, $offer);
         $form->handleRequest($request);
 
+        $offerImageForm = $this->createForm(OfferImageType::class, $offer);
+        $offerImageForm->handleRequest($request);
+
         $originalDate = new ArrayCollection();
         foreach ($offer->getAvailabilityOffers() as $availabilityOffer) {
             $originalDate->add($availabilityOffer);
@@ -47,10 +53,26 @@ class OfferController extends AbstractController
         $offerDateForm->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+
             $em->persist($offer);
             $em->flush();
 
             return $this->redirectToRoute('recipient_offer_index');
+        }
+
+        if ($offerImageForm->isSubmitted() && $offerImageForm->isValid()) {
+            if($offerImageForm->get('image') && !is_null($offerImageForm->get('image')->getData())) {
+                $medium = new Medium();
+                $medium->setUploadedFile($offerImageForm->get('image')->getData());
+                $fileManager->upload($medium);
+                $offer->setImage($medium);
+
+                $em = $this->getDoctrine()->getManager();
+                $em->persist($medium);
+                $em->flush();
+
+                return $this->redirectToRoute('recipient_offer_index');
+            }
         }
 
         if ($offerDateForm->isSubmitted() && $offerDateForm->isValid()) {
@@ -69,7 +91,8 @@ class OfferController extends AbstractController
         return $this->render('recipient/offer/index.html.twig', [
             'recipient' => $recipient,
             'form' => $form->createView(),
-            'offerDateForm' => $offerDateForm->createView()
+            'offerDateForm' => $offerDateForm->createView(),
+            'offerImageForm' => $offerImageForm->createView()
         ]);
     }
 

@@ -1,0 +1,21 @@
+{% extends 'email/base-email.html.twig' %}
+
+{% block title %}Aty'place | Demande de reservation{% endblock %}
+
+{% block body %}
+    <p>
+        Bonjour,
+        <br>
+        <br>
+    </p>
+    <p>
+        Votre demande de réservation pour l'offre {{ offer_title }} a bien été prise en compte.
+        Merci
+    </p>
+    <p>
+        A très vite !
+        <br>
+        L'équipe Aty'place.
+        <br>
+    </p>
+{% endblock %}

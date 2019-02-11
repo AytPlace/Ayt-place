@@ -10,54 +10,33 @@ security:
             entity:
                 class: App\Entity\User
                 property: email
-
-        app_recipient_provider:
-            entity:
-                class: App\Entity\Recipient
-                property: email
-
     firewalls:
         dev:
           pattern: ^/(_(profiler|wdt)|scss|images|js)/
           security: false
 
-        client:
+        app:
             anonymous: ~
-            pattern: ^/client
+            pattern: ^/
             provider: app_user_provider
             form_login:
               login_path: app_login
               check_path: app_login
               default_target_path: app_index_home
-            logout:
-                path: client_logout
-                target: app_login
             guard:
                 authenticators:
                     - App\Security\UserAuthentificator
-
-        recipient:
-            anonymous: ~
-            pattern: ^/prestataire
-            provider: app_recipient_provider
-            form_login:
-              login_path: recipient_login
-              check_path: recipient_login
-              default_target_path: recipient_index_home
             logout:
-              path: recipient_logout
-              target: recipient_login
-            guard:
-                authenticators:
-                    - App\Security\RecipientAuthentificator
+              path: app_logout
+
 
     access_control:
       - { path: ^/inscription, roles: IS_AUTHENTICATED_ANONYMOUSLY }
       - { path: ^/mot-de-passe-oublie, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+      - { path: ^/connexion, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+      - { path: ^/logout, roles: IS_AUTHENTICATED_ANONYMOUSLY }
 
-      - { path: ^/client/connexion, roles: IS_AUTHENTICATED_ANONYMOUSLY }
       - { path: ^/client, roles: ROLE_CLIENT }
 
       - { path: ^/prestataire/inscription, roles: IS_AUTHENTICATED_ANONYMOUSLY }
-      - { path: ^/prestataire/connexion, roles: IS_AUTHENTICATED_ANONYMOUSLY }
       - { path: ^/prestataire, roles: ROLE_RECIPIENT }

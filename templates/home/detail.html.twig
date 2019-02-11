@@ -1,6 +1,7 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
+<<<<<<< HEAD
     <style>
         .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
         .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
@@ -12,3 +13,131 @@
         </div>
     </div>
 {% endblock %}
+=======
+<style>
+    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
+    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
+    .overlay { background-color: rgba(0,0,0, 0.8); width: 100%; height: 100%; position: fixed; top: 0; left: 0; z-index: 1}
+    .log__container { background-color: #fff}
+</style>
+
+   {# {% if app.user is  null %}
+        <div class="overlay">
+            <div class="log__container">
+                <div class="sign-up">
+
+                </div>
+                <div class="sign-in">
+                    <form method="post" action="{{ path('app_login') }}">
+
+                        <h1 class="h3 mb-3 font-weight-normal">Please sign in</h1>
+                        <label for="inputEmail" class="sr-only">Email</label>
+                        <input type="email" value="alexandrevagniar1@gmail.com" name="email" id="inputEmail" class="form-control" placeholder="Email" required="" autofocus="">
+                        <label for="inputPassword" class="sr-only">Password</label>
+                        <input type="password" name="password" id="inputPassword" class="form-control" placeholder="Password" required="">
+
+                        <input type="hidden" name="_csrf_token" value="ZYKAflyjGwGp1PQs6ltJW9VFz1UIPOJfY0TgTWnC1y8">
+                        <input type="hidden" name="_target_path" value="{{ path('app_index_detail_offer', {'offer': offer.id}) }}" />
+
+                        <button class="btn btn-lg btn-primary" type="submit">
+                            Sign in
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    {% endif %}#}
+
+    <div class="offer__container">
+        <p>{{ offer.title }}</p>
+        <p>{{ offer.travelerNumbers }}</p>
+        <p>{{ offer.costByTraveler }}</p>
+        <p>{{ offer.location }}</p>
+        <p>{{ offer.city }}</p>
+        <p>{{ offer.country }}</p>
+        <p>{{ offer.getRegionName(offer.region) }}</p>
+        {{ offer.description|raw }}
+    </div>
+
+    <div class="available_date">
+        {{ form_start(form) }}
+            {{ form_widget(form.intervalDate) }}
+            {{ form_widget(form.description) }}
+            <button type="submit">valider</button>
+        {{ form_end(form) }}
+    </div>
+
+{% endblock %}
+{% block javascripts %}
+    <script type="application/javascript">
+        var $picker = $('#select_date_intervalDate');
+
+        function dateToYMD(date) {
+            var d = date.getDate();
+            var m = date.getMonth() + 1; //Month from 0 to 11
+            var y = date.getFullYear();
+            return '' + y + '-' + (m<=9 ? '0' + m : m) + '-' + (d <= 9 ? '0' + d : d);
+        }
+
+        $.ajax({
+            type: "POST",
+            url : "{{ path('app_index_get_available_date', {'offer' : offer.id}) }}",
+            success: function (response) {
+                var dates = response.dates;
+                $picker.datepicker({
+                    language: 'fr',
+                    onRenderCell: function (date, cellType) {
+                        console.log(dates)
+                        var formatted = dateToYMD(date);
+                        console.log(dates.indexOf(formatted));
+                        if (cellType == 'day') {
+                            console.log(formatted)
+                            var day = date.getDay(),
+                                isDisabled = dates.indexOf(formatted) === -1;
+
+                            return {
+                                disabled: isDisabled
+                            }
+                        }
+                    }
+                })
+/*                $('#test-date').datepicker({
+                    language: 'fr',
+                    onRenderCell: function (date, cellType) {
+                        dates.forEach(function (currentDate) {
+                            console.log(dates)
+                            startDate = new Date(currentDate.startDate.date);
+                            endDate = new Date(currentDate.endDate.date);
+
+                            if (startDate <= date && date <= endDate) {
+                            }
+                            else {
+                                console.log(date)
+                                hasDisable.push(date)
+                            }
+                        })
+
+                        var day = date,
+                        isDisabled = hasDisable.indexOf(day) != -1;
+        console.log(isDisabled)
+
+                        return {
+                            disabled: isDisabled
+                        }
+
+                        /!*if (cellType == 'day') {
+                            var day = date.getDay(),
+                                isDisabled = disabledDays.indexOf(day) != -1;
+                            return {
+                                disabled: isDisabled
+                            }
+                        }*!/
+                    }
+                })*/
+                $picker.data('datepicker')
+            }
+
+        });
+    </script>
+{% endblock %}
+>>>>>>> 8ecfa6b8a9a9606e8a9c24497e8f39b0f2e57b32

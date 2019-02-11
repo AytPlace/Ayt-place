@@ -17,6 +17,12 @@ use Symfony\Component\Validator\Constraints as Assert;
  */
 class User implements UserInterface
 {
+
+    const STATUS = [
+        "A valider" => 1,
+        "Valider" => 2
+    ];
+
     /**
      * @ORM\Id
      * @ORM\GeneratedValue
@@ -275,7 +281,7 @@ class User implements UserInterface
     /**
      * @return string
      */
-    public function getZipcode(): string
+    public function getZipcode(): ?string
     {
         return $this->zipcode;
     }

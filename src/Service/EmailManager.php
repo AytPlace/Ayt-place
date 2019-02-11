@@ -9,6 +9,7 @@
 namespace App\Service;
 
 
+use App\Entity\Client;
 use App\Entity\User;
 use Swift_Mailer;
 use Swift_Message;
@@ -66,6 +67,18 @@ class EmailManager
             'reset-password',
             [$user->getEmail()],
             'Aty\'place | Réinitialisation de votre mot de passe',
+            $vars
+        );
+    }
+
+    public function sendSendBookingOffer(Client $client, string $offerName)
+    {
+        $vars = ['offer_title' =>  $offerName];
+
+        return $this->sendEmail(
+            'booking-offer',
+            [$client->getEmail()],
+            "Aty'place | Demande de reservation",
             $vars
         );
     }

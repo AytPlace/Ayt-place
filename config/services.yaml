@@ -11,7 +11,6 @@ services:
     _defaults:
         autowire: true      # Automatically injects dependencies in your services.
         autoconfigure: true # Automatically registers your services as commands, event subscribers, etc.
-
     # makes classes in src/ available to be used as services
     # this creates a service per class whose id is the fully-qualified class name
     App\:
@@ -29,7 +28,16 @@ services:
             - { name: doctrine.event_listener, event: prePersist }
 
 
-    App\EventListener\RecipientListener:
+    App\EventListener\UserListener:
+        tags:
+            - { name: doctrine.event_listener, event: prePersist }
+
+
+    App\EventListener\OfferListener:
+        tags:
+            - { name: doctrine.event_listener, event: prePersist }
+
+    App\EventListener\BookingRequestListener:
         tags:
             - { name: doctrine.event_listener, event: prePersist }
 

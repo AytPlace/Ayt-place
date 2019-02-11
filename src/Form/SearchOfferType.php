@@ -22,7 +22,10 @@ class SearchOfferType extends AbstractType
         $builder
             ->add('name', TextType::class, [
             'label' => 'recherche nom',
-            'required' => false
+            'required' => false,
+            'attr' => [
+                'placeholder' => 'Nom'
+            ]
             ])
             ->add('region', ChoiceType::class, [
                 'choices' => Offer::REGION,

@@ -19,32 +19,25 @@ class AvailabilityOfferRepository extends ServiceEntityRepository
         parent::__construct($registry, AvailabilityOffer::class);
     }
 
-    // /**
-    //  * @return AvailabilityOffer[] Returns an array of AvailabilityOffer objects
-    //  */
-    /*
-    public function findByExampleField($value)
+    public function getAvailableOffer()
     {
-        return $this->createQueryBuilder('a')
-            ->andWhere('a.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('a.id', 'ASC')
-            ->setMaxResults(10)
-            ->getQuery()
-            ->getResult()
+        return $this->createQueryBuilder('o')
+            ->where('o.available = true')
+            ->orderBy('o.startDate', 'DESC')
+            ->getQuery()->getResult()
         ;
     }
-    */
 
-    /*
-    public function findOneBySomeField($value): ?AvailabilityOffer
+    public function checkBookingOffer($startDate, $endDate)
     {
-        return $this->createQueryBuilder('a')
-            ->andWhere('a.exampleField = :val')
-            ->setParameter('val', $value)
-            ->getQuery()
-            ->getOneOrNullResult()
+        return $this->createQueryBuilder('o')
+            ->where('o.available = true')
+            ->andWhere('o.startDate <= :startDate')
+            ->andWhere('o.endDate >= :endDate')
+            ->setMaxResults(1)
+            ->setParameter('startDate', $startDate)
+            ->setParameter('endDate', $endDate)
+            ->getQuery()->getResult()
         ;
     }
-    */
 }

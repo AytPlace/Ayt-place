@@ -5,6 +5,7 @@ namespace App\Entity;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity()
@@ -13,6 +14,8 @@ class Recipient extends User
 {
     /**
      * @ORM\Column(type="string", length=9)
+     * @Assert\NotBlank()
+     * @Assert\Length(min="9", max="9", minMessage="form.length.min", maxMessage="form.length.max")
      */
     private $siren;
 
@@ -32,8 +35,7 @@ class Recipient extends User
     private $offers;
 
     /**
-     * @ORM\OneToOne(targetEntity="App\Entity\Status", cascade={"persist", "remove"})
-     * @ORM\JoinColumn(name="status", referencedColumnName="id")
+     * @ORM\Column(type="status", type="string")
      */
     private $status;
 
@@ -97,12 +99,12 @@ class Recipient extends User
         return $this;
     }
 
-    public function getStatus(): ?Status
+    public function getStatus(): ?string
     {
         return $this->status;
     }
 
-    public function setStatus(Status $status): self
+    public function setStatus( string $status): self
     {
         $this->status = $status;
 

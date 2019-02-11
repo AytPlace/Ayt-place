@@ -109,6 +109,11 @@ class Offer
     private $region;
 
     /**
+     * @ORM\OneToOne(targetEntity="Medium")
+     */
+    private $image;
+
+    /**
      * @ORM\Column(type="datetime")
      */
     private $createdAt;
@@ -330,4 +335,22 @@ class Offer
 
         return $this;
     }
+
+    public function getRegionName( string $key) : string
+    {
+        return array_search($key, self::REGION);
+    }
+
+    public function getImage() : ?Medium
+    {
+        return $this->image;
+    }
+
+    public function setImage(Medium $medium) : self
+    {
+        $this->image = $medium;
+
+        return $this;
+    }
+
 }

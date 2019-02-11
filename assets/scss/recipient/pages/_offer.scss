@@ -25,6 +25,29 @@
   }
 }
 
+.document-container {
+  form {
+    width: 100%;
+  }
+}
+.available__offer {
+  display: flex;
+  flex-flow: row wrap;
+  align-items: center;
+}
+
+.availabilityOffers {
+  li {
+    display: inline-flex;
+    align-items: center;
+    width: 100%;
+
+    div {
+      flex: 2;
+    }
+  }
+}
+
 .textarea {
   width: 80%;
 
@@ -40,3 +63,9 @@
   padding: 20px 0;
 }
 
+.offer-image__container {
+  width: 100%;
+  height: 500px;
+  background-size: cover;
+  background-position: center;
+}

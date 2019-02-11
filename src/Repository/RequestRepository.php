@@ -2,6 +2,7 @@
 
 namespace App\Repository;
 
+use App\Entity\AvailabilityOffer;
 use App\Entity\Request;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Symfony\Bridge\Doctrine\RegistryInterface;
@@ -19,32 +20,13 @@ class RequestRepository extends ServiceEntityRepository
         parent::__construct($registry, Request::class);
     }
 
-    // /**
-    //  * @return Request[] Returns an array of Request objects
-    //  */
-    /*
-    public function findByExampleField($value)
-    {
-        return $this->createQueryBuilder('r')
-            ->andWhere('r.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('r.id', 'ASC')
-            ->setMaxResults(10)
-            ->getQuery()
-            ->getResult()
-        ;
-    }
-    */
 
-    /*
-    public function findOneBySomeField($value): ?Request
+    public function getRequests(AvailabilityOffer $availableOffer)
     {
         return $this->createQueryBuilder('r')
-            ->andWhere('r.exampleField = :val')
-            ->setParameter('val', $value)
-            ->getQuery()
-            ->getOneOrNullResult()
+            ->andWhere('r.availabilityOffer = :availableOffer')
+            ->setParameter('availableOffer', $availableOffer)
+            ->getQuery()->getResult()
         ;
     }
-    */
 }

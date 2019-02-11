@@ -5,6 +5,7 @@ namespace App\Form;
 use App\Entity\User;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
@@ -43,22 +44,30 @@ class UserType extends AbstractType
                 'label' => "numéro de téléphone",
                 'required' => true
             ])
-            ->add('gender', CheckboxType::class, [
-                'label' => "Genre",
-                'required' => true,
-
+            ->add('gender', ChoiceType::class, [
+                'label' => 'Genre',
+                'label_attr' => [
+                    'class' => 'form__label'
+                ],
+                'expanded' => true,
+                'multiple' => false,
+                'choices' => [
+                    'monsieur' => 'M',
+                    'madame' => 'Mmme',
+                ]
             ])
             ->add('email', EmailType::class, [
                 'label' => "Email",
                 'required' => true
-            ])
-            ->add('password', RepeatedType::class, [
+            ]);
+
+        if (!$options["empty_data"])
+            $builder->add('password', RepeatedType::class, [
                 'type' => PasswordType::class,
                 'required' => true,
                 'first_options' => ['label' => 'Mot de passe'],
                 'second_options' => ['label' => 'répéter mot de passe ']
-            ])
-        ;
+            ]);
     }
 
     public function configureOptions(OptionsResolver $resolver)

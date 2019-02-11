@@ -1,8 +1,10 @@
 var Encore = require('@symfony/webpack-encore');
+var $ = require('jquery');
 Encore
     .setOutputPath('public/build/')
     .setPublicPath('/build')
     .addEntry('recipient', './assets/js/recipient.js')
+    .addEntry('client', './assets/js/client.js')
 
     .enableSingleRuntimeChunk()
     .cleanupOutputBeforeBuild()

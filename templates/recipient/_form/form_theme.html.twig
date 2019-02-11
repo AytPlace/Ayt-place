@@ -72,12 +72,14 @@
     </div>
 {% endblock %}
 
-{#
-https://symfony.com/doc/master/form/form_customization.html#how-to-customize-a-collection-prototype
-{% block availabilityOffers_widget %}
-    {{ dump(form) }}
-    <tr>
-        <td>{{ form_widget(form.task) }}</td>
-        <td>{{ form_widget(form.dueDate) }}</td>
-    </tr>
-{% endblock %}#}
+{% block file_widget %}
+    <div class="file-field input-field">
+        <div class="btn">
+            <span>{{ form.vars.label }}</span>
+            <input type="file" {{ block('widget_attributes') }} id="{{ form.vars.id }}">
+        </div>
+        <div class="file-path-wrapper">
+            <input class="file-path validate" type="text">
+        </div>
+    </div>
+{% endblock %}

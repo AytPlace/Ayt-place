@@ -3,10 +3,28 @@
     <head>
         <meta charset="UTF-8">
         <title>{% block title %}Welcome!{% endblock %}</title>
-        {% block stylesheets %}{% endblock %}
+        <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/air-datepicker/2.2.3/css/datepicker.css" />
+        {% block stylesheets %}
+            {{ encore_entry_link_tags('client') }}
+        {% endblock %}
     </head>
     <body>
+        <header class="header__container">
+            <ul class="header__container-list">
+                <li><a href="" class="header__list-item">A propos</a></li>
+                <li><a href="" class="header__list-item">Réservation</a></li>
+                <li ><a href="" class="header__list-item">Contact</a></li>
+                <li ><a href="" class="header__list-item">Connexion</a></li>
+            </ul>
+        </header>
         {% block body %}{% endblock %}
-        {% block javascripts %}{% endblock %}
+        <script type="text/javascript" src="https://cdn.jsdelivr.net/jquery/latest/jquery.min.js"></script>
+        <script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
+        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/air-datepicker/2.2.3/js/datepicker.min.js"></script>
+        {% block javascripts %}
+
+            {{ encore_entry_script_tags('client') }}
+
+        {% endblock %}
     </body>
 </html>

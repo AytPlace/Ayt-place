@@ -199,6 +199,12 @@
   text-align: left;
   margin: 0 0 10px 45px;
   padding-top: 20px;
+
+  &.demo {
+    text-align: center;
+    opacity: 0.8;
+    padding: 10px 0;
+  }
 }
 
 .add-demo-container {
