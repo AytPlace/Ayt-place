@@ -1,0 +1,21 @@
+.header__container-list{
+  width: 100%;
+  display: inline-flex;
+  flex-flow: row wrap;
+  justify-content: space-around;
+  background-color: $main-color-front;
+  padding: 20px 0;
+
+  .header__list-item {
+    font-size: 15px;
+    color: #000;
+    font-family: Nunito;
+    text-decoration: none;
+    transition: all 0.75s;
+
+    &:hover {
+      color: #fff;
+      border-bottom: 1px solid #fff;
+    }
+  }
+}
