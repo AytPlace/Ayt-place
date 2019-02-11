@@ -21,5 +21,5 @@ Aty'place est un symfony  4.2.
 ## lancer yarn 
 
 - `npm install`
--  pour le dev `yarn dev encore --watch`
--  pour la prod `yarn prod encore`
+-  pour le dev `yarn encore dev  --watch`
+-  pour la prod `yarn encore prod `
