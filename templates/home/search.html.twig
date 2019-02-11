@@ -1,0 +1,66 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+<div class="search-cover__container">
+    <h2 class="search-cover__title">RESERVATION</h2>
+</div>
+<div class="row">
+    <div id="search">
+        {{ include('includes/searchForm.html.twig',
+            {
+                'form' : form
+            })
+        }}
+    </div>
+    <div id="offer-result">
+        <div class="offer-filter__container">
+            <span class="filter-by">filtré par</span>
+            <div class="filter__container">
+                <h4>Région</h4>
+                <hr class="filter-line">
+                <ul class="filter-list__container region">
+                    <form action="#" method="post" id="filter-region">
+                        {% for city,count in useCities %}
+                            <li class="filter__item"><span>{{ city }} ({{ count }})</span><label class="container"><input type="checkbox"> <span class="checkmark"></span></label></li>
+                        {% endfor %}
+                    </form>
+                </ul>
+            </div>
+
+            <div class="filter__container">
+
+                <h4>Capacité</h4>
+                <hr class="filter-line">
+                <ul class="filter-list__container capacity">
+                    <form action="#" method="post" id="filter-capacity">
+                        <li class="filter__item">50 et moins <label class="container"><input type="checkbox"> <span class="checkmark"></span></label></li>
+                        <li class="filter__item">50 à 100 <label  class="container"><input type="checkbox"> <span class="checkmark"></span></label></li>
+                        <li class="filter__item">100 et plus <label  class="container"><input type="checkbox"> <span class="checkmark"></span></label></li>
+                    </form>
+                </ul>
+            </div>
+
+            <span class="filter-clear">effacer</span>
+        </div>
+        <div class="offer__container">
+            {% if offers is defined %}
+                {% for offer in offers %}
+                    <a href="{{ path('app_index_detail_offer', {'offer' : offer.id}) }}">
+                        <div class="offer__item">
+                            <img src="{{ offer.image.path }}" alt="">
+                            <div class="offer__item-info">
+                                <h3>{{ offer.title }}</h3>
+                                <p>{{ offer.location }}, {{ offer.city }} {{ offer.country }}</p>
+                                <span>A partir de {{ offer.costByTraveler * offer.travelerNumbers }} €</span>
+                            </div>
+                        </div>
+                    </a>
+                {% else %}
+                    <p>Malheureusement aucun lieux ne correspond à votre recherche</p>
+                {% endfor %}
+            {% endif %}
+        </div>
+    </div>
+</div>
+
+{% endblock %}

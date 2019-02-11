@@ -1,0 +1,125 @@
+.search-cover__container {
+  width: 100%;
+  background-image: url("../amboise-chateau-loire.jpg");
+  background-size: cover;
+  background-position: center ;
+
+  .search-cover__title {
+    font-size: 34px;
+    color: #fff;
+    text-align: center;
+    width: 100%;
+    padding: 200px 0;
+  }
+}
+
+.search-container {
+  margin: 50px 0;
+  form {
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: center;
+  }
+  .inner_form {
+    width: 70%;
+    position: relative;
+
+    input[type=text] {
+      height: 50px;
+      background-color: #fff;
+      border: 1px solid #DDDFE1;
+      width: 100%;
+    }
+
+    button {
+      background-color: #fff;
+      height: 44px;
+      width: 15%;
+      position: absolute;
+      top: 5px;
+      padding: 0;
+      right: 0;
+      border: none;
+      border-left: 1px solid #DDDFE1;
+    }
+
+  }
+}
+
+#offer-result {
+  display: inline-flex;
+  flex-flow: wrap row;
+  width: 100%;
+  margin-bottom: 50px;
+
+  .offer-filter__container{
+    display: flex;
+    flex-flow: column;
+    width: 15%;
+
+    .filter-by {
+      text-align: center;
+      font-size: 24px;
+      margin-bottom: 20px;
+    }
+
+    .filter__container {
+      position: relative;
+      margin-bottom: 20px;
+      h4 {
+        text-align: center;
+        font-size: 24px;
+        text-transform: uppercase;
+      }
+
+      ul {
+        font-size: 20px;
+        padding-left: 20px;
+        margin-top: 20px;
+
+        .filter__item {
+          display: flex;
+          flex-flow: row;
+          justify-content: space-between;
+          margin: 10px 0;
+        }
+      }
+    }
+  }
+
+  .offer__container {
+    margin-left: 50px;
+    display: flex;
+    flex-flow: row wrap;
+    flex: 1;
+    justify-content: space-around;
+
+    a {
+      text-decoration: none;
+      color: #000;
+
+      .offer__item {
+        img {
+          max-height: 140px;
+          margin-bottom: 30px;
+        }
+
+        .offer__item-info {
+          font-style: italic;
+          h3 {
+            font-size: 30px;
+            font-style: normal;
+          }
+        }
+      }
+    }
+  }
+
+  .filter-line {
+    width: 70%;
+    position: absolute;
+    right: 0;
+    border-top: 1px solid #DDDFE1;
+  }
+}
+

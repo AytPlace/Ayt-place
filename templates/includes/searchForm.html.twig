@@ -1,8 +1,9 @@
-<h4>Rechercher un prestataire</h4>
 <div class="search-container">
     {{ form_start(form) }}
-    {{ form_widget(form.name) }}
-    {{ form_widget(form.region) }}
-    <button type="submit">Rechercher</button>
+    <div class="inner_form">
+        {{ form_widget(form.name) }}
+        <button type="submit">Rechercher</button>
+    </div>
+
     {{ form_end(form) }}
 </div>

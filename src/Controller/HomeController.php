@@ -41,20 +41,30 @@ class HomeController extends AbstractController
      * @Route("/recherche", name="app_index_search")
      */
     public function searchAction(Request $request, OfferRepository $offerRepository)
-
     {
+        $data = $request->request->get('search_offer');
+        $offers = $offerRepository->searchOffer($data['name']);
+
+        $useRegion = $offerRepository->getUseCity();
         $form = $this->createForm(SearchOfferType::class);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
             $data = $request->request->get('search_offer');
-            $offers = $offerRepository->searchOffer($data['name'], $data['region']);
+            $offers = $offerRepository->searchOffer($data['name']);
 
-            return $this->render('home/index.html.twig', [
+            return $this->render('home/search.html.twig', [
                 'form' => $form->createView(),
-                'offers' => $offers
+                'offers' => $offers,
+                'useCities' => $useRegion
             ]);
         }
+
+        return $this->render('home/search.html.twig', [
+            'form' => $form->createView(),
+            'offers' => $offers,
+            'useCities' => $useRegion
+        ]);
     }
 
     /**

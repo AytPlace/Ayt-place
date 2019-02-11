@@ -2,6 +2,12 @@
 @import "client/mixins/_color";
 @import "client/air-datepicker";
 @import "client/component/header";
+@import "client/component/form";
 @import "client/component/footer";
 @import "client/component/button";
 @import "client/page/home";
+@import "client/page/search";
+
+.row {
+  padding: 0 10%;
+}
