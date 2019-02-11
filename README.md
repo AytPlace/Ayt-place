@@ -2,6 +2,9 @@
 
 Aty'place est un symfony  4.2.
 
+## Installation 
+- `compose install`
+
 ## Lancement en local du docker-compose
 
 - `docker-compose up` | `docker-compose up --build`
@@ -14,3 +17,9 @@ Aty'place est un symfony  4.2.
 - fait les migration (création des tables) `docker-compose php bin/console d:s:u -f`
 - lance les fixtures `docker-compose php bin/console d:f:l`
 - si la bdd exite déja lancer en premier `docker-compose d:d:d --force`
+
+## lancer yarn 
+
+- `npm install`
+-  pour le dev `yarn dev encore --watch`
+-  pour la prod `yarn prod encore`
