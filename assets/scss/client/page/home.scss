@@ -109,27 +109,36 @@
   margin-top: 80px;
   display: inline-flex;
   flex-flow: row wrap;
+  width: 100%;
+
 
   a {
     color: #000;
     text-decoration: none;
+    flex: 1;
+    justify-content: space-around;
+  }
+
+  .offer-item {
+
+    transition: all 0.75s;
+    img {
+      max-height: 140px;
+    }
+
+    p {
+      font-size:20px;
+      font-style: italic;
+    }
+    span {
+      font-style: italic;
+    }
+
+    &:hover {
+      opacity: 0.7;
+    }
   }
 }
 
-.offer-item {
-  width: 45%;
-  transition: all 0.75s;
-  img {
-    width: 60%;
-  }
 
-  p {
-    text-align: center;
-    width: 50%;
-    font-size:20px;
-  }
 
-  &:hover {
-    opacity: 0.7;
-  }
-}
