@@ -3,7 +3,7 @@
 Aty'place est un symfony  4.2.
 
 ## Installation 
-- `compose install`
+- `composer install`
 
 ## Lancement en local du docker-compose
 
