@@ -15,27 +15,28 @@
     <div id="offer-result">
         <div class="offer-filter__container">
             <span class="filter-by">filtré par</span>
-            <div class="filter__container">
-                <h4>Région</h4>
-                <hr class="filter-line">
-                <ul class="filter-list__container region">
-                    <form action="#" method="post" id="filter-region">
-                        {% for city,count in useCities %}
-                            <li class="filter__item"><span>{{ city }} ({{ count }})</span><label class="container"><input type="checkbox"> <span class="checkmark"></span></label></li>
-                        {% endfor %}
-                    </form>
-                </ul>
-            </div>
+            {% if useCities|length > 0 %}
+                <div class="filter__container">
+                    <h4>Région</h4>
+                    <hr class="filter-line">
+                    <ul class="filter-list__container region">
+                        <form action="#" method="post" id="filter-region">
+                            {% for city,count in useCities %}
+                                <li class="filter__item"><span>{{ city }} ({{ count }})</span><label class="container"><input type="checkbox" value="{{ city }}"> <span class="checkmark"></span></label></li>
+                            {% endfor %}
+                        </form>
+                    </ul>
+                </div>
+            {% endif %}
 
             <div class="filter__container">
-
                 <h4>Capacité</h4>
                 <hr class="filter-line">
                 <ul class="filter-list__container capacity">
                     <form action="#" method="post" id="filter-capacity">
-                        <li class="filter__item">50 et moins <label class="container"><input type="checkbox"> <span class="checkmark"></span></label></li>
-                        <li class="filter__item">50 à 100 <label  class="container"><input type="checkbox"> <span class="checkmark"></span></label></li>
-                        <li class="filter__item">100 et plus <label  class="container"><input type="checkbox"> <span class="checkmark"></span></label></li>
+                        <li class="filter__item">50 et moins <label class="container"><input type="checkbox" value="50"> <span class="checkmark"></span></label></li>
+                        <li class="filter__item">50 à 100 <label  class="container"><input type="checkbox" value="100"> <span class="checkmark"></span></label></li>
+                        <li class="filter__item">100 et plus <label  class="container"><input type="checkbox" value="101"> <span class="checkmark"></span></label></li>
                     </form>
                 </ul>
             </div>
@@ -62,5 +63,15 @@
         </div>
     </div>
 </div>
+{% endblock %}
 
+{% block javascripts %}
+    <script type="application/javascript">
+        var $checkbox = $('.checkmark');
+        $checkbox.on('click', function () {
+            var checkbox = $($(this).parent()).find("input");
+            console.log(checkbox.val())
+        });
+
+    </script>
 {% endblock %}
