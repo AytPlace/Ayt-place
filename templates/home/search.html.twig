@@ -45,20 +45,7 @@
         </div>
         <div class="offer__container">
             {% if offers is defined %}
-                {% for offer in offers %}
-                    <a href="{{ path('app_index_detail_offer', {'offer' : offer.id}) }}">
-                        <div class="offer__item">
-                            <img src="{{ offer.image.path }}" alt="">
-                            <div class="offer__item-info">
-                                <h3>{{ offer.title }}</h3>
-                                <p>{{ offer.location }}, {{ offer.city }} {{ offer.country }}</p>
-                                <span>A partir de {{ offer.costByTraveler * offer.travelerNumbers }} €</span>
-                            </div>
-                        </div>
-                    </a>
-                {% else %}
-                    <p>Malheureusement aucun lieux ne correspond à votre recherche</p>
-                {% endfor %}
+                {{ include('includes/searchContent.html.twig', offers) }}
             {% endif %}
         </div>
     </div>
@@ -68,10 +55,63 @@
 {% block javascripts %}
     <script type="application/javascript">
         var $checkbox = $('.checkmark');
-        $checkbox.on('click', function () {
-            var checkbox = $($(this).parent()).find("input");
-            console.log(checkbox.val())
+        $checkbox.on('click', function (event) {
+            event.preventDefault()
+            var checkbox = $($(this).parent()).find("input")
+
+            if (checkbox.is(':checked')) {
+                checkbox.attr('checked', false);
+            }else {
+                checkbox.attr('checked', true);
+            }
+
+            var $RegionCheck = $('.region input:checked');
+            var $CapacityCheck = $('.capacity input:checked');
+
+            var capacity = [];
+            for (var i = 0; i < $CapacityCheck.length; i++) {
+                capacity.push($CapacityCheck[i].value);
+            }
+
+            var region = [];
+            for (var i = 0; i < $RegionCheck.length; i++) {
+                region.push($RegionCheck[i].value);
+            }
+
+            $.ajax({
+                type: "POST",
+                url: "/offer-filter",
+                data : {
+                    'regions' : region,
+                    'capacity' : capacity
+                }
+            })
+                .done(function (datas) {
+                    $('.offer__container').html(datas)
+                })
+            ;
         });
+
+        $('.filter-clear').on('click', function (event) {
+            var $checkboxs = $('input:checkbox');
+
+            for (var i = 0; i < $checkboxs.length; i++) {
+                $checkboxs.attr('checked', false);
+            }
+
+
+            $.ajax({
+                type: "POST",
+                url: "/offer-filter",
+                data : {
+
+                }
+            })
+                .done(function (datas) {
+                    $('.offer__container').html(datas)
+                })
+            ;
+        })
 
     </script>
 {% endblock %}

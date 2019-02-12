@@ -1,0 +1,14 @@
+{% for offer in offers %}
+    <a href="{{ path('app_index_detail_offer', {'offer' : offer.id}) }}">
+        <div class="offer__item">
+            <img src="{{ offer.image.path }}" alt="">
+            <div class="offer__item-info">
+                <h3>{{ offer.title }}</h3>
+                <p>{{ offer.location }}, {{ offer.city }} {{ offer.country }}</p>
+                <span>A partir de {{ offer.costByTraveler * offer.travelerNumbers }} €</span>
+            </div>
+        </div>
+    </a>
+{% else %}
+    <p>Malheureusement aucun lieux ne correspond à votre recherche</p>
+{% endfor %}

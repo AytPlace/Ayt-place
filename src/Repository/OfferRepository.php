@@ -19,7 +19,7 @@ class OfferRepository extends ServiceEntityRepository
         parent::__construct($registry, Offer::class);
     }
 
-    public function searchOffer(?string $title = null)
+    public function searchOffer(?string $title = null, ?array $cities = null, ?array $capacity = null)
     {
         $query = $this->createQueryBuilder('o')
             ->leftJoin('o.recipient', 'r')->addSelect('r')
@@ -31,6 +31,38 @@ class OfferRepository extends ServiceEntityRepository
             $query->andWhere('o.title LIKE :title')
                 ->setParameter('title', '%'.$title.'%')
             ;
+        }
+
+        if (!empty($cities)) {
+            foreach ($cities as $city) {
+                $query->andWhere('o.city = :city')
+                    ->setParameter('city', $city)
+                ;
+            }
+
+        }
+
+        if (!empty($capacity)) {
+            foreach ($capacity as $cap) {
+                if ($cap == "50") {
+                    $query->andWhere('o.travelerNumbers <= :cap')
+                        ->setParameter('cap', $cap)
+                    ;
+                }
+
+                if ($cap == "100") {
+                    $query->andWhere('o.travelerNumbers >= :cap')
+                        ->andWhere('o.travelerNumbers <= :cap')
+                        ->setParameter('cap', $cap)
+                    ;
+                }
+
+                if ($cap == "101") {
+                    $query->andWhere('o.travelerNumbers >= :cap')
+                        ->setParameter('cap', $cap)
+                    ;
+                }
+            }
         }
 
 

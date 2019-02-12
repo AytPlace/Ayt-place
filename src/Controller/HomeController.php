@@ -123,10 +123,29 @@ class HomeController extends AbstractController
 
 
     /**
+     * @param Request $request
+     * @param OfferRepository $offerRepository
+     * @return \Symfony\Component\HttpFoundation\Response
+     * @Route("/offer-filter", name="app_index_filter_offer")
+     */
+    public function getFilterOffer(Request $request, OfferRepository $offerRepository)
+    {
+        $regions = $request->request->get('regions');
+        $capacity = $request->request->get('capacity');
+
+        $offers = $offerRepository->searchOffer(null, $regions, $capacity);
+
+        return $this->render('includes/searchContent.html.twig', [
+            'offers' => $offers
+        ]);
+    }
+
+    /**
      * @Route("/recherche-resultat/{data]", name="app_search_result")
      * @param Offer $offer
      * @param DateAvailableManager $dateAvailableManager
      * @return \Symfony\Component\HttpFoundation\Response
+     * @throws \Exception
      */
     public function getAvailableOfferDates(Offer $offer, DateAvailableManager $dateAvailableManager)
     {
