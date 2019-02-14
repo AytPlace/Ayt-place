@@ -29,4 +29,13 @@ class RequestRepository extends ServiceEntityRepository
             ->getQuery()->getResult()
         ;
     }
+
+    public function userHasRequest($clientId)
+    {
+        $statement = $this->getEntityManager()->getConnection()->prepare("SELECT request_id FROM users_requests WHERE users_requests.client_id = :clientId");
+        $statement->bindValue('clientId', $clientId);
+        $statement->execute();
+
+        return $statement->fetchAll();
+    }
 }

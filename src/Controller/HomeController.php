@@ -28,7 +28,7 @@ class HomeController extends AbstractController
     public function indexAction(OfferRepository $offerRepository)
     {
         $offers = $offerRepository->getLastOffer();
-        dump($offers);
+
         return $this->render('home/index.html.twig', [
             'offers' => $offers
         ]);
@@ -76,10 +76,13 @@ class HomeController extends AbstractController
      * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
      * @throws \Exception
      */
-    public function detailAction(Offer $offer, Request $request, DateAvailableManager $dateAvailableManager, EmailManager $emailManager)
+    public function detailAction(Offer $offer, Request $request, DateAvailableManager $dateAvailableManager, EmailManager $emailManager, OfferRepository $offerRepository)
     {
+        $offers = $offerRepository->getLastOffer();
         $dateAvailableManager->getUnbookDate($offer);
         $bookingRequest = new BookingRequest();
+
+
         $form = $this->createForm(SelectDateType::class, $bookingRequest);
         $form->handleRequest($request);
 
@@ -92,22 +95,14 @@ class HomeController extends AbstractController
 
                 return $this->render('home/detail.html.twig', [
                     'offer' => $offer,
+                    'offers' => $offers,
                     'form' => $form->createView()
                 ]);
             }
 
             $this->getUser()->addRequest($bookingRequest);
-
             $dates = $dateAvailableManager->parseDateInterval($dateInput);
-
-            $bookingRequest->setAvailableOffer($dateInterval);
-            $dateInterval->addRequest($bookingRequest);
-            $bookingRequest->setStartDate($dates["startDate"]);
-            $bookingRequest->setEndDate($dates["endDate"]);
-
-            $em = $this->getDoctrine()->getManager();
-            $em->persist($bookingRequest);
-            $em->flush();
+            $dateAvailableManager->setBooking($bookingRequest, $dateInterval, $dates);
 
             $emailManager->sendSendBookingOffer($this->getUser(), $offer->getTitle());
 
@@ -117,6 +112,7 @@ class HomeController extends AbstractController
 
         return $this->render('home/detail.html.twig', [
             'offer' => $offer,
+            'offers' => $offers,
             'form' => $form->createView()
         ]);
     }
@@ -141,7 +137,7 @@ class HomeController extends AbstractController
     }
 
     /**
-     * @Route("/recherche-resultat/{data]", name="app_search_result")
+     * @Route("/recherche-resultat/{offer}", name="app_search_result")
      * @param Offer $offer
      * @param DateAvailableManager $dateAvailableManager
      * @return \Symfony\Component\HttpFoundation\Response
@@ -149,6 +145,7 @@ class HomeController extends AbstractController
      */
     public function getAvailableOfferDates(Offer $offer, DateAvailableManager $dateAvailableManager)
     {
+
         return new JsonResponse([
             'dates' => $dateAvailableManager->getUnbookDate($offer)
         ]);

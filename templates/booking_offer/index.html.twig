@@ -12,6 +12,7 @@
     <h1>Mes offres</h1>
     <div class="requests__container">
         {% for request in requests %}
+            {% set request = request[0] %}
             <div class="request-item__container">
                 {% set offer =  request.availableOffer.offer%}
 

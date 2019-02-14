@@ -15,16 +15,19 @@ use App\Entity\Request;
 use App\Repository\AvailabilityOfferRepository;
 use App\Repository\RequestRepository;
 use DateInterval;
+use Doctrine\ORM\EntityManagerInterface;
 
 class DateAvailableManager
 {
     private $availabilityOfferRepository;
     private $requestRepository;
+    private $em;
 
-    public function __construct(AvailabilityOfferRepository $availabilityOfferRepository, RequestRepository $requestRepository)
+    public function __construct(AvailabilityOfferRepository $availabilityOfferRepository, RequestRepository $requestRepository, EntityManagerInterface $entityManager)
     {
         $this->availabilityOfferRepository = $availabilityOfferRepository;
         $this->requestRepository = $requestRepository;
+        $this->em = $entityManager;
     }
 
     /**
@@ -102,28 +105,63 @@ class DateAvailableManager
     public function getUnbookDate(Offer $offer): array
     {
         $availableDates = $this->availabilityOfferRepository->findBy(['offer' => $offer]);
+
         $data = [];
+        $disableDate = [];
+
         foreach ($availableDates as $availableDate) {
             $booksDate = $this->requestRepository->getRequests($availableDate);
             $globalDiff = $availableDate->getStartDate()->diff($availableDate->getEndDate());
-            foreach ($booksDate as $bookDate) {
-                $startDiff = $bookDate->getStartDate()->diff($availableDate->getStartDate());
-                $requestDiff = $bookDate->getEndDate()->diff($bookDate->getStartDate());
 
+            if (count($booksDate) > 0) {
+                $disableDate = [];
+                // generate all disable date
+                foreach ($booksDate as $bookDate) {
+                    $startDiff = $bookDate->getStartDate()->diff($availableDate->getStartDate());
+                    $requestDiff = $bookDate->getEndDate()->diff($bookDate->getStartDate());
+
+                    for ($i = 0; $i <= $requestDiff->d; $i++) {
+                        $currentTimestamp  = $bookDate->getStartDate()->getTimestamp();
+                        $currentDate = new \DateTime();
+                        $currentDate->setTimestamp($currentTimestamp);
+
+                        $disableDate[] = $currentDate->add(new DateInterval('P'.($i).'D'))->format('Y-m-d');
+                    }
+                }
+
+                // if not disable add  to available date
+                for ($i = 0; $i <= $globalDiff->d; $i++) {
+                    $currentDate = new \DateTime();
+                    $currentDate->setTimestamp($availableDate->getStartDate()->getTimestamp());
+                    $currentDate = $currentDate->add(new DateInterval('P'.($i).'D'))->format('Y-m-d');
+
+                    if (!in_array($currentDate, $disableDate)) {
+                        $data[] = $currentDate;
+                    }
+                }
+            }else {
                 for ($i = 0; $i <= $globalDiff->d; $i++) {
                     $currentDate = new \DateTime();
                     $currentDate->setTimestamp( $availableDate->getStartDate()->getTimestamp());
-
-                    if ($i  < $startDiff->d || $i > $requestDiff->d +1 ) {
-                        $data[] = $currentDate->add(new DateInterval('P'.($i).'D'))->format('Y-m-d');
-                    }
+                    $data[] = $currentDate->add(new DateInterval('P'.($i).'D'))->format('Y-m-d');
                 }
             }
+
         }
 
         return $data;
     }
 
+    public function setBooking(Request $bookingRequest, AvailabilityOffer $dateInterval, $dates)
+    {
+        $bookingRequest->setAvailableOffer($dateInterval);
+        $dateInterval->addRequest($bookingRequest);
+        $bookingRequest->setStartDate($dates["startDate"]);
+        $bookingRequest->setEndDate($dates["endDate"]);
+
+        $this->em->persist($bookingRequest);
+        $this->em->flush();
+    }
     /**
      * Fermer un Interval qui n'as plus de jour libre
      */

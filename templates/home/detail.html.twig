@@ -70,8 +70,19 @@
     <div class="associate__container row">
         <h3>Découvrir</h3>
         <p>Endroit qui pourrait vous plaire</p>
-        <div class="discover__container">
+        <div class="booking-enable__container">
+            <div class="last-offer__container">
+                {% for offer in offers %}
+                    <a href="{{ path('app_index_detail_offer', { 'offer' : offer.id }) }}">
+                        <div class="offer-item">
+                            <img src="{{ offer.image.path }}" alt="">
+                            <p>{{ offer.city }}, {{ offer.location }}</p>
+                            <span>A partir de {{ offer.costByTraveler * offer.travelerNumbers }} €</span>
+                        </div>
+                    </a>
 
+                {% endfor %}
+            </div>
         </div>
     </div>
 

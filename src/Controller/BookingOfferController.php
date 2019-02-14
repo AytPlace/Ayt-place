@@ -17,7 +17,12 @@ class BookingOfferController extends AbstractController
     public function index(RequestRepository $requestRepository)
     {
 
-        $requests = $requestRepository->findAll();
+        $requestsId = $requestRepository->userHasRequest($this->getUser()->getId());
+        $requests = [];
+        foreach ($requestsId as $id) {
+            $requests[] =  $requestRepository->findBy(['id' => $id["request_id"]]);
+        }
+
         return $this->render('booking_offer/index.html.twig', [
             'requests' => $requests,
         ]);
