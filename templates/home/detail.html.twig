@@ -1,26 +1,6 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-<<<<<<< HEAD
-    <style>
-        .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
-        .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
-    </style>
-
-    <div class="example-wrapper">
-        <div class="recipient__container">
-            {{ dump(offer) }}
-        </div>
-    </div>
-{% endblock %}
-=======
-<style>
-    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
-    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
-    .overlay { background-color: rgba(0,0,0, 0.8); width: 100%; height: 100%; position: fixed; top: 0; left: 0; z-index: 1}
-    .log__container { background-color: #fff}
-</style>
-
    {# {% if app.user is  null %}
         <div class="overlay">
             <div class="log__container">
@@ -48,24 +28,54 @@
         </div>
     {% endif %}#}
 
-    <div class="offer__container">
-        <p>{{ offer.title }}</p>
-        <p>{{ offer.travelerNumbers }}</p>
-        <p>{{ offer.costByTraveler }}</p>
-        <p>{{ offer.location }}</p>
-        <p>{{ offer.city }}</p>
-        <p>{{ offer.country }}</p>
-        <p>{{ offer.getRegionName(offer.region) }}</p>
-        {{ offer.description|raw }}
+    <div class="offer__coverCity">
+        <h3 class="coverCity__title">{{ offer.city }}</h3>
     </div>
 
-    <div class="available_date">
-        {{ form_start(form) }}
-            {{ form_widget(form.intervalDate) }}
-            {{ form_widget(form.description) }}
-            <button type="submit">valider</button>
-        {{ form_end(form) }}
+    <div class="offer__container row">
+        <a href="{{ path('app_index_search') }}" class="back-arrow-offer"><img src="{{ asset('left-arrow.svg') }}" alt="" width="20px"></a>
+        <div class="offer-item__image" style="background-image: url('{{ offer.image.path }}')"></div>
+        <div class="offer-info__container">
+            <h3>{{ offer.title }}</h3>
+            <div class="available_date">
+                {{ form_start(form) }}
+                <div class="info-render">
+                    <span class="info-render__label">date</span>
+                    <div class="info-render__form">
+                        {{ form_widget(form.intervalDate) }}
+                        {{ form_widget(form.description) }}
+                    </div>
+                </div>
+
+                <div class="info-render">
+                    <span class="info-render__label">capacité</span>
+                    <span class="cpacity-display">{{ offer.travelerNumbers }}</span>
+                </div>
+
+                <div class="info-render">
+                    <span class="info-render__label">prix à la personne</span>
+                    <span class="cpacity-display">{{ offer.travelerNumbers }}€</span>
+                </div>
+
+                <button type="submit" class="offer_submit">Réservation</button>
+                {{ form_end(form) }}
+            </div>
+            <div class="info-render-description">
+                <h4 class="info-description__title">description</h4>
+                {{ offer.description|raw }}
+            </div>
+        </div>
     </div>
+
+    <div class="associate__container row">
+        <h3>Découvrir</h3>
+        <p>Endroit qui pourrait vous plaire</p>
+        <div class="discover__container">
+
+        </div>
+    </div>
+
+
 
 {% endblock %}
 {% block javascripts %}
@@ -81,7 +91,7 @@
 
         $.ajax({
             type: "POST",
-            url : "{{ path('app_index_get_available_date', {'offer' : offer.id}) }}",
+            url : "{{ path('app_search_result', {'offer' : offer.id}) }}",
             success: function (response) {
                 var dates = response.dates;
                 $picker.datepicker({
@@ -140,4 +150,3 @@
         });
     </script>
 {% endblock %}
->>>>>>> 8ecfa6b8a9a9606e8a9c24497e8f39b0f2e57b32
