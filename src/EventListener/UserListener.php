@@ -38,16 +38,19 @@ class UserListener
     public function prePersist(LifecycleEventArgs $args)
     {
         $entity = $args->getEntity();
+
         if ($entity instanceof Recipient || $entity instanceof Client) {
             $entity->setPassword($this->userPasswordEncoder->encodePassword($entity, $entity->getPassword()));
 
             $entity->setEnableToken($this->randomStringGenerator->generate());
+            $entity->setEnable(false);
             $this->emailManager->sendEnableEmail($entity);
 
             if ($entity instanceof Recipient) {
                 $entity->setStatus(User::STATUS["A valider"]);
                 $entity->setRoles(['ROLE_RECIPIENT']);
             }
+
 
             if ($entity instanceof Client) {
                 $entity->setRoles(['ROLE_CLIENT']);

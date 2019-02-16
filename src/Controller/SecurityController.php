@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\Client;
 use App\Entity\Recipient;
 use App\Entity\Status;
 use App\Entity\User;
@@ -44,7 +45,7 @@ class SecurityController extends AbstractController
      */
     public function registrationAction(Request $request, UserPasswordEncoderInterface $userPasswordEncoder, RegisterManager $registerManager)
     {
-        $user = new User();
+        $user = new Client();
         $form = $this->createForm(UserType::class, $user);
 
         $form->handleRequest($request);
