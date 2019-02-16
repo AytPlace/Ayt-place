@@ -131,7 +131,7 @@ class SecurityController extends AbstractController
             $data = $form->getData();
             $user = $em->getRepository(User::class)->findOneBy(['email' => $data["email"]]);
 
-            if (!is_null($user) && !$user instanceof Recipient) {
+            if (!$user) {
                 $user->setToken($randomStringGenerator->generate(15));
                 $user->setTokenRequestAt(new \DateTime());
 
@@ -164,7 +164,7 @@ class SecurityController extends AbstractController
         $date = new \DateTime();
         $date = $date->sub(new \DateInterval('P2D'));
 
-        if (!is_null($user) && !$user instanceof Recipient  && $user->getTokenRequestAt() > $date) {
+        if (!is_null($user)  && $user->getTokenRequestAt() > $date) {
             $form = $this->createForm(UpdatePasswordType::class);
             $form->handleRequest($request);
 

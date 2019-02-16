@@ -10,6 +10,7 @@ namespace App\Service;
 
 
 use App\Entity\Client;
+use App\Entity\Recipient;
 use App\Entity\User;
 use Swift_Mailer;
 use Swift_Message;
@@ -95,6 +96,14 @@ class EmailManager
             [$user->getEmail()],
             "Aty'place | Activation de compte",
             $vars
+        );
+    }
+
+    public function sendEnableRecipient(Recipient $recipient)
+    {
+        return $this->sendEmail('enable-recipient',
+            [$recipient->getEmail()],
+            "Aty'place | Activation de votre compte prestataire"
         );
     }
 }
