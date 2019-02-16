@@ -82,4 +82,19 @@ class EmailManager
             $vars
         );
     }
+
+    public function sendEnableEmail(User $user)
+    {
+        $link = $this->router->generate('app_index_enable', [
+            'token' => $user->getEnableToken()
+        ], $this->router::ABSOLUTE_URL);
+
+        $vars = ['ctaUrl' => $link];
+
+        return $this->sendEmail('enable-user',
+            [$user->getEmail()],
+            "Aty'place | Activation de compte",
+            $vars
+        );
+    }
 }

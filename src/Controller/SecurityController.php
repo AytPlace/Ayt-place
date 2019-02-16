@@ -10,6 +10,7 @@ use App\Form\RecipientFormType;
 use App\Form\RecipientType;
 use App\Form\UpdatePasswordType;
 use App\Form\UserType;
+use App\Repository\UserRepository;
 use App\Service\EmailManager;
 use App\Service\RandomStringGenerator;
 use App\Service\RegisterManager;
@@ -90,6 +91,30 @@ class SecurityController extends AbstractController
         return $this->render('security/registration.html.twig', [
             "form" => $form->createView()
         ]);
+    }
+
+    /**
+     * @Route("/activation/{token}", name="app_index_enable")
+     * @param string $token
+     * @param UserRepository $userRepository
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|Response
+     */
+    public function enableEmailAction(string $token, UserRepository $userRepository)
+    {
+        $user = $userRepository->findOneBy(['enableToken' => $token]);
+
+        if (!$user) {
+            $this->addFlash('error', 'Lien invalide merci de contacter notre service client');
+
+            return $this->render('security/enable.html.twig');
+        }
+
+        $user->setEnable(true);
+        $user->setEnableToken(null);
+
+        $this->getDoctrine()->getManager()->flush();
+
+        return $this->redirectToRoute('app_login', ['message' => 'votre compte à bien étais activé']);
     }
 
     /**

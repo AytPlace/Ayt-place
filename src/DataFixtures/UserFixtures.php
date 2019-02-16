@@ -34,6 +34,8 @@ class UserFixtures extends Fixture
             ->setZipcode("75013")
             ->setEmail("alexandre.vagnair@hetic.net")
             ->setPassword('root')
+            ->setEnable(false)
+            ->setEnableToken($this->randomStringGenerator->generate())
             ->setRoles(["ROLE_CLIENT"]);
 
         $manager->persist($user);

@@ -145,9 +145,20 @@ class User implements UserInterface
      */
     private $tokenRequestAt;
 
+    /**
+     * @ORM\Column(type="boolean", name="enable", nullable=true)
+     */
+    private $enable;
+
+    /**
+     * @ORM\Column(type="string", name="enable_token", nullable=true)
+     */
+    private $enableToken;
+
     public function __construct()
     {
         $this->responses = new ArrayCollection();
+        $this->enable = false;
     }
 
     public function getId(): ?int
@@ -486,6 +497,43 @@ class User implements UserInterface
     public function setTokenRequestAt(\DateTime $tokenRequestAt): User
     {
         $this->tokenRequestAt = $tokenRequestAt;
+        return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getEnable()
+    {
+        return $this->enable;
+    }
+
+    /**
+     * @param mixed $enable
+     * @return User
+     */
+    public function setEnable($enable)
+    {
+        $this->enable = $enable;
+
+        return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getEnableToken()
+    {
+        return $this->enableToken;
+    }
+
+    /**
+     * @param mixed $enableToken
+     */
+    public function setEnableToken($enableToken): self
+    {
+        $this->enableToken = $enableToken;
+
         return $this;
     }
 }

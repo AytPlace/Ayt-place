@@ -32,6 +32,7 @@ security:
 
     access_control:
       - { path: ^/inscription, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+      - { path: ^/activation, roles: IS_AUTHENTICATED_ANONYMOUSLY }
       - { path: ^/mot-de-passe-oublie, roles: IS_AUTHENTICATED_ANONYMOUSLY }
       - { path: ^/connexion, roles: IS_AUTHENTICATED_ANONYMOUSLY }
       - { path: ^/logout, roles: IS_AUTHENTICATED_ANONYMOUSLY }
