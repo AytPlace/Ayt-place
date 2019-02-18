@@ -9,17 +9,22 @@
 </style>
 
 <div class="example-wrapper">
-    <h1>Mes offres</h1>
+    <h1 class="clientBo__title">Mes offres</h1>
     <div class="requests__container">
         {% for request in requests %}
             {% set request = request[0] %}
             <div class="request-item__container">
                 {% set offer =  request.availableOffer.offer%}
-
-                Titre : {{ offer.title }}
-                Description: {{ request.description }}
-                du : {{ request.startDate|date('d/m/y') }} au {{ request.endDate|date('d/m/y') }}
-                Statut: {{ request.status|statut(request.status)}}
+                <img src="{{ request.availableOffer.offer.image.path }}" alt="">
+                <div class="content__offer-container">
+                    <h4 class="info-description__title">Description</h4>
+                    <h4>Demande de réservation</h4>
+                    <p class="saler__container">Vendeur <b>{{ request.availableOffer.offer.recipient.firstname}} {{ request.availableOffer.offer.recipient.lastname|capitalize}}</b></p>
+                    <span class="duration__container"> Du {{ request.startDate|date('d/m/y') }} au {{ request.endDate|date('d/m/y') }}</span>
+                    <span class="day__container">? jours</span>
+                    <p class="status__container"> Statut <span style="color: {% if request.status == 1 %}#d4252f{% endif %};">{{ request.status|statut(request.status)}}</span></p>
+                    <a class="offer_submit" href="{{ path('app_index_booking_delete', {'request' : request.id}) }}">Annulation</a>
+                </div>
             </div>
         {% endfor %}
     </div>
