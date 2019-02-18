@@ -162,11 +162,9 @@ class DateAvailableManager
         $this->em->persist($bookingRequest);
         $this->em->flush();
     }
-    /**
-     * Fermer un Interval qui n'as plus de jour libre
-     */
-    public function closeAvailableOffer()
-    {
 
+    public function displayBookingDate(Request $request)
+    {
+        return $request->getEndDate()->diff($request->getStartDate())->d;
     }
 }
