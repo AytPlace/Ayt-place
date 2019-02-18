@@ -1,0 +1,9 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Aty'place oublie de mot de passe{% endblock %}
+
+{% block body %}
+    {% for message in app.flashes('error') %}
+        <div class="alert aler-notice">{{ message }}</div>
+    {% endfor %}
+{% endblock %}

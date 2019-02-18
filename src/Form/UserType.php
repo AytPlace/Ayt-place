@@ -2,6 +2,7 @@
 
 namespace App\Form;
 
+use App\Entity\Client;
 use App\Entity\User;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
@@ -44,6 +45,10 @@ class UserType extends AbstractType
                 'label' => "numéro de téléphone",
                 'required' => true
             ])
+            ->add('zipcode', TextType::class, [
+                'label' => "Code postal",
+                'required' => true
+            ])
             ->add('gender', ChoiceType::class, [
                 'label' => 'Genre',
                 'label_attr' => [
@@ -61,7 +66,6 @@ class UserType extends AbstractType
                 'required' => true
             ]);
 
-        if (!$options["empty_data"])
             $builder->add('password', RepeatedType::class, [
                 'type' => PasswordType::class,
                 'required' => true,
@@ -73,7 +77,7 @@ class UserType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
-            'data_class' => User::class,
+            'data_class' => Client::class,
         ]);
     }
 }

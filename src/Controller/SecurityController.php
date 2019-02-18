@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\Client;
 use App\Entity\Recipient;
 use App\Entity\Status;
 use App\Entity\User;
@@ -10,6 +11,7 @@ use App\Form\RecipientFormType;
 use App\Form\RecipientType;
 use App\Form\UpdatePasswordType;
 use App\Form\UserType;
+use App\Repository\UserRepository;
 use App\Service\EmailManager;
 use App\Service\RandomStringGenerator;
 use App\Service\RegisterManager;
@@ -43,7 +45,7 @@ class SecurityController extends AbstractController
      */
     public function registrationAction(Request $request, UserPasswordEncoderInterface $userPasswordEncoder, RegisterManager $registerManager)
     {
-        $user = new User();
+        $user = new Client();
         $form = $this->createForm(UserType::class, $user);
 
         $form->handleRequest($request);
@@ -93,6 +95,30 @@ class SecurityController extends AbstractController
     }
 
     /**
+     * @Route("/activation/{token}", name="app_index_enable")
+     * @param string $token
+     * @param UserRepository $userRepository
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|Response
+     */
+    public function enableEmailAction(string $token, UserRepository $userRepository)
+    {
+        $user = $userRepository->findOneBy(['enableToken' => $token]);
+
+        if (!$user) {
+            $this->addFlash('error', 'Lien invalide merci de contacter notre service client');
+
+            return $this->render('security/enable.html.twig');
+        }
+
+        $user->setEnable(true);
+        $user->setEnableToken(null);
+
+        $this->getDoctrine()->getManager()->flush();
+
+        return $this->redirectToRoute('app_login', ['message' => 'votre compte à bien étais activé']);
+    }
+
+    /**
      * @Route("/mot-de-passe-oublie", name="app_client_forgot_password")
      */
     public function forgotClientPassword(Request $request, RandomStringGenerator $randomStringGenerator, EmailManager $emailManager)
@@ -106,7 +132,7 @@ class SecurityController extends AbstractController
             $data = $form->getData();
             $user = $em->getRepository(User::class)->findOneBy(['email' => $data["email"]]);
 
-            if (!is_null($user) && !$user instanceof Recipient) {
+            if (!$user) {
                 $user->setToken($randomStringGenerator->generate(15));
                 $user->setTokenRequestAt(new \DateTime());
 
@@ -139,7 +165,7 @@ class SecurityController extends AbstractController
         $date = new \DateTime();
         $date = $date->sub(new \DateInterval('P2D'));
 
-        if (!is_null($user) && !$user instanceof Recipient  && $user->getTokenRequestAt() > $date) {
+        if (!is_null($user)  && $user->getTokenRequestAt() > $date) {
             $form = $this->createForm(UpdatePasswordType::class);
             $form->handleRequest($request);
 

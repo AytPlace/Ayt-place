@@ -42,6 +42,8 @@ class RecipientFixture extends Fixture
                 ->setSiren("111111111")
                 ->setEmail("alexandre.vagnair+$i@sooyoos.com")
                 ->setPassword('root')
+                ->setEnable(false)
+                ->setEnableToken($this->randomStringGenerator->generate())
                 ->setRoles(["ROLE_RECIPIENT"]);
 
             $manager->persist($user);

@@ -1,0 +1,21 @@
+{% extends 'email/base-email.html.twig' %}
+
+{% block title %}Aty'place | Activation de votre compte{% endblock %}
+
+{% block body %}
+    <p>
+        Bonjour,
+        <br>
+        <br>
+    </p>
+    <p>
+        Pour activer votre compte merci de cliquer sur le lien <a href="{{ ctaUrl }}" style="color: #000; text-decoration: underline;"><span style="color: #000; text-decoration: underline;">{{ ctaUrl }}</span></a>
+        Merci
+    </p>
+    <p>
+        A très vite !
+        <br>
+        L'équipe Aty'place.
+        <br>
+    </p>
+{% endblock %}

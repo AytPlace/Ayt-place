@@ -73,6 +73,13 @@ class UserAuthentificator extends AbstractFormLoginAuthenticator
             throw new CustomUserMessageAuthenticationException('Email ou mot de passe invalide');
         }
 
+        $user = $this->entityManager->getRepository(User::class)->findOneBy(['email' => $credentials['email'], 'enable' => '1']);
+
+        if (!$user) {
+            // fail authentication with a custom error
+            throw new CustomUserMessageAuthenticationException('Merci de vérifier votre adresse mail avant de vous connecter');
+        }
+
         return $user;
     }
 

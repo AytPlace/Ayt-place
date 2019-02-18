@@ -10,6 +10,7 @@ namespace App\Service;
 
 
 use App\Entity\Client;
+use App\Entity\Recipient;
 use App\Entity\User;
 use Swift_Mailer;
 use Swift_Message;
@@ -80,6 +81,29 @@ class EmailManager
             [$client->getEmail()],
             "Aty'place | Demande de reservation",
             $vars
+        );
+    }
+
+    public function sendEnableEmail(User $user)
+    {
+        $link = $this->router->generate('app_index_enable', [
+            'token' => $user->getEnableToken()
+        ], $this->router::ABSOLUTE_URL);
+
+        $vars = ['ctaUrl' => $link];
+
+        return $this->sendEmail('enable-user',
+            [$user->getEmail()],
+            "Aty'place | Activation de compte",
+            $vars
+        );
+    }
+
+    public function sendEnableRecipient(Recipient $recipient)
+    {
+        return $this->sendEmail('enable-recipient',
+            [$recipient->getEmail()],
+            "Aty'place | Activation de votre compte prestataire"
         );
     }
 }
