@@ -64,23 +64,26 @@ class RecipientType extends AbstractType
                 'label' => "Email",
                 'required' => true
             ])
-            ->add('password', RepeatedType::class, [
-                'type' => PasswordType::class,
-                'required' => true,
-                'first_options' => ['label' => 'Mot de passe'],
-                'second_options' => ['label' => 'répéter mot de passe ']
-            ])
             ->add('siren', TextType::class, [
                 'required' => true,
                 'label' => 'Siren'
-            ])
-        ;
+            ]);
+
+            if ($options['use_password']) {
+                $builder->add('password', RepeatedType::class, [
+                    'type' => PasswordType::class,
+                    'required' => true,
+                    'first_options' => ['label' => 'Mot de passe'],
+                    'second_options' => ['label' => 'répéter mot de passe ']
+                ]);
+            }
     }
 
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
             'data_class' => Recipient::class,
+            'use_password' => false
         ]);
     }
 }

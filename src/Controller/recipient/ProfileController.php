@@ -10,8 +10,8 @@ namespace App\Controller\recipient;
 
 use App\Entity\Medium;
 use App\Form\ProfilePictureType;
+use App\Form\RecipientType;
 use App\Form\SirenType;
-use App\Form\UpdateRecipientType;
 use App\Repository\RecipientRepository;
 use App\Service\FileManager;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -26,7 +26,7 @@ class ProfileController extends AbstractController
     public function indexAction(Request $request, FileManager $fileManager)
     {
         $recipient = $this->getUser();
-        $form = $this->createForm(UpdateRecipientType::class, $this->getUser());
+        $form = $this->createForm(RecipientType::class, $this->getUser());
         $pictureForm = $this->createForm(ProfilePictureType::class, $this->getUser());
         $sirenForm = $this->createForm(SirenType::class, $recipient);
 
