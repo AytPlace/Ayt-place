@@ -85,14 +85,14 @@ class DateAvailableManager
      * @return AvailabilityOffer|null
      * @throws \Exception
      */
-    public function checkBooking($form): ?AvailabilityOffer
+    public function checkBooking($form, Offer $offer): ?AvailabilityOffer
     {
         $dates = $this->parseDateInterval($form);
 
         $startDate = $dates["startDate"];
         $endDate = $dates["endDate"];
 
-        $availableOffer = $this->availabilityOfferRepository->checkBookingOffer($startDate, $endDate);
+        $availableOffer = $this->availabilityOfferRepository->checkBookingOffer($startDate, $endDate, $offer->getId());
 
         return (count($availableOffer) > 0) ? $availableOffer[0] : null;
     }

@@ -12,6 +12,7 @@ use App\Repository\AvailabilityOfferRepository;
 use App\Repository\OfferRepository;
 use App\Service\DateAvailableManager;
 use App\Service\EmailManager;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -69,6 +70,7 @@ class HomeController extends AbstractController
 
     /**
      * @Route("/offre/{offer}", name="app_index_detail_offer")
+     * @IsGranted("ROLE_CLIENT")
      * @param Offer $offer
      * @param Request $request
      * @param DateAvailableManager $dateAvailableManager
@@ -88,7 +90,7 @@ class HomeController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $dateInput = $request->request->get('select_date');
-            $dateInterval = $dateAvailableManager->checkBooking($dateInput);
+            $dateInterval = $dateAvailableManager->checkBooking($dateInput, $offer);
 
             if (is_null($dateInterval)) {
                 $this->addFlash('error', "Cette date n'est pas valide");
