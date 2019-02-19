@@ -52,11 +52,6 @@ class Offer
      */
     private $recipient;
 
-    /**
-     * @ORM\ManyToMany(targetEntity="Request", inversedBy="offers")
-     * @ORM\JoinTable(name="offers_requests")
-     */
-    private $requests;
 
     /**
      * @ORM\Column(type="string", length=255)
@@ -130,6 +125,11 @@ class Offer
      */
     protected $availabilityOffers;
 
+    /**
+     * @ORM\ManyToMany(targetEntity="App\Entity\Request", inversedBy="offers")
+     */
+    private $requests;
+
     public function __construct()
     {
         $this->availabilityOffers = new ArrayCollection();
@@ -149,32 +149,6 @@ class Offer
     public function setRecipient(?Recipient $recipient): self
     {
         $this->recipient = $recipient;
-
-        return $this;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getRequest()
-    {
-        return $this->requests;
-    }
-
-    public function addRequest(Request $request) :self
-    {
-        if (!$this->requests->contains($request)) {
-            $this->requests[] = $request;
-        }
-
-        return $this;
-    }
-
-    public function removeRequest(Request $request) :self
-    {
-        if ($this->requests->contains($request)) {
-            $this->requests->removeElement($request);
-        }
 
         return $this;
     }
@@ -349,6 +323,32 @@ class Offer
     public function setImage(Medium $medium) : self
     {
         $this->image = $medium;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Request[]
+     */
+    public function getRequests(): Collection
+    {
+        return $this->requests;
+    }
+
+    public function addRequest(Request $request): self
+    {
+        if (!$this->requests->contains($request)) {
+            $this->requests[] = $request;
+        }
+
+        return $this;
+    }
+
+    public function removeRequest(Request $request): self
+    {
+        if ($this->requests->contains($request)) {
+            $this->requests->removeElement($request);
+        }
 
         return $this;
     }

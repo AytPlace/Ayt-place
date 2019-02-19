@@ -9,18 +9,24 @@
         <div class="demande__container-list">
             <div class="collection">
                 {% for request in requests %}
-                    <a href="">
                         <div class="card white darken-1">
-                            <div class="card-content black-text">
-                                <span class="card-title">Demande de location du {{ request.startDate|date('d/m/y') }} au {{ request.endDate|date('d/m/y') }}</span>
-                                <p>{{ request.description|raw }}</p>
-                            </div>
+                            <a href="{{ path('recipient_request_view', {'request' : request.id}) }}">
+                                <div class="card-content black-text">
+                                    <span class="card-title">Demande de location du {{ request.startDate|date('d/m/y') }} au {{ request.endDate|date('d/m/y') }}</span>
+                                    <p>{{ request.description|raw }}</p>
+                                </div>
+                            </a>
                             <div class="card-action">
-                                <a href="#">This is a link</a>
-                                <a href="#">This is a link</a>
+                                <form action="{{ path('recipient_request_accept', {'request' : request.id}) }}" method="post">
+                                    <input type="hidden" value="1">
+                                    <input type="submit" class="btn" value="Accepter">
+                                </form>
+                                <form action="{{ path('recipient_request_refuse', {'request' : request.id}) }}" method="post">
+                                    <input type="hidden" value="0">
+                                </form>
+                                <input type="submit" class="btn" value="Refuser">
                             </div>
                         </div>
-                    </a>
                 {% endfor %}
          {#       {% for event in request %}
                     {{ dump( event.clients ) }}

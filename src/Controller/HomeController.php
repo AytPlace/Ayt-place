@@ -103,6 +103,7 @@ class HomeController extends AbstractController
             }
 
             $this->getUser()->addRequest($bookingRequest);
+            $bookingRequest->addOffer($offer);
             $dates = $dateAvailableManager->parseDateInterval($dateInput);
             $dateAvailableManager->setBooking($bookingRequest, $dateInterval, $dates);
 
