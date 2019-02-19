@@ -38,4 +38,13 @@ class RequestRepository extends ServiceEntityRepository
 
         return $statement->fetchAll();
     }
+
+    public function recipientHasRequest($offerId)
+    {
+        $statement = $this->getEntityManager()->getConnection()->prepare("SELECT request_id FROM offers_requests WHERE offers_requests.offer_id = :offerId");
+        $statement->bindValue('offerId', $offerId);
+        $statement->execute();
+
+        return $statement->fetchAll();
+    }
 }

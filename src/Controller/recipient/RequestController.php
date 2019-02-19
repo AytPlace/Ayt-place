@@ -23,10 +23,16 @@ class RequestController extends AbstractController
      */
     public function indexAction(RequestRepository $requestRepository)
     {
-        $request = $this->getUser()->getOffers();
-        dump($request->getRequest());die;
+        dump($this->getUser()->getOffers()->getRequest());die;
+        $requestsId = $requestRepository->recipientHasRequest($this->getUser()->getOffers()->getId());
+
+        $requests = [];
+        foreach ($requestsId as $requestId) {
+            $requests[] = $requestRepository->find($requestId["request_id"]);
+        }
+
         return $this->render('recipient/request/index.html.twig', [
-            'request' => $request
+            'requests' => $requests
         ]);
     }
 }

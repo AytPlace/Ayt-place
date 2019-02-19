@@ -53,7 +53,7 @@ class Offer
     private $recipient;
 
     /**
-     * @ORM\ManyToMany(targetEntity="Request", inversedBy="offer")
+     * @ORM\ManyToMany(targetEntity="Request", inversedBy="offers")
      * @ORM\JoinTable(name="offers_requests")
      */
     private $requests;
@@ -164,7 +164,7 @@ class Offer
     public function addRequest(Request $request) :self
     {
         if (!$this->requests->contains($request)) {
-            $this->requests->add($request);
+            $this->requests[] = $request;
         }
 
         return $this;

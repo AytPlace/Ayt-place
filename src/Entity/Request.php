@@ -67,6 +67,7 @@ class Request
     {
         $this->responses = new ArrayCollection();
         $this->clients = new ArrayCollection();
+        $this->offers = new ArrayCollection();
     }
 
     public function getId(): ?int

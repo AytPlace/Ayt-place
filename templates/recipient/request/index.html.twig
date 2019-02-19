@@ -1,17 +1,31 @@
 {% extends 'recipient/_base.html.twig' %}
 
 {% block body %}
-    {{ dump(request) }}
+    {{ dump(requests) }}
     <div class="background-container"></div>
     <div class="separation"></div>
     <div class="demande__container">
-        <h1 class="demande__container-title">Liste des demandes</h1>
+        <h1 class="demande__container-title">Liste des demandes de location</h1>
         <div class="demande__container-list">
             <div class="collection">
-                {% for event in request %}
+                {% for request in requests %}
+                    <a href="">
+                        <div class="card white darken-1">
+                            <div class="card-content black-text">
+                                <span class="card-title">Demande de location du {{ request.startDate|date('d/m/y') }} au {{ request.endDate|date('d/m/y') }}</span>
+                                <p>{{ request.description|raw }}</p>
+                            </div>
+                            <div class="card-action">
+                                <a href="#">This is a link</a>
+                                <a href="#">This is a link</a>
+                            </div>
+                        </div>
+                    </a>
+                {% endfor %}
+         {#       {% for event in request %}
                     {{ dump( event.clients ) }}
                     <a href="#!" class="collection-item">Demande de : </a>
-                {% endfor %}
+                {% endfor %}#}
             </div>
         </div>
 
