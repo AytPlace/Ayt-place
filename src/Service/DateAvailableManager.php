@@ -35,11 +35,12 @@ class DateAvailableManager
      *  Date de début courante = ddc | Date de fin courante = dfc ;; Date dé début = dd | Date de fin = df
      *  ( ddc >= dd & ddc <= df ) || (dfc => dd & dfc <= df) || (dd >= ddc & df <= dfc) ===> false
      * @param AvailabilityOffer $availabilityOffer
+     * @param Offer $offer
      * @return bool
      */
-    public function checkDateAvailable(AvailabilityOffer $availabilityOffer) : bool
+    public function checkDateAvailable(AvailabilityOffer $availabilityOffer, Offer $offer) : bool
     {
-        $availableDates = $this->availabilityOfferRepository->findAll();
+        $availableDates = $this->availabilityOfferRepository->findBy(['offer' => $offer]);
         $available = true;
 
         foreach ($availableDates as $availableDate) {
