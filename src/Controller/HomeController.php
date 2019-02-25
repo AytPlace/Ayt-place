@@ -141,7 +141,7 @@ class HomeController extends AbstractController
     }
 
     /**
-     * @Route("/recherche-resultat/{data]", name="app_search_result")
+     * @Route("/recherche-resultat/{offer}", name="app_search_result")
      * @param Offer $offer
      * @param DateAvailableManager $dateAvailableManager
      * @return \Symfony\Component\HttpFoundation\Response
