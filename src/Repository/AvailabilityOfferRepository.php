@@ -28,15 +28,17 @@ class AvailabilityOfferRepository extends ServiceEntityRepository
         ;
     }
 
-    public function checkBookingOffer($startDate, $endDate)
+    public function checkBookingOffer($startDate, $endDate, $offerId)
     {
         return $this->createQueryBuilder('o')
             ->where('o.available = true')
             ->andWhere('o.startDate <= :startDate')
             ->andWhere('o.endDate >= :endDate')
+            ->andWhere('o.offer = :offer')
             ->setMaxResults(1)
             ->setParameter('startDate', $startDate)
             ->setParameter('endDate', $endDate)
+            ->setParameter('offer', $offerId)
             ->getQuery()->getResult()
         ;
     }

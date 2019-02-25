@@ -20,7 +20,8 @@ class User implements UserInterface
 
     const STATUS = [
         "A valider" => 1,
-        "Valider" => 2
+        "Valider" => 2,
+        "Refuser" => 3
     ];
 
     /**

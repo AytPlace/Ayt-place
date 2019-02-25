@@ -1,0 +1,54 @@
+.clientBo__title {
+  font-size: 40px;
+  text-align: center;
+  font-weight: 400;
+  text-transform: uppercase;
+}
+
+.request-item__container {
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: space-between;
+  margin: 10px 0;
+  font-size: 18px;
+  position: relative;
+
+  a {
+    &.offer_submit {
+      display: inline;
+      position: absolute;
+      bottom: 0;
+      right: 0;
+      text-decoration: none;
+    }
+  }
+
+  .saler__container {
+    margin: 10px 0;
+  }
+
+  .duration__container {
+    margin: 10px 0;
+  }
+  .status__container {
+    margin-bottom: 30px;
+  }
+  .info-description__title {
+    border-bottom: 1px solid #000;
+    font-size: 24px;
+    margin-bottom: 10px;
+  }
+
+  b {
+    font-weight: bold;
+  }
+  
+  .day__container {
+    display: block;
+    margin: 10px 0;
+  }
+
+  img {
+    height: 300px;
+  }
+}

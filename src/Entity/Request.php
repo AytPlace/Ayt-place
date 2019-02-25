@@ -63,10 +63,16 @@ class Request
      */
     private $status;
 
+    /**
+     * @ORM\ManyToMany(targetEntity="App\Entity\Offer", mappedBy="requests")
+     */
+    private $offers;
+
     public function __construct()
     {
         $this->responses = new ArrayCollection();
         $this->clients = new ArrayCollection();
+        $this->offers = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -217,6 +223,34 @@ class Request
     public function setStatus(string $status): self
     {
         $this->status = $status;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Offer[]
+     */
+    public function getOffers(): Collection
+    {
+        return $this->offers;
+    }
+
+    public function addOffer(Offer $offer): self
+    {
+        if (!$this->offers->contains($offer)) {
+            $this->offers[] = $offer;
+            $offer->addRequest($this);
+        }
+
+        return $this;
+    }
+
+    public function removeOffer(Offer $offer): self
+    {
+        if ($this->offers->contains($offer)) {
+            $this->offers->removeElement($offer);
+            $offer->removeRequest($this);
+        }
 
         return $this;
     }

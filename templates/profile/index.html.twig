@@ -3,14 +3,34 @@
 {% block title %}Mon profil{% endblock %}
 
 {% block body %}
-<style>
-    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
-    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
-</style>
+<div class="profil__index-container">
+    <h2 class="profil__title">profil</h2>
+    <p class="hello">Bonjour {{ client.firstname }} {{ client.lastname|capitalize }}</p>
+    
+    <div class="choose__page-container">
+        <a class="adm-button" href="{{ path('app_index_profil_edit') }}">Modifier mon profil</a>
+        <a class="adm-button" href="{{ path('app_index_booking_offer') }}">Accèder à mes demandes</a>
+    </div>
 
-<div class="example-wrapper">
-    <h2>Modifier mon profile</h2>
-    {{ form_start(profilForm) }}
+    <div class="display__profil-container">
+        <div class="info__container">
+            <p><span class="info__label">civilité </span>
+                {% if client.gender == "M" %}
+                    Monsieur
+                {% else %}
+                    Madame
+                {% endif %}
+            </p>
+            <p><span class="info__label">nom </span> {{ client.lastname }}</p>
+            <p><span class="info__label">prénom </span> {{ client.firstname }}</p>
+            <p><span class="info__label">ville </span> {{ client.city }}</p>
+            <p><span class="info__label">code postal </span> {{ client.zipcode }}</p>
+            <p><span class="info__label">pays </span> {{ client.country }}</p>
+            <p><span class="info__label">date de naissance </span> {{ client.bornDate|date('d/m/y') }}</p>
+            <p><span class="info__label">email </span> {{ client.email }}</p>
+        </div>
+    </div>
+    {#{{ form_start(profilForm) }}
     {{ form_widget(profilForm) }}
     <button class="btn btn-lg btn-primary" type="submit">
         Sign up
@@ -28,6 +48,6 @@
         </div>
     </div>
     <button class="btn waves-effect waves-light" type="submit" name="action">Enregistrer</button>
-    {{ form_end(pictureForm) }}
+    {{ form_end(pictureForm) }}#}
 </div>
 {% endblock %}

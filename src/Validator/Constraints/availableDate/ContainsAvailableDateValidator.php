@@ -44,7 +44,7 @@ class ContainsAvailableDateValidator extends ConstraintValidator
         }
 
         foreach ($value as $availableDate) {
-            if (is_null($availableDate->getId()) && !$this->dateAvailableManager->checkDateAvailable($availableDate)) {
+            if (is_null($availableDate->getId()) && !$this->dateAvailableManager->checkDateAvailable($availableDate, $value->getOwner())) {
                 $this->context->buildViolation($constraint->message)
                     ->setParameters(['{{ startDate }}', $availableDate->getStartDate(), '{{ endDate }}', $availableDate->getEndDate()])
                     ->addViolation()
