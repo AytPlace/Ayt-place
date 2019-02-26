@@ -1,12 +1,30 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Inscription ! {% endblock %}
+
+
+{% block title %}Inscription  {% endblock %}
 
 {% block body %}
+
+        <img src="{{ asset('logo.png') }}" alt="logo" class="logo">
+
+
+        <fieldset id="subscription">
+
+            <p id="inscription">INSCRIPTION</p>
+            <div id="form1">
     {{ form_start(form) }}
     {{ form_widget(form) }}
-    <button class="btn btn-lg btn-primary" type="submit">
+
+    <button class="btn2 btn-lg btn-primary" type="submit">
         Sign up
     </button>
+    </div>
+    </fieldset>
     {{ form_end(form) }}
+
+{% endblock %}
+
+{% block header %}
+
 {% endblock %}

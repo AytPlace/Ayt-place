@@ -1,7 +1,8 @@
 {# integer #}
 {% block number_widget %}
     <div class="input-container">
-        <label for="{{ form.vars.id }}">{{ form.vars.label|raw }}</label>
+
+        <label  for="{{ form.vars.id }}">{{ form.vars.label|raw }}</label>
         <div class="wrap-input100 rs1 validate-input">
             <input   id="{{ form.vars.id }}"  {{ block('widget_attributes') }} class="{% if form.vars.errors|length > 0  %} invalid {% endif %}" type="number"  value="{{ form.vars.value }}"  placeholder="{{ form.vars.label }}">
             {% if form.vars.errors %}
@@ -82,4 +83,6 @@
             <input class="file-path validate" type="text">
         </div>
     </div>
+    </div>
 {% endblock %}
+

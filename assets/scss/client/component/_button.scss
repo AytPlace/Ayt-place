@@ -1,12 +1,53 @@
-.btn {
-  background-color: $second-color-front;
+
+.btn2 {
+  background-color: #19222E;
+  padding: 10px 20px;
+  border: 3px outset;
+  margin-top: 38px;
+  margin-left: 50%;
+  width: 50%;
+  cursor: pointer;
+  color: #eeeeee;
+}
+a {
+  color: #fff;
+  font-size: 12px;
+  text-decoration: none;
+}
+.btn3 {
+  background-color: #19222E;
   padding: 10px 20px;
   border: none;
-  width: 20%;
-
-  a {
-    color: #fff;
-    font-size: 12px;
-    text-decoration: none;
+  margin-top: 38px;
+  /* margin-left: 60%; */
+  width: 40%;
+  cursor: pointer;
+  color: #eeeeee;
+}
+ .btn {
+    background-color: #19222E;
+    padding: 10px 20px;
+    border: 4px outset;
+    /* margin-top: 38px; */
+    /* margin-left: 1%; */
+    width: 40%;
+    cursor: pointer;
+    color: #eeeeee;
+}
+input{
+  border: none;
+  border-bottom: 1px solid #999999;
+  width: 90%;
+}
+#client_forgot_password_submit{
+  .btn2 {
+    background-color: #19222E;
+    padding: 10px 20px;
+    border: 3px outset;
+    margin-top: 38px;
+    margin-left: 50%;
+    width: 50%;
+    cursor: pointer;
+    color: #eeeeee;
   }
 }

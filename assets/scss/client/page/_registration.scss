@@ -1,0 +1,259 @@
+#inscription{
+    height: 50px;
+    letter-spacing: 10px;
+    font-size: 32px;
+    font-family: Abhaya Libre;
+    margin-bottom: 50px;
+    margin-top: 20px;
+    color: #bdbdbd;
+    border: 15px outset #999999;
+    border: 4px outset #4a4a4a;
+    text-shadow: 1px 0 0 black, 0 1px 0 black, 0 -1px 0 #bdbdbd, -1px 0 0 #bdbdbd;
+    text-align: center;
+    padding-top: 20px;
+    background-color: #252f3c;
+    border-spacing: 21px;
+
+
+
+  }
+#signin2 {
+  height: 50px;
+  letter-spacing: 2px;
+  font-size: 130%;
+  font-family: Abhaya Libre;
+  margin-bottom: 50px;
+  margin-top: 20px;
+  color: #bdbdbd;
+  border: 15px outset #999999;
+  border: 4px outset #4a4a4a;
+  text-shadow: 1px 0 0 black, 0 1px 0 black, 0 -1px 0 #bdbdbd, -1px 0 0 #bdbdbd;
+  text-align: center;
+  padding-top: 25px;
+  background-color: #252f3c;
+}
+
+#signin {
+  height: 50px;
+  letter-spacing: 7px;
+  font-size: 250%;
+  font-family: Abhaya Libre;
+  margin-bottom: 50px;
+  margin-top: 20px;
+  color: #bdbdbd;
+  border: 15px outset #999999;
+  border: 4px outset #4a4a4a;
+  text-shadow: 1px 0 0 black, 0 1px 0 black, 0 -1px 0 #bdbdbd, -1px 0 0 #bdbdbd;
+  text-align: center;
+  padding-top: 25px;
+  background-color: #252f3c;
+
+}
+input[id="inscription"]{
+  border: none;
+  border-bottom: 1px solid black;
+  font-family: inherit;
+  color:black;
+  padding:0px;
+  font-size: 100%;
+  vertical-align: baseline;
+  width: 392px;
+  margin-top: 0px;
+  margin-bottom: 10px;
+
+}
+
+.place__container2 {
+  margin-top: 50px;
+ // display: inline-flex;
+  flex-flow: wrap column;
+  align-items: center;
+  position: relative;
+}
+label.recipient_gender.radio{
+  display: inline-block;
+  width: 45%;
+  margin: 10px 2.5% 10px 2.5%;
+  text-align: center;
+  label:100px;
+}
+
+form {
+  width: 100%;
+  font-family: serif;
+  border-color: #4a4a4a;
+  margin-left: 0%;
+  margin-top: 13%;
+  font-size: 10px;
+}
+
+
+
+.btn {
+    background-color: #19222E;
+    padding: 10px 20px;
+    border: 4px outset;
+    /* margin-top: 38px; */
+    /* margin-left: 1%; */
+    width: 40%;
+    cursor: pointer;
+    color: #eeeeee;
+
+}
+a {
+  color: #fff;
+  font-size: 12px;
+  text-decoration: none;
+  }
+
+#recipient_password_first{
+  border: none;
+  border-bottom: 1px solid #999999;
+  width: 100%;
+}
+
+fieldset {
+  padding: 20px 20px 20px 20px;
+  border: 1px solid #000000;
+  width: 35%;
+  margin-left: 80px;
+  margin-bottom: 200px;
+}
+#recipient_gender{
+  width: 25%;
+  display: inline-flex;
+  font-size: 9px;
+}
+
+
+.logo {
+  width: 25%;
+  display: block;
+  margin-bottom: 150px;
+  margin-top: 100px;
+}
+
+p[id="signin"] {
+  height: 50px;
+  letter-spacing: 8px;
+  font-size: 28px;
+  font-family: Abhaya Libre;
+  margin-bottom: 100px;
+  margin-top: 17px;
+  color: #005C05;
+  border: 1px solid black;
+  text-shadow: 1px 0 0 black, 0 1px 0 black, 0 -1px 0 black, -1px 0 0 black;
+  text-align: center;
+  padding-top: 30px;
+}
+fieldset[id="login"] {
+  padding: 10px 20px 20px 20px;
+  border: 5px outset;
+  width: 25%;
+  margin-left: 200px;
+}
+
+form[id="form1"] {
+  width: 72%;
+  font-family: serif;
+  border-color: #4a4a4a;
+  margin-left: 6%;
+  margin-top: 3%;
+}
+fieldset[id="subscription"]{
+  padding: 10px 20px 20px 20px;
+  border: 5px outset;
+  width: 25%;
+  margin-left: 200px;
+
+}
+
+#inputEmail {
+    border: none;
+    border-bottom: 1px solid #999;
+    width: 100%;
+   margin-bottom: 2%;
+  }
+#inputPassword {
+    border: none;
+    border-bottom: 1px solid #999;
+    width: 100%;
+  }
+#recipient_email {
+    border: none;
+    border-bottom: 1px solid #999;
+    width: 100%;
+  font-size: 10px;
+  }
+#recipient_siren {
+    border: none;
+    border-bottom: 1px solid #999;
+    width: 100%;
+  }
+
+#recipient_password_first {
+    border: none;
+  border-bottom: 1px solid #999;
+    width: 100%;
+  }
+
+#recipient_phoneNumber {
+    border: none;
+    border-bottom: 1px solid #999;
+    width: 100%;
+  }
+
+#recipient_bornDate {
+    border: none;
+    border-bottom: 1px solid #999;
+    width: 100%;
+    font-size: 10px;
+  }
+
+#recipient_country {
+    border: none;
+    border-bottom: 1px solid #999;
+    width: 100%;
+  }
+
+#recipient_zipcode {
+    border: none;
+    border-bottom: 1px solid #999;
+    width: 100%;
+  }
+
+#recipient_city {
+    border: none;
+    border-bottom: 1px solid #999;
+    width: 100%;
+  font-size: 10px;
+  }
+
+
+#recipient_lastname {
+    border: none;
+    border-bottom: 1px solid #999;
+    width: 100%;
+  }
+
+#recipient_firstname {
+    border: none;
+    border-bottom: 1px solid #999;
+    width: 100%;
+  }
+
+input[id="recipient_firstname"]{
+  border: none;
+  border-bottom: 1px solid black;
+  font-family: inherit;
+  color:black;
+  padding:0px;
+  font-size: 100%;
+  vertical-align: baseline;
+  width: 100%;
+  margin-top: 0px;
+  margin-bottom: 10px;
+}
+#label.required{
+  font-size: 10px;
+}

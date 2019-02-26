@@ -6,8 +6,8 @@ use App\Entity\Client;
 use App\Entity\User;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
-use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
@@ -22,7 +22,7 @@ class UserType extends AbstractType
         $builder
             ->add('firstname', TextType::class, [
                 'label' => "Nom",
-                'required' => true
+                'required' => trueg
             ])
             ->add('lastname', TextType::class, [
                 'label' => "Prénom",
@@ -42,7 +42,7 @@ class UserType extends AbstractType
                 'widget' => 'single_text',
             ])
             ->add('phoneNumber', TextType::class, [
-                'label' => "numéro de téléphone",
+                'label' => "Numéro de téléphone",
                 'required' => true
             ])
             ->add('zipcode', TextType::class, [
@@ -75,7 +75,13 @@ class UserType extends AbstractType
                     'second_options' => ['label' => 'répéter mot de passe ']
                 ]);
             }
-
+        if (!$options["empty_data"])
+            $builder->add('password', RepeatedType::class, [
+                'type' => PasswordType::class,
+                'required' => true,
+                'first_options' => ['label' => 'Mot de passe'],
+                'second_options' => ['label' => 'Répéter mot de passe ']
+            ]);
     }
 
     public function configureOptions(OptionsResolver $resolver)
