@@ -64,12 +64,7 @@ class RecipientType extends AbstractType
                 'label' => "EMAIL",
                 'required' => true
             ])
-            ->add('password', RepeatedType::class, [
-                'type' => PasswordType::class,
-                'required' => true,
-                'first_options' => ['label' => 'MOT DE PASSE'],
-                'second_options' => ['label' => 'REPETER MOT DE PASSE ']
-            ])
+
             ->add('siren', TextType::class, [
                 'required' => true,
                 'label' => 'SIREN'

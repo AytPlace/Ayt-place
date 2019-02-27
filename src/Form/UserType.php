@@ -22,7 +22,7 @@ class UserType extends AbstractType
         $builder
             ->add('firstname', TextType::class, [
                 'label' => "Nom",
-                'required' => trueg
+                'required' => true
             ])
             ->add('lastname', TextType::class, [
                 'label' => "Prénom",
@@ -58,7 +58,7 @@ class UserType extends AbstractType
                 'multiple' => false,
                 'choices' => [
                     'monsieur' => 'M',
-                    'madame' => 'Mmme',
+                    'madame' => 'Mme',
                 ]
             ])
             ->add('email', EmailType::class, [
@@ -67,21 +67,6 @@ class UserType extends AbstractType
             ]);
 
 
-            if ($options['use_password']) {
-                $builder->add('password', RepeatedType::class, [
-                    'type' => PasswordType::class,
-                    'required' => true,
-                    'first_options' => ['label' => 'Mot de passe'],
-                    'second_options' => ['label' => 'répéter mot de passe ']
-                ]);
-            }
-        if (!$options["empty_data"])
-            $builder->add('password', RepeatedType::class, [
-                'type' => PasswordType::class,
-                'required' => true,
-                'first_options' => ['label' => 'Mot de passe'],
-                'second_options' => ['label' => 'Répéter mot de passe ']
-            ]);
     }
 
     public function configureOptions(OptionsResolver $resolver)
