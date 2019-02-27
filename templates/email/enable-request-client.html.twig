@@ -1,0 +1,20 @@
+{% extends 'email/base-email.html.twig' %}
+
+{% block title %}Aty'place |Activation de votre compte prestataire{% endblock %}
+
+{% block body %}
+<p>
+    Bonjour,
+    <br>
+    <br>
+</p>
+<p>
+    Votre demande de réservation pour {{ city }}, du {{ startDate|date('d/m/y') }} au {{ endDate|date('d/m/y') }} à été accpeté
+</p>
+<p>
+    A très vite !
+    <br>
+    L'équipe Aty'place.
+    <br>
+</p>
+{% endblock %}

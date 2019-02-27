@@ -36,6 +36,7 @@ class UserAuthentificator extends AbstractFormLoginAuthenticator
         $this->router = $router;
         $this->csrfTokenManager = $csrfTokenManager;
         $this->passwordEncoder = $passwordEncoder;
+
     }
 
     public function supports(Request $request)
