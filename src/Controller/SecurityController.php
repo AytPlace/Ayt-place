@@ -39,7 +39,6 @@ class SecurityController extends AbstractController
         return $this->render('security/login.html.twig', ['last_username' => $lastUsername, 'error' => $error]);
     }
 
-
     /**
      * @Route("/inscription", name="app_client_registration")
      */
@@ -146,7 +145,7 @@ class SecurityController extends AbstractController
                 $this->addFlash('error',"Vous allez recevoir un email à l'adresse ".$data["email"]." contenant un lien pour réinitialiser votre mot de passe.");
             }
         }else{
-            $this->addFlash('error', 'Une erreur est survenue.');
+            $this->addFlash('error', 'Veuillez entrer votre email ');
         }
 
         return $this->render('security/client-forgot-password.twig', [
@@ -175,7 +174,7 @@ class SecurityController extends AbstractController
                 $user->setTokenRequestAt(null);
                 $em->flush();
 
-                $this->addFlash('sucess', 'Votre mot de passe a été mis à jour.');
+                $this->addFlash('success', 'Votre mot de passe a été mis à jour.');
 
                 return $this->redirectToRoute('app_login');
             }

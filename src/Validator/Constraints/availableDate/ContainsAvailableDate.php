@@ -17,7 +17,7 @@ use Symfony\Component\Validator\Constraint;
  */
 class ContainsAvailableDate extends Constraint
 {
-    public $message = 'L\'interval du "{{ startDate|date("d/m/Y") }}" au "{{ endDate|date("d/m/Y") }}" est déjà utiliser';
+    public $message = 'L\'intervalle du "{{ startDate|date("d/m/Y") }}" au "{{ endDate|date("d/m/Y") }}" est déjà utiliser';
 
     public function validatedBy()
     {

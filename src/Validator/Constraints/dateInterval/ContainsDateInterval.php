@@ -17,7 +17,7 @@ use Symfony\Component\Validator\Constraint;
  */
 class ContainsDateInterval extends Constraint
 {
-    public $message = 'Cette interval de date n\'est pas valide';
+    public $message = 'Cette intervalle de date n\'est pas valide';
 
     public function validatedBy()
     {

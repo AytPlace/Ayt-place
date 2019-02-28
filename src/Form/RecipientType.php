@@ -20,32 +20,32 @@ class RecipientType extends AbstractType
     {
         $builder
             ->add('firstname', TextType::class, [
-                'label' => "Nom",
+                'label' => "NOM",
                 'required' => true
             ])
             ->add('lastname', TextType::class, [
-                'label' => "Prénom",
+                'label' => "PRENOM",
                 'required' => true
             ])
             ->add('city', TextType::class, [
-                'label' => "Ville",
+                'label' => "VILLE",
                 'required' => true
             ])
             ->add('zipcode', TextType::class, [
-                'label' => "Code postal",
+                'label' => "CODE POSTAL",
                 'required' => true
             ])
             ->add('country', TextType::class, [
-                'label' => "Pays",
+                'label' => "PAYS",
                 'required' => true
             ])
             ->add('bornDate', DateTimeType::class, [
-                'label' => "Date de naissance",
+                'label' => "DATE DE NAISSANCE",
                 'required' => true,
                 'widget' => 'single_text'
             ])
             ->add('phoneNumber', TextType::class, [
-                'label' => "numéro de téléphone",
+                'label' => "NUMERO DE TELEPHONE",
                 'required' => true
             ])
             ->add('gender', ChoiceType::class, [
@@ -56,27 +56,20 @@ class RecipientType extends AbstractType
                 'expanded' => true,
                 'multiple' => false,
                 'choices' => [
-                    'monsieur' => 'M',
-                    'madame' => 'Mmme',
+                    'MONSIEUR' => 'M',
+                    'MADAME' => 'Mme',
                 ]
             ])
             ->add('email', EmailType::class, [
-                'label' => "Email",
+                'label' => "EMAIL",
                 'required' => true
             ])
+
             ->add('siren', TextType::class, [
                 'required' => true,
-                'label' => 'Siren'
-            ]);
-
-            if ($options['use_password']) {
-                $builder->add('password', RepeatedType::class, [
-                    'type' => PasswordType::class,
-                    'required' => true,
-                    'first_options' => ['label' => 'Mot de passe'],
-                    'second_options' => ['label' => 'répéter mot de passe ']
-                ]);
-            }
+                'label' => 'SIREN'
+            ])
+        ;
     }
 
     public function configureOptions(OptionsResolver $resolver)

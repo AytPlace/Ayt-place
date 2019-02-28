@@ -25,7 +25,7 @@ class OfferType extends AbstractType
             ])
             ->add('travelerNumbers', NumberType::class, [
                 'required' => true,
-                'label' => 'Nombre maximun de voyageur'
+                'label' => 'Nombre maximum de voyageur'
             ])
             ->add('costByTraveler', NumberType::class, [
                 'required' => true,
@@ -33,7 +33,7 @@ class OfferType extends AbstractType
             ])
             ->add('location', TextType::class, [
                 'required' => true,
-                'label' => 'Adresse du lieux'
+                'label' => 'Adresse du lieu'
             ])
             ->add('city', TextType::class, [
                 'required' => true,
