@@ -13,13 +13,13 @@
                 <div class="content__offer-container">
                     <h4 class="info-description__title">Description</h4>
                     <h4>Demande de réservation</h4>
-                    <p class="saler__container">Vendeur <b>{{ request.availableOffer.offer.recipient.firstname}} {{ request.availableOffer.offer.recipient.lastname|capitalize}}</b></p>
-                    <span class="duration__container"> Du {{ request.startDate|date('d/m/y') }} au {{ request.endDate|date('d/m/y') }}</span>
-                    <span class="day__container">{{ displayBookingDate(request) }} jours</span>
-                    <p class="status__container"> Statut <span style="color: {% if request.status == 1 %}#d4252f{% endif %};">{{ request.status|statut(request.status)}}</span></p>
+                    <p class="saler__container">Vendeur: <b>{{ request.availableOffer.offer.recipient.firstname}} {{ request.availableOffer.offer.recipient.lastname|capitalize}}</b></p>
+                    <span class="duration__container"> Du: {{ request.startDate|date('d/m/y') }} au {{ request.endDate|date('d/m/y') }}</span>
+                    <span class="day__container">Pour: {{ displayBookingDate(request) }} jours</span>
+                    <p class="status__container"> Statut: <span>{{ request.status|statut(request.status)}}</span></p>
                     <div class="requestButton__container">
-                        <a class="offer_submit" href="{{ path('app_index_chatting', {'request' : request.id}) }}">Voir l'offre</a>
-                        <a class="offer_submit" href="{{ path('app_index_booking_delete', {'request' : request.id}) }}">Annulation</a>
+                        <a class="offer_submit {% if  request.status == 2%}disable{% endif %}" href="{{ path('app_index_chatting', {'bookingRequest' : request.id}) }}">Voir l'offre</a>
+                        <a class="offer_submit {% if  request.status == 3%}disable{% endif %}" href="{{ path('app_index_booking_delete', {'request' : request.id}) }}">Annulation</a>
                     </div>
                 </div>
             </div>

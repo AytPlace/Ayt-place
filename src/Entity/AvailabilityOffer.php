@@ -24,7 +24,7 @@ class AvailabilityOffer
     private $offer;
 
     /**
-     * @ORM\OneToMany(targetEntity="Request", mappedBy="availabilityOffer")
+     * @ORM\OneToMany(targetEntity="Request", mappedBy="availabilityOffer", cascade={"remove"})
      */
     private $requests;
 

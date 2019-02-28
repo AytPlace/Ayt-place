@@ -36,7 +36,7 @@ class Request
     private $endDate;
 
     /**
-     * @ORM\ManyToOne(targetEntity="AvailabilityOffer", inversedBy="requests")
+     * @ORM\ManyToOne(targetEntity="AvailabilityOffer", inversedBy="requests", cascade={"remove"})
      */
     private $availabilityOffer;
 
@@ -56,7 +56,7 @@ class Request
     private $updatedAt;
 
     /**
-     * @ORM\ManyToMany(targetEntity="App\Entity\Response", mappedBy="Request")
+     * @ORM\ManyToMany(targetEntity="App\Entity\Response", mappedBy="Request", cascade={"remove"})
      */
     private $responses;
 

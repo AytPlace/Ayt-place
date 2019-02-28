@@ -39,3 +39,28 @@
   display: flex;
   justify-content: end;
 }
+.chatting__title {
+  text-align: center;
+  font-size: 32px;
+  margin-bottom: 20px;
+}
+
+.message__container {
+  display: flex;
+  flex-flow: column;
+}
+.card-right  {
+  text-align: right;
+}
+
+.card-left {
+  margin: 0 !important;
+  text-align: left;
+}
+
+.chattingForm__container {
+  form {
+    display: flex;
+    align-items: flex-end;
+  }
+}

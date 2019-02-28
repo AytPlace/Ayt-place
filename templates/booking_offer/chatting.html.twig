@@ -6,13 +6,20 @@
     <div class="row">
         <h2 class="chatting__title">Discussion avec {{ recipient.firstname }} {{ recipient.lastname }}</h2>
         <div class="message__container">
-
+            {% for response in responses %}
+                <div class="response__container {% if response.sender == 'client' %} sender {% endif %}">
+                    <span class="response__date">{{ response.createdAt|date('d/m/y') }}</span>
+                    <p class="response__content">{{ response.content }}</p>
+                </div>
+            {% else %}
+                <p class="default__message">Aucun message partager</p>
+            {% endfor %}
         </div>
-        <div class="chattingForm__container">
-            {{ form_start(form) }}
-            {{ form_widget(form.content) }}
-            <button type="submit" class="btn">Envoyer</button>
-            {{ form_end(form) }}
-        </div>
+    </div>
+    <div class="chattingForm__container">
+        {{ form_start(form) }}
+        {{ form_widget(form.content) }}
+        <button type="submit" class="btn">Envoyer</button>
+        {{ form_end(form) }}
     </div>
 {% endblock %}

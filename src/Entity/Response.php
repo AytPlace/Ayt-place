@@ -34,6 +34,12 @@ class Response
     private $Request;
 
     /**
+     * @ORM\Column(type="string", name="sender")
+     * @var string
+     */
+    private $sender;
+
+    /**
      * @ORM\Column(type="datetime")
      */
     private $createdAt;
@@ -123,6 +129,25 @@ class Response
     public function setUpdatedAt(\DateTimeInterface $updatedAt): self
     {
         $this->updatedAt = $updatedAt;
+
+        return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getSender() : string
+    {
+        return $this->sender;
+    }
+
+    /**
+     * @param mixed $from
+     * @return Response
+     */
+    public function setSender(string $from): self
+    {
+        $this->sender = $from;
 
         return $this;
     }

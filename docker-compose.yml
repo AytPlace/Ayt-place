@@ -8,7 +8,7 @@ services:
         image: "php"
         build: docker/php
         links:
-          - mysql
+            - mysql
         env_file:
             - .env
         volumes:
@@ -21,10 +21,9 @@ services:
         build: docker/nginx
         env_file:
             - .env
-
         ports:
-            - 81
-        links:yarn encore dev --watch
+            - 81:80
+        links:
             - php
             - mysql
         volumes:

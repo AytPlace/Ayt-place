@@ -9,7 +9,7 @@
             <div class="collection">
                 {% for request in requests %}
                         <div class="card white darken-1">
-                            <a href="{{ path('recipient_request_view', {'request' : request.id}) }}">
+                            <a href="{{ path('recipient_request_view', {'bookingRequest' : request.id}) }}">
                                 <div class="card-content black-text request__card">
                                     <div class="request__card-info">
                                         <span class="card-title">Demande de location du {{ request.startDate|date('d/m/y') }} au {{ request.endDate|date('d/m/y') }}</span>

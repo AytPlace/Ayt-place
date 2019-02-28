@@ -9,7 +9,9 @@
 namespace App\Controller\recipient;
 
 
+use App\Entity\Response;
 use App\Entity\User;
+use App\Form\ChattingType;
 use App\Repository\RequestRepository;
 use App\Entity\Request as BookingRequest;
 use App\Service\EmailManager;
@@ -33,13 +35,31 @@ class RequestController extends AbstractController
     }
 
     /**
-     * @Route("/prestataire/demande/{request}", name="recipient_request_view")
-     * @TODO Najla faire ici le systme de discusion entre client et prestataire
+     * @Route("/prestataire/demande/{bookingRequest}", name="recipient_request_view")
      * @param BookingRequest $bookingRequest
      */
-    public function detailAction(BookingRequest $request)
+    public function detailAction(BookingRequest $bookingRequest, Request $request)
     {
-        dump($request);die;
+        $response = new Response();
+        $form = $this->createForm(ChattingType::class, $response);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $em = $this->getDoctrine()->getManager();
+            $bookingRequest->addResponse($response);
+            $response->SetSender("recipient");
+
+            $em->persist($response);
+            $em->flush();
+
+            return $this->redirectToRoute('recipient_request_view', ['bookingRequest' => $bookingRequest->getId()]);
+        }
+
+        return $this->render('recipient/offer/chatting.html.twig', [
+            'client' => $bookingRequest->getClients()[0],
+            'form' => $form->createView(),
+            'responses' => $bookingRequest->getResponses()
+        ]);
     }
 
     /**
