@@ -14,10 +14,11 @@
                 <li><a href="{{ path('app_index') }}" class="header__list-item">A propos</a></li>
 
                 <li ><a href="" class="header__list-item">Contact</a></li>
-                <li >{% if app.user is not null %}
+                <li >
+                    {% if app.user is not null and is_granted('ROLE_CLIENT') %}
                     <li><a href="{{ path('app_index_booking_offer') }}" class="header__list-item">Réservation</a></li>
                     <li><a href="{{ path('app_index_profil_index') }}" class="header__list-item">Profil</a></li>
-                <a href="/logout" class="header__list-item">Déconnexion</a></li>
+                    <a href="/logout" class="header__list-item">Déconnexion</a></li>
                     {% else %}
                         <a href="{{ path('app_login') }}" class="header__list-item">Connexion</a></li>
                     {% endif %}
