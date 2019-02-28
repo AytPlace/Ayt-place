@@ -13,7 +13,7 @@
             <ul class="header__container-list">
                 <li><a href="{{ path('app_index') }}" class="header__list-item">A propos</a></li>
 
-                <li ><a href="" class="header__list-item">Contact</a></li>
+                <li ><a href="{{ path('app_index_contact') }}" class="header__list-item">Contact</a></li>
                 <li >
                     {% if app.user is not null and is_granted('ROLE_CLIENT') %}
                     <li><a href="{{ path('app_index_booking_offer') }}" class="header__list-item">Réservation</a></li>

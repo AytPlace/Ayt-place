@@ -153,4 +153,13 @@ class EmailManager
             $vars
         );
     }
+
+    public function sendContactForm(array $data)
+    {
+        return $this->sendEmail('contact-form',
+            ["alexandre.vagnair@sooyoos.com"],
+            "Aty'place | Demande de contact de ". $data["email"],
+            $data
+        );
+    }
 }

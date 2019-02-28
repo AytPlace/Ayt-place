@@ -1,0 +1,23 @@
+{% extends 'email/base-email.html.twig' %}
+
+{% block title %}Aty'place | Demande de contact de {{ name }}{% endblock %}
+
+{% block body %}
+    <p>
+        Bonjour,
+        <br>
+        <br>
+    </p>
+    <p>
+        Une demande de renseignement a été effectuer aurjourd'hui de {{ name }},
+        pour répondre merci d'utiliser l'adressre email {{ email }}.
+    </p>
+    <p>Le sujet de cette demande est {{ subject }}</p>
+    <p>la demande est: {{ message|raw }}</p>
+    <p>
+        A très vite !
+        <br>
+        L'équipe Aty'place.
+        <br>
+    </p>
+{% endblock %}

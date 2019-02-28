@@ -1,0 +1,20 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Demande de contact{% endblock %}
+
+{% block body %}
+<div class="row">
+    <h2 class="center__title">Nous contacter</h2>
+    <div class="formContact__container">
+        {{ form_start(form) }}
+        {{ form_widget(form.name) }}
+        {{ form_widget(form.email) }}
+        {{ form_widget(form.subject) }}
+        {{ form_widget(form.message) }}
+
+        <button type="submit" class="btn contact-btn">Envoyez</button>
+        {{ form_end(form) }}
+    </div>
+</div>
+
+{% endblock %}
