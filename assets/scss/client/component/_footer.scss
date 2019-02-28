@@ -3,8 +3,9 @@ footer {
   width: 100%;
   background-color: $second-color-front;
   color: #BDBDBD;
-  position: fixed;
-  bottom: 0;
+}
+#main {
+  min-height: 660px;
 }
 
 .social-media__container {

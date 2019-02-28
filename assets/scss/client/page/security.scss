@@ -1,0 +1,31 @@
+.signIn__title {
+  text-align: center;
+  font-size: 32px;
+  margin-bottom: 3rem;
+}
+
+.signIn__container-item {
+  text-align: center;
+  font-size: 22px;
+  margin-bottom: 20px;
+  display: flex;
+  flex-flow: row;
+  align-items: center;
+  justify-content: center;
+
+  input {
+    background-color: #fff !important;
+    border: none;
+    border-bottom: 1px solid #000;
+    height: 25px;
+    width: 15%;
+    margin-left: 10px;
+  }
+}
+
+.login-button {
+  color: #fff;
+  margin: auto;
+  display: block;
+  width: 7%;
+}
