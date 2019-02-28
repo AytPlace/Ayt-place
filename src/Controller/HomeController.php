@@ -23,9 +23,6 @@ class HomeController extends AbstractController
     /**
      * @Route("/", name="app_index")
      */
-
-
-
     public function indexAction(OfferRepository $offerRepository)
     {
         $offers = $offerRepository->getLastOffer();
