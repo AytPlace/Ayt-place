@@ -70,7 +70,7 @@ class HomeController extends AbstractController
 
     /**
      * @Route("/offre/{offer}", name="app_index_detail_offer")
-     * @IsGranted("ROLE_CLIENT")
+
      * @param Offer $offer
      * @param Request $request
      * @param DateAvailableManager $dateAvailableManager

@@ -1,0 +1,13 @@
+{% block text_widget %}
+    <div class="inputText__container">
+        <label for="{{ form.vars.id }}">{{ form.vars.label|raw }}</label>
+        <div class="wrap-input">
+            <input   id="{{ form.vars.id }}"  {{ block('widget_attributes') }} class="{% if form.vars.errors|length > 0  %} invalid {% endif %}" type="text"  value="{{ form.vars.value }}"  placeholder="{{ form.vars.label }}">
+            {% if form.vars.errors %}
+                {% for error in form.vars.errors %}
+                    <span class="helper-text" data-error="{{ error.message }}" data-success="right"></span>
+                {% endfor %}
+            {% endif %}
+        </div>
+    </div>
+{% endblock %}

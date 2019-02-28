@@ -63,6 +63,9 @@
   display: block;
   margin: 0 auto;
   box-shadow: 5px 5px 5px rgba(0,0,0,0.2);
+  &.disable {
+    opacity: 0.7;
+  }
 }
 
 .offer-item__image {

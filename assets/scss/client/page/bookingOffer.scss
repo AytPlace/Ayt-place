@@ -4,22 +4,22 @@
   font-weight: 400;
   text-transform: uppercase;
 }
-
+.requestButton__container {
+  display: flex;
+  flex-flow: row wrap;
+}
 .request-item__container {
   display: flex;
   flex-flow: row wrap;
-  justify-content: space-between;
+  justify-content: center;
   margin: 10px 0;
   font-size: 18px;
   position: relative;
 
   a {
     &.offer_submit {
-      display: inline;
-      position: absolute;
-      bottom: 0;
-      right: 0;
       text-decoration: none;
+      width: 26%;
     }
   }
 
@@ -33,6 +33,7 @@
   .status__container {
     margin-bottom: 30px;
   }
+
   .info-description__title {
     border-bottom: 1px solid #000;
     font-size: 24px;

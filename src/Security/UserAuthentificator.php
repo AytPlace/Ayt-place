@@ -99,7 +99,7 @@ class UserAuthentificator extends AbstractFormLoginAuthenticator
         }
 
         if ($user instanceof Recipient) {
-            return new RedirectResponse($this->router->generate('recipient_index_home'));
+            return new RedirectResponse($this->router->generate('recipient_profil_home'));
         }
     }
 

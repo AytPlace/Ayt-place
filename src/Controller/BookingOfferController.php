@@ -3,7 +3,10 @@
 namespace App\Controller;
 
 use App\Entity\Request as BookingRequest;
+use App\Entity\Request;
+use App\Entity\Response;
 use App\Entity\User;
+use App\Form\ChattingType;
 use App\Repository\RequestRepository;
 use App\Service\EmailManager;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
@@ -24,7 +27,21 @@ class BookingOfferController extends AbstractController
     }
 
     /**
-     * @Route("/client/booking/offer/{request}", name="app_index_booking_delete")
+     * @Route("/client/discussion/{request}", name="app_index_chatting")
+     */
+    public function chatting(Request $request)
+    {
+        $response = new Response();
+        $form = $this->createForm(ChattingType::class, $response);
+
+        return $this->render('booking_offer/chatting.html.twig', [
+            'recipient' => $request->getOffers()[0]->getRecipient(),
+            'form' => $form->createView()
+        ]);
+    }
+
+    /**
+     * @Route("/client/booking/offer/{request}/delete", name="app_index_booking_delete")
      * @param Request $request
      *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse

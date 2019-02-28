@@ -1,5 +1,6 @@
 {% extends 'base.html.twig' %}
 
+{% form_theme form 'templates/form_client.html.twig' %}
 {% block body %}
    {# {% if app.user is  null %}
         <div class="overlay">
@@ -40,10 +41,14 @@
             <div class="available_date">
                 {{ form_start(form) }}
                 <div class="info-render">
-                    <span class="info-render__label">date</span>
                     <div class="info-render__form">
                         {{ form_widget(form.intervalDate) }}
-                        {{ form_widget(form.description) }}
+                        <div class="inputText__container">
+                            <span>Déscription</span>
+                            <div class="ckeditor__container">
+                                {{ form_widget(form.description) }}
+                            </div>
+                        </div>
                     </div>
                 </div>
 
@@ -57,7 +62,7 @@
                     <span class="cpacity-display">{{ offer.travelerNumbers }}€</span>
                 </div>
 
-                <button type="submit" class="offer_submit">Réservation</button>
+                <button type="submit" class="offer_submit {% if  is_granted('ROLE_RECIPIENT')%}disable{% endif %}" {% if  is_granted('ROLE_RECIPIENT')%}disabled{% endif %}>Réservation</button>
                 {{ form_end(form) }}
             </div>
             <div class="info-render-description">

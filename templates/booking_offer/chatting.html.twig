@@ -1,0 +1,18 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Discussion avec {{ recipient.firstname }} {{ recipient.lastname }}{% endblock %}
+
+{% block body %}
+    <div class="row">
+        <h2 class="chatting__title">Discussion avec {{ recipient.firstname }} {{ recipient.lastname }}</h2>
+        <div class="message__container">
+
+        </div>
+        <div class="chattingForm__container">
+            {{ form_start(form) }}
+            {{ form_widget(form.content) }}
+            <button type="submit" class="btn">Envoyer</button>
+            {{ form_end(form) }}
+        </div>
+    </div>
+{% endblock %}

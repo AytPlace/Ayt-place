@@ -41,10 +41,7 @@
     display: inline-flex;
     align-items: center;
     width: 100%;
-
-    div {
-      flex: 2;
-    }
+    justify-content: center;
   }
 }
 

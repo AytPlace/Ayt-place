@@ -24,9 +24,11 @@ class SelectDateType extends AbstractType
                     'data-multiple-dates-separator' => ' - ',
                     'data-language' => 'fr',
                     'data-date-format' => "yyyy/mm/dd",
+                    'placeholder' => 'Sélectionner une date',
                     'class' => 'datepicker-here'
                 ],
                 'mapped' => false,
+                'label' => "Date",
                 'required' => true
             ])
             ->add('description', CKEditorType::class, [
