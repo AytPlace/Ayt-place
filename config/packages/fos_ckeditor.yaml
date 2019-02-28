@@ -3,3 +3,13 @@
 twig:
     form_themes:
         - '@FOSCKEditor/Form/ckeditor_widget.html.twig'
+
+fos_ck_editor:
+    configs:
+        request_config:
+            toolbar: "request_config"
+            uiColor: "#ffffff"
+
+    toolbars:
+        configs:
+            request_config:   [ [ "Source", "-", "Save" ], "/", [ "Anchor" ], "/", [ "Maximize" ] ]

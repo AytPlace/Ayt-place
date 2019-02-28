@@ -80,7 +80,7 @@ class HomeController extends AbstractController
      */
     public function detailAction(Offer $offer, Request $request, DateAvailableManager $dateAvailableManager, EmailManager $emailManager, OfferRepository $offerRepository)
     {
-        $offers = $offerRepository->getLastOffer();
+        $offers = $offerRepository->getLastOffer(3, $offer);
         $dateAvailableManager->getUnbookDate($offer);
         $bookingRequest = new BookingRequest();
 

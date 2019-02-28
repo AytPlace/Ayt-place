@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use App\Validator\Constraints\ckeditor as Ckeditor;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
@@ -20,6 +21,7 @@ class Request
 
     /**
      * @ORM\Column(type="text")
+     * @Ckeditor\ContainsCkeditor()
      */
     private $description;
 

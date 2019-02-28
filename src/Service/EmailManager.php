@@ -11,6 +11,7 @@ namespace App\Service;
 
 use App\Entity\Client;
 use App\Entity\Recipient;
+use App\Entity\Request;
 use App\Entity\User;
 use Swift_Mailer;
 use Swift_Message;
@@ -104,6 +105,36 @@ class EmailManager
         return $this->sendEmail('enable-recipient',
             [$recipient->getEmail()],
             "Aty'place | Activation de votre compte prestataire"
+        );
+    }
+
+    public function sendDisableRequestToClient(Client $client, Request $request)
+    {
+        $vars = [
+            'city'=> $request->getAvailableOffer()->getOffer()->getCity(),
+            'startDate' => $request->getStartDate(),
+            'endDate' => $request->getEndDate()
+        ];
+
+        return $this->sendEmail('disable-request-client',
+            [$client->getEmail()],
+            "Aty'palce | Votre demande à été annulé",
+            $vars
+        );
+    }
+
+    public function sendEnableRequestToCLient(Client $client, Request $request)
+    {
+        $vars = [
+            'city'=> $request->getAvailableOffer()->getOffer()->getCity(),
+            'startDate' => $request->getStartDate(),
+            'endDate' => $request->getEndDate()
+        ];
+
+        return $this->sendEmail('enable-request-client',
+            [$client->getEmail()],
+            "Aty'palce | Votre demande de réservation à été accepter",
+            $vars
         );
     }
 }

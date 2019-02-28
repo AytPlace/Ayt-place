@@ -1,7 +1,6 @@
 {% extends 'recipient/_base.html.twig' %}
 
 {% block body %}
-    {{ dump(requests) }}
     <div class="background-container"></div>
     <div class="separation"></div>
     <div class="demande__container">
@@ -11,22 +10,28 @@
                 {% for request in requests %}
                         <div class="card white darken-1">
                             <a href="{{ path('recipient_request_view', {'request' : request.id}) }}">
-                                <div class="card-content black-text">
-                                    <span class="card-title">Demande de location du {{ request.startDate|date('d/m/y') }} au {{ request.endDate|date('d/m/y') }}</span>
+                                <div class="card-content black-text request__card">
+                                    <div class="request__card-info">
+                                        <span class="card-title">Demande de location du {{ request.startDate|date('d/m/y') }} au {{ request.endDate|date('d/m/y') }}</span>
+                                        <div class="label__offer"> Status :<span class="new badge" data-badge-caption="{{ request.status|statut(request.status) }}"></span></div>
+                                    </div>
+
                                     <p>{{ request.description|raw }}</p>
                                 </div>
                             </a>
-                            <div class="card-action">
+                            <div class="card-action request__container">
                                 <form action="{{ path('recipient_request_accept', {'request' : request.id}) }}" method="post">
                                     <input type="hidden" value="1">
-                                    <input type="submit" class="btn" value="Accepter">
+                                    <input type="submit" class="btn" {% if request.status == 3 or request.status == 2 %} disabled {% endif %} value="Accepter">
                                 </form>
                                 <form action="{{ path('recipient_request_refuse', {'request' : request.id}) }}" method="post">
                                     <input type="hidden" value="0">
+                                    <input type="submit" class="btn" {% if request.status == 3 %} disabled {% endif %} value="Refuser">
                                 </form>
-                                <input type="submit" class="btn" value="Refuser">
                             </div>
                         </div>
+                {% else %}
+                    Aucune demande de réservation en attente
                 {% endfor %}
          {#       {% for event in request %}
                     {{ dump( event.clients ) }}

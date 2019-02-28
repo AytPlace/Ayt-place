@@ -4,6 +4,7 @@ namespace App\Form;
 
 use App\Entity\AvailabilityOffer;
 use App\Entity\Request;
+use FOS\CKEditorBundle\Form\Type\CKEditorType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
@@ -28,8 +29,10 @@ class SelectDateType extends AbstractType
                 'mapped' => false,
                 'required' => true
             ])
-            ->add('description', TextareaType::class, [
-                'required' => true
+            ->add('description', CKEditorType::class, [
+                'required' => true,
+                'label' => "Description",
+                'config' => ['toolbar' => 'standard'],
             ])
         ;
     }
