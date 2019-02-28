@@ -75,6 +75,7 @@ class Request
         $this->responses = new ArrayCollection();
         $this->clients = new ArrayCollection();
         $this->offers = new ArrayCollection();
+        $this->setStatus(User::STATUS["A valider"]);
     }
 
     public function getId(): ?int

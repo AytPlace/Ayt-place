@@ -45,13 +45,12 @@ class SecurityController extends AbstractController
     public function registrationAction(Request $request, UserPasswordEncoderInterface $userPasswordEncoder, RegisterManager $registerManager)
     {
         $user = new Client();
-        $form = $this->createForm(UserType::class, $user);
+        $form = $this->createForm(UserType::class, $user, ['use_password' => true]);
 
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
             $em = $this->getDoctrine()->getManager();
-
             if ($registerManager->getDuplicateEmail($user->getEmail())) {
 
                 return $this->render('security/registration.html.twig', [
@@ -75,7 +74,7 @@ class SecurityController extends AbstractController
     public function recipientRegistrationAction(Request $request, UserPasswordEncoderInterface $userPasswordEncoder, RegisterManager $registerManager)
     {
         $recipient = new Recipient();
-        $form = $this->createForm(RecipientType::class, $recipient);
+        $form = $this->createForm(RecipientType::class, $recipient, ['use_password' => true]);
 
         $form->handleRequest($request);
 
