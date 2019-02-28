@@ -10,6 +10,7 @@ namespace App\Service;
 
 
 use App\Entity\Client;
+use App\Entity\Offer;
 use App\Entity\Recipient;
 use App\Entity\Request;
 use App\Entity\User;
@@ -134,6 +135,21 @@ class EmailManager
         return $this->sendEmail('enable-request-client',
             [$client->getEmail()],
             "Aty'palce | Votre demande de réservation à été accepter",
+            $vars
+        );
+    }
+
+    public function sendRemoveRecipientOffer(Request $request)
+    {
+        $vars = [
+            'client_name' => $request->getClients()[0]->getLastname(). " ". $request->getClients()[0]->getFirstname(),
+            'startDate' => $request->getStartDate()->format('d/m/y'),
+            'endDate' => $request->getEndDate()->format('d/m/y')
+        ];
+
+        return $this->sendEmail('remove-recipient-request',
+            [$request->getOffers()[0]->getRecipient()->getEmail()],
+            "Aty'place | Annulation de la réservation du ". $request->getStartDate()->format('d/m/y'). " au ". $request->getEndDate()->format('d/m/y'),
             $vars
         );
     }

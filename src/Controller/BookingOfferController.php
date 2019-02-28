@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Request as BookingRequest;
 use App\Entity\User;
 use App\Repository\RequestRepository;
+use App\Service\EmailManager;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
@@ -28,8 +29,9 @@ class BookingOfferController extends AbstractController
      *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
-    public function removeBooking(BookingRequest $request)
+    public function removeBooking(BookingRequest $request, EmailManager $emailManager)
     {
+        $emailManager->sendRemoveRecipientOffer($request);
         $em = $this->getDoctrine()->getManager();
         $em->remove($request);
         $em->flush();

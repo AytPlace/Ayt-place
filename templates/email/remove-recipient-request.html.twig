@@ -1,0 +1,20 @@
+{% extends 'email/base-email.html.twig' %}
+
+{% block title %}Aty'place - Annulation de la réservation{% endblock %}
+
+{% block body %}
+    <p>
+        Bonjour,
+        <br>
+        <br>
+    </p>
+    <p>
+        La réservation de {{ client_name }} à été annulé. Cette réservation avais lieu du {{ startDate }} au {{ endDate }}
+    </p>
+    <p>
+        A très vite !
+        <br>
+        L'équipe Aty'place.
+        <br>
+    </p>
+{% endblock %}
