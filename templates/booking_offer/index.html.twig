@@ -25,6 +25,8 @@
                     <a class="offer_submit" href="{{ path('app_index_booking_delete', {'request' : request.id}) }}">Annulation</a>
                 </div>
             </div>
+        {% else %}
+            <p class="center">Aucune réservation en cours</p>
         {% endfor %}
     </div>
 </div>
