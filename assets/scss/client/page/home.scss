@@ -109,15 +109,12 @@
   margin-top: 80px;
   display: inline-flex;
   flex-flow: row wrap;
-  width: 100%;
-
 
   a {
     color: #000;
     text-decoration: none;
-    flex: 1;
-    justify-content: space-around;
   }
+}
 
   .offer-item {
 
@@ -136,9 +133,14 @@
 
     &:hover {
       opacity: 0.7;
+
+
+
+
+
     }
+    #inputEmail {
+      background-color: red !important;
+    }
+
   }
-}
-
-
-

@@ -1,0 +1,103 @@
+p[id="inscription"]{
+  height: 50px;
+  letter-spacing: 10px;
+  font-size: 50px;
+  position: center;
+  font-family: Abhaya Libre;
+  margin-bottom: 50px;
+  margin-top:10px;
+  color:#005C05;
+  border: 2px solid black;
+  text-shadow: 1px 0 0 black, 0 1px 0 black, 0 -1px 0 black, -1px 0 0 black;
+}
+input {
+  border: none;
+  border-bottom: 1px solid #999;
+  font-family: inherit;
+  color:white;
+  padding:0px;
+  margin: 2px;
+  font-size: 100%;
+  font: inherit;
+  vertical-align: baseline;
+  width: 392px
+
+}
+
+.place__container2 {
+  margin-top: 50px;
+  // display: inline-flex;
+  flex-flow: wrap column;
+  align-items: center;
+  position: relative;
+}
+label.recipient_gender.radio{
+  margin: 10px 10% 10px 2% display-inline;
+  display: inline-block;
+  width: 45%;
+  margin: 10px 2.5% 10px 2.5%;
+  text-align: center;
+  label:100px;
+}
+
+form {
+  width: 220px;
+  position:inherit;
+  font-family: serif;
+  border-color: #4a4a4a;
+}
+
+a {
+  color: #fff;
+  font-size: 12px;
+  text-decoration: none;
+}
+
+#recipient_password_second{
+  border: none;
+  border-bottom: 1px solid #999;
+}
+fieldset {
+  padding: 10px 20px 20px 20px;
+  margin-bottom: 10px;
+  border: 1px solid #000000;
+  width: 150px;
+}
+
+#recipient_gender{
+  width: 240px; ;
+}
+p {
+  /* height: 50px; */
+  /* letter-spacing: 10px; */
+  /* font-size: 50px; */
+  position: center;
+  /* font-family: Abhaya Libre; */
+  margin-bottom: 50px;
+  /* margin-top: 10px; */
+  /* color: #005C05; */
+  border: 1px solid black;
+  /* text-shadow: 1px 0 0 black, 0 1px 0 black, 0 -1px 0 black, -1px 0 0 black; */
+}
+p[id="signin"] {
+  margin-bottom: 40px;
+  font-size: 30px;
+  font-family: Al Tarikh;
+  text-align: center;
+  border: 1px solid;
+  margin-top: 15px;
+  padding-top: 20px;
+}
+p[id="login"]{
+  border: none;
+  border-bottom: 1px solid #999;
+  font-family: inherit;
+  color: black;
+  padding: 0px;
+  font-size: 100%;
+  font: inherit;
+  vertical-align: baseline;
+  width: 392px;
+  margin-top: 0px;
+  margin-bottom: 35px;
+}

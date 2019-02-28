@@ -30,21 +30,19 @@
         </div>
     </div>
 
-    {% if offers|length > 0 %}
-        <div class="booking-enable__container">
-            <h2 class="booking-enable__title">Dernière Locations Disponibles</h2>
-            <div class="last-offer__container">
-                {% for offer in offers %}
-                    <a href="{{ path('app_index_detail_offer', { 'offer' : offer.id }) }}">
-                        <div class="offer-item">
-                            <img src="{{ offer.image.path }}" alt="">
-                            <p>{{ offer.city }}, {{ offer.location }}</p>
-                            <span>A partir de {{ offer.costByTraveler * offer.travelerNumbers }} €</span>
-                        </div>
-                    </a>
+    <div class="booking-enable__container">
+        <h2 class="booking-enable__title">Dernière Locations Disponibles</h2>
+        <div class="last-offer__container">
+            {% for offer in offers %}
+                <a href="{{ path('app_index_detail_offer', { 'offer' : offer.id }) }}">
+                    <div class="offer-item">
+                        <img src="{{ offer.image.path }}" alt="">
+                        <p>{{ offer.city }}, {{ offer.location }}</p>
+                        <span>A partir de {{ offer.costByTraveler * offer.travelerNumbers }} €</span>
+                    </div>
+                </a>
 
-                {% endfor %}
-            </div>
+            {% endfor %}
         </div>
-    {% endif %}
+    </div>
 {% endblock %}
