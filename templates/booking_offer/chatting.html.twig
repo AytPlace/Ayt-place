@@ -4,6 +4,11 @@
 
 {% block body %}
     <div class="row">
+        <h2 class="chatting__title">Information sur l'offre {{ offer.title }}</h2>
+        <div class="offer__container">
+            <div class="description__container"> {{ offer.description|raw }}</div>
+        </div>
+
         <h2 class="chatting__title">Discussion avec {{ recipient.firstname }} {{ recipient.lastname }}</h2>
         <div class="message__container">
             {% for response in responses %}

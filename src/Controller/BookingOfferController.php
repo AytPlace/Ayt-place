@@ -8,6 +8,7 @@ use App\Form\ChattingType;
 use App\Service\EmailManager;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 
@@ -15,7 +16,7 @@ class BookingOfferController extends AbstractController
 {
     /**
      * @Security("has_role('ROLE_CLIENT')")
-     * @Route("/client/booking/offer", name="app_index_booking_offer")
+     * @Route("/client/booking/offer", name="app_index_booking_offer", methods={"GET"})
      */
     public function index()
     {
@@ -25,7 +26,11 @@ class BookingOfferController extends AbstractController
     }
 
     /**
-     * @Route("/client/discussion/{bookingRequest}", name="app_index_chatting")
+     * @Security("has_role('ROLE_CLIENT')")
+     * @Route("/client/discussion/{bookingRequest}", name="app_index_chatting", methods={"GET", "POST"})
+     * @param BookingRequest $bookingRequest
+     * @param Request $request
+     * @return RedirectResponse|\Symfony\Component\HttpFoundation\Response
      */
     public function chatting(BookingRequest $bookingRequest, Request $request)
     {
@@ -37,7 +42,6 @@ class BookingOfferController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $em = $this->getDoctrine()->getManager();
             $bookingRequest->addResponse($response);
-            $response->SetSender("client");
 
             $em->persist($response);
             $em->flush();
@@ -45,18 +49,23 @@ class BookingOfferController extends AbstractController
             return $this->redirectToRoute('app_index_chatting', ['bookingRequest' => $bookingRequest->getId()]);
         }
 
+        $offer = $bookingRequest->getOffers()[0];
+
         return $this->render('booking_offer/chatting.html.twig', [
-            'recipient' => $bookingRequest->getOffers()[0]->getRecipient(),
+            'recipient' => $offer->getRecipient(),
+            'offer' => $offer,
             'form' => $form->createView(),
             'responses' => $responses
         ]);
     }
 
     /**
-     * @Route("/client/booking/offer/{request}/delete", name="app_index_booking_delete")
-     * @param Request $request
+     * @Security("has_role('ROLE_CLIENT')")
+     * @Route("/client/booking/offer/{request}/delete", name="app_index_booking_delete", methods={"GET"})
+     * @param BookingRequest $request
      *
-     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     * @param EmailManager $emailManager
+     * @return RedirectResponse
      */
     public function removeBooking(BookingRequest $request, EmailManager $emailManager)
     {

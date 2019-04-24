@@ -15,13 +15,15 @@ use App\Service\EmailManager;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 class HomeController extends AbstractController
 {
     /**
-     * @Route("/", name="app_index")
+     * @Route("/", name="app_index", methods={"GET"})
      */
     public function indexAction(OfferRepository $offerRepository)
     {
@@ -35,8 +37,8 @@ class HomeController extends AbstractController
     /**
      * @param Request $request
      * @param OfferRepository $offerRepository
-     * @return \Symfony\Component\HttpFoundation\Response
-     * @Route("/recherche", name="app_index_search")
+     * @return Response
+     * @Route("/recherche", name="app_index_search", methods={"GET", "POST"})
      */
     public function searchAction(Request $request, OfferRepository $offerRepository)
     {
@@ -66,21 +68,19 @@ class HomeController extends AbstractController
     }
 
     /**
-     * @Route("/offre/{offer}", name="app_index_detail_offer")
-
+     * @Route("/offre/{offer}", name="app_index_detail_offer", methods={"GET", "POST"})
      * @param Offer $offer
      * @param Request $request
      * @param DateAvailableManager $dateAvailableManager
      * @param EmailManager $emailManager
-     * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
+     * @param OfferRepository $offerRepository
+     * @return RedirectResponse|Response
      * @throws \Exception
      */
     public function detailAction(Offer $offer, Request $request, DateAvailableManager $dateAvailableManager, EmailManager $emailManager, OfferRepository $offerRepository)
     {
         $offers = $offerRepository->getLastOffer(3, $offer);
-        $dateAvailableManager->getUnbookDate($offer);
         $bookingRequest = new BookingRequest();
-
 
         $form = $this->createForm(SelectDateType::class, $bookingRequest);
         $form->handleRequest($request);
@@ -121,8 +121,8 @@ class HomeController extends AbstractController
     /**
      * @param Request $request
      * @param OfferRepository $offerRepository
-     * @return \Symfony\Component\HttpFoundation\Response
-     * @Route("/offer-filter", name="app_index_filter_offer")
+     * @return Response
+     * @Route("/offer-filter", name="app_index_filter_offer", methods={"GET"})
      */
     public function getFilterOffer(Request $request, OfferRepository $offerRepository)
     {
@@ -133,14 +133,14 @@ class HomeController extends AbstractController
 
         return $this->render('includes/searchContent.html.twig', [
             'offers' => $offers
-        ]);
+        ]);    $dateAvailableManager->getUnbookDate($offer);
     }
 
     /**
      * @Route("/recherche-resultat/{offer}", name="app_search_result")
      * @param Offer $offer
      * @param DateAvailableManager $dateAvailableManager
-     * @return \Symfony\Component\HttpFoundation\Response
+     * @return Response
      * @throws \Exception
      */
     public function getAvailableOfferDates(Offer $offer, DateAvailableManager $dateAvailableManager)

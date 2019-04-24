@@ -6,6 +6,7 @@ use App\Entity\Medium;
 use App\Form\ProfilePictureType;
 use App\Form\UserType;
 use App\Service\FileManager;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
@@ -14,7 +15,8 @@ class ProfileController extends AbstractController
 {
 
     /**
-     * @Route("/client/profile", name="app_index_profil_index")
+     * @Security("has_role('ROLE_CLIENT')")
+     * @Route("/client/profile", name="app_index_profil_index", methods={"GET"})
      */
     public function indexAction()
     {
@@ -25,7 +27,8 @@ class ProfileController extends AbstractController
 
 
     /**
-     * @Route("/client/profile/modifier", name="app_index_profil_edit")
+     * @Security("has_role('ROLE_CLIENT')")
+     * @Route("/client/profile/modifier", name="app_index_profil_edit", methods={"GET", "POST"})
      * @param Request $request
      * @return \Symfony\Component\HttpFoundation\Response
      */

@@ -108,10 +108,13 @@
 .last-offer__container {
   display: inline-flex;
   flex-flow: row wrap;
+  width: 100%;
+  justify-content: center;
 
   a {
     color: #000;
     text-decoration: none;
+    max-width: 33%;
   }
 }
 

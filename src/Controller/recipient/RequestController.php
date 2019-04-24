@@ -15,7 +15,9 @@ use App\Form\ChattingType;
 use App\Repository\RequestRepository;
 use App\Entity\Request as BookingRequest;
 use App\Service\EmailManager;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 
@@ -24,6 +26,7 @@ class RequestController extends AbstractController
     private $status = User::STATUS;
 
     /**
+     * @Security("has_role('ROLE_RECIPIENT')")
      * @Route("/prestataire/demande", name="recipient_request_index")
      * @return \Symfony\Component\HttpFoundation\Response
      */
@@ -35,8 +38,10 @@ class RequestController extends AbstractController
     }
 
     /**
-     * @Route("/prestataire/demande/{bookingRequest}", name="recipient_request_view")
+     * @Security("has_role('ROLE_RECIPIENT')")
+     * @Route("/prestataire/demande/{bookingRequest}", name="recipient_request_view", methods={"GET", "POST"})
      * @param BookingRequest $bookingRequest
+     * @return RedirectResponse|\Symfony\Component\HttpFoundation\Response
      */
     public function detailAction(BookingRequest $bookingRequest, Request $request)
     {
@@ -47,7 +52,6 @@ class RequestController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $em = $this->getDoctrine()->getManager();
             $bookingRequest->addResponse($response);
-            $response->SetSender("recipient");
 
             $em->persist($response);
             $em->flush();
@@ -64,6 +68,9 @@ class RequestController extends AbstractController
 
     /**
      * @Route("/prestataire/demande/{request}/refuse", name="recipient_request_refuse")
+     * @param BookingRequest $request
+     * @param EmailManager $emailManager
+     * @return RedirectResponse
      */
     public function refuseAction(BookingRequest $request, EmailManager $emailManager)
     {
@@ -79,6 +86,9 @@ class RequestController extends AbstractController
 
     /**
      * @Route("/prestataire/demande/{request}/accepte", name="recipient_request_accept")
+     * @param BookingRequest $request
+     * @param EmailManager $emailManager
+     * @return RedirectResponse
      */
     public function acceptAction(BookingRequest $request, EmailManager $emailManager)
     {
@@ -89,6 +99,6 @@ class RequestController extends AbstractController
         $em = $this->getDoctrine()->getManager();
         $em->flush();
 
-        return $this->redirectToRoute('recipient_request_index'); 
+        return $this->redirectToRoute('recipient_request_index');
     }
 }

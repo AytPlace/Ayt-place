@@ -20,6 +20,7 @@
     &.offer_submit {
       text-decoration: none;
       width: 26%;
+      text-align: center;
     }
   }
 
@@ -56,4 +57,8 @@
 
 .center {
   text-align: center;
+}
+
+.content__offer-container {
+  width: 20%;
 }

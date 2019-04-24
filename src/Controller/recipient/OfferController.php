@@ -18,7 +18,9 @@ use App\Repository\RecipientRepository;
 use App\Service\DateAvailableManager;
 use App\Service\FileManager;
 use Doctrine\Common\Collections\ArrayCollection;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 
@@ -26,7 +28,11 @@ class OfferController extends AbstractController
 {
 
     /**
-     * @Route("prestataire/offre/", name="recipient_offer_index")
+     * @Security("has_role('ROLE_RECIPIENT')")
+     * @Route("prestataire/offre", name="recipient_offer_index", methods={"GET", "POST"})
+     * @param Request $request
+     * @param FileManager $fileManager
+     * @return RedirectResponse|\Symfony\Component\HttpFoundation\Response
      */
     public function indexAction(Request $request, FileManager $fileManager)
     {
@@ -98,9 +104,10 @@ class OfferController extends AbstractController
 
 
     /**
+     * @Security("has_role('ROLE_RECIPIENT')")
      * @Route("/prestataire/offre/{offer}/delete")
-     * @param RecipientRepository $recipientRepository
-     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     * @param Offer $offer
+     * @return RedirectResponse
      */
     public function deleteAction(Offer $offer)
     {

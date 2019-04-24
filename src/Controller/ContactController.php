@@ -18,7 +18,7 @@ use Symfony\Component\Routing\Annotation\Route;
 class ContactController extends AbstractController
 {
     /**
-    * @Route("/contact",name="app_index_contact")
+    * @Route("/contact",name="app_index_contact", methods={"GET"})
     */
     public function contact(Request $request, EmailManager $emailManager)
     {

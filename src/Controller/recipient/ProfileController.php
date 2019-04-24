@@ -14,6 +14,7 @@ use App\Form\RecipientType;
 use App\Form\SirenType;
 use App\Repository\RecipientRepository;
 use App\Service\FileManager;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
@@ -21,19 +22,17 @@ use Symfony\Component\Routing\Annotation\Route;
 class ProfileController extends AbstractController
 {
     /**
-     * @Route("/prestataire/profil/", name="recipient_profil_home")
+     * @Security("has_role('ROLE_RECIPIENT')")
+     * @Route("/prestataire/profil/", name="recipient_profil_home", methods={"GET", "POST"})
      */
     public function indexAction(Request $request, FileManager $fileManager)
     {
         $recipient = $this->getUser();
         $form = $this->createForm(RecipientType::class, $this->getUser());
         $pictureForm = $this->createForm(ProfilePictureType::class, $this->getUser());
-        $sirenForm = $this->createForm(SirenType::class, $recipient);
+        $sirenForm = $this->createForm(SirenType::class, $this->getUser());
 
         $form->handleRequest($request);
-        $pictureForm->handleRequest($request);
-        $sirenForm->handleRequest($request);
-
         if ($form->isSubmitted() && $form->isValid()) {
             $em = $this->getDoctrine()->getManager();
             $em->flush();
@@ -41,6 +40,7 @@ class ProfileController extends AbstractController
             return $this->redirectToRoute('recipient_profil_home');
         }
 
+        $pictureForm->handleRequest($request);
         if ($pictureForm->isSubmitted() && $pictureForm->isValid()) {
 
             if($pictureForm->get('profilePicture') && !is_null($pictureForm->get('profilePicture')->getData())) {
@@ -57,6 +57,8 @@ class ProfileController extends AbstractController
             }
         }
 
+
+        $sirenForm->handleRequest($request);
         if ($sirenForm->isSubmitted() && $sirenForm->isValid()) {
             $em = $this->getDoctrine()->getManager();
             if($sirenForm->get('sirenPicture') && !is_null($sirenForm->get('sirenPicture')->getData()))
