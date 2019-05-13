@@ -65,7 +65,6 @@
         "auto-scripts": {
             "cache:clear": "symfony-cmd",
             "assets:install %PUBLIC_DIR%": "symfony-cmd",
-            "doctrine:database:create ": "symfony-cmd",
             "doctrine:schema:update -f ": "symfony-cmd"
         },
         "post-install-cmd": [
