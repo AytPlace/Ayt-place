@@ -12,7 +12,7 @@
     "dev-server": "encore dev-server",
     "dev": "encore dev",
     "watch": "encore dev --watch",
-    "build": "encore production --progress"
+    "postinstall": "encore production --progress"
   },
   "dependencies": {
     "air-datepicker": "^2.2.3",
