@@ -65,7 +65,9 @@
         "auto-scripts": {
             "cache:clear": "symfony-cmd",
             "assets:install %PUBLIC_DIR%": "symfony-cmd",
-            "doctrine:schema:update -f ": "symfony-cmd"
+            "doctrine:schema:update -f ": "symfony-cmd",
+            "install" : "npm",
+            "run build": "npm"
         },
         "post-install-cmd": [
             "@auto-scripts"
