@@ -1,0 +1,17 @@
+{
+  "addons": [
+
+  ],
+  "buildpacks": [
+
+  ],
+  "description": "",
+  "env": {
+  },
+  "formation": {
+  },
+  "name": "Ayt-place",
+  "scripts": {
+  },
+  "stack": "heroku-18"
+}
