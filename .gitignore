@@ -18,7 +18,6 @@
 .idea
 docker/db
 public/uploads/*
-public/build/*
 
 ###> symfony/webpack-encore-bundle ###
 

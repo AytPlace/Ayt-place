@@ -1,0 +1,22 @@
+{
+  "entrypoints": {
+    "recipient": {
+      "js": [
+        "/build/runtime.js",
+        "/build/recipient.js"
+      ],
+      "css": [
+        "/build/recipient.css"
+      ]
+    },
+    "client": {
+      "js": [
+        "/build/runtime.js",
+        "/build/client.js"
+      ],
+      "css": [
+        "/build/client.css"
+      ]
+    }
+  }
+}
