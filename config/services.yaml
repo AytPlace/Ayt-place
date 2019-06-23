@@ -45,3 +45,4 @@ services:
     App\EventListener\BookingOfferListener:
         tags:
             - { name: doctrine.event_listener, event: prePersist }
+

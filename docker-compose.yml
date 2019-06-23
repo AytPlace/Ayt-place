@@ -59,10 +59,9 @@ services:
     blackfire:
         image: blackfire/blackfire
         environment:
-            - BLACKFIRE_CLIENT_ID=540e6ea8-6f7c-49e2-96a8-2559fa82d705
-            - BLACKFIRE_CLIENT_TOKEN=87483a5ae1d407ec22aadedd71ea65b2828272e329ea27f9c5a665f0f9fc0d01
-            - BLACKFIRE_SERVER_ID=32ac1779-78ae-4f8e-b8bc-b2ca1cc45fa4
-            - BLACKFIRE_SERVER_TOKEN=535ee536abf6a10851dad9f197841c1971991a92202a64f1ffdef67816eddf0e
+            # Exposes the host BLACKFIRE_SERVER_ID and TOKEN environment variables.
+            - BLACKFIRE_SERVER_ID
+            - BLACKFIRE_SERVER_TOKEN
         links:
           - nginx
 volumes:

@@ -13,15 +13,19 @@
     color: #fff;
   }
 }
+.image__container {
+  display: flex;
+  margin-right: 20px;
+}
 
 .back-arrow-offer {
-  width: 5%;
+  margin-right: 5px;
 }
+
 .offer__container {
   margin-top: 30px;
   display: flex;
-  flex-flow: row wrap;
-  justify-content: center;
+  flex-flow: row;
 
   .offer-info__container {
     padding-left: 50px;
@@ -42,6 +46,18 @@
   justify-content: space-between;
   margin: 30px 0;
   align-items: center;
+
+  &.date {
+    justify-content: center;
+  }
+
+  .inputText__container {
+    margin-bottom: 50px;
+
+    label {
+      margin-bottom: 20px;
+    }
+  }
 
   .info-render__label {
     text-transform: uppercase;
@@ -72,7 +88,7 @@
   background-size: cover;
   background-position: center;
   height: 500px;
-  width: 33%;
+  width: 100%;
 
 }
 

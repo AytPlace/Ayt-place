@@ -9,27 +9,22 @@
 
 .secondary-cover__container {
   width: 100%;
-  background-image: url("../secondary-cover.jpg");
   background-size: cover;
   background-position: center;
   padding: 110px 0;
   margin-bottom: 70px;
 
+
   .tipical-place__container {
-    background-color: #fff;
+    color: #fff;
     display: flex;
     flex-flow: column wrap;
-    margin: 0 auto;
-    align-items: center;
-    width: 50%;
-    font-size: 18px;
-    padding-top: 110px;
+    font-size: 22px;
+    margin: 200px 0 0 50px;
 
     h2 {
       font-size: 36px;
-      color: $second-color-front;
       margin-bottom: 50px;
-      text-align: center;
     }
 
     p {
@@ -97,7 +92,7 @@
 }
 
 .booking-enable__container {
-  padding: 0 20%;
+  padding: 0 5%;
 
   .booking-enable__title {
     font-size: 48px;
@@ -109,25 +104,28 @@
   display: inline-flex;
   flex-flow: row wrap;
   width: 100%;
-  justify-content: center;
+  justify-content: space-between;
 
   a {
     color: #000;
     text-decoration: none;
-    max-width: 33%;
+    width: 33%;
   }
 }
 
   .offer-item {
-
     transition: all 0.75s;
+
     img {
-      max-height: 140px;
+      max-height: 200px;
+      margin: 20px 0;
     }
 
     p {
       font-size:20px;
       font-style: italic;
+      width: 70%;
+      margin-bottom: 10px;
     }
     span {
       font-style: italic;
