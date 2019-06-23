@@ -1,0 +1,1 @@
+(window.webpackJsonp=window.webpackJsonp||[]).push([["recipient"],{K66b:function(n,e,i){i("zxD1"),console.log("Hello Webpack Encore! Edit me in assets/js/recipient.js")},zxD1:function(n,e,i){}},[["K66b","runtime"]]]);

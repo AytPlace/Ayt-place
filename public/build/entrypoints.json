@@ -2,20 +2,31 @@
   "entrypoints": {
     "recipient": {
       "js": [
-        "/build/runtime.js",
-        "/build/recipient.js"
+
+        "/build/runtime.be789d2f.js",
+        "/build/recipient.4256f0d5.js"
       ],
       "css": [
-        "/build/recipient.css"
+        "/build/recipient.8e7b671a.css"
       ]
     },
     "client": {
       "js": [
-        "/build/runtime.js",
-        "/build/client.js"
+
+        "/build/runtime.be789d2f.js",
+        "/build/client.67bd49a5.js"
       ],
       "css": [
-        "/build/client.css"
+        "/build/client.8769c696.css"
+      ]
+    },
+    "admin": {
+      "js": [
+        "/build/runtime.be789d2f.js",
+        "/build/admin.9594706d.js"
+      ],
+      "css": [
+        "/build/admin.1e342c0d.css"
       ]
     }
   }
