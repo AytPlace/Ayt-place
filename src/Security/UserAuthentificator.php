@@ -98,6 +98,10 @@ class UserAuthentificator extends AbstractFormLoginAuthenticator
             return new RedirectResponse($this->router->generate('app_index'));
         }
 
+        if ($user instanceof User && $user->getRoles()[0] === "ROLE_ADMIN") {
+            return new RedirectResponse($this->router->generate('app_admin_index'));
+        }
+
         if ($user instanceof Recipient) {
             return new RedirectResponse($this->router->generate('recipient_profil_home'));
         }

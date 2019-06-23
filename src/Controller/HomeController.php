@@ -46,6 +46,7 @@ class HomeController extends AbstractController
         $offers = $offerRepository->searchOffer($data['name']);
 
         $useRegion = $offerRepository->getUseCity();
+        $prices = $offerRepository->getPrices();
         $form = $this->createForm(SearchOfferType::class);
         $form->handleRequest($request);
 
@@ -122,7 +123,7 @@ class HomeController extends AbstractController
      * @param Request $request
      * @param OfferRepository $offerRepository
      * @return Response
-     * @Route("/offer-filter", name="app_index_filter_offer", methods={"GET"})
+     * @Route("/offer-filter", name="app_index_filter_offer", methods={"GET", "POST"})
      */
     public function getFilterOffer(Request $request, OfferRepository $offerRepository)
     {
