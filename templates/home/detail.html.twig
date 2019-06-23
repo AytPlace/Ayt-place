@@ -2,45 +2,20 @@
 
 {% form_theme form 'templates/form_client.html.twig' %}
 {% block body %}
-   {# {% if app.user is  null %}
-        <div class="overlay">
-            <div class="log__container">
-                <div class="sign-up">
-
-                </div>
-                <div class="sign-in">
-                    <form method="post" action="{{ path('app_login') }}">
-
-                        <h1 class="h3 mb-3 font-weight-normal">Please sign in</h1>
-                        <label for="inputEmail" class="sr-only">Email</label>
-                        <input type="email" value="alexandrevagniar1@gmail.com" name="email" id="inputEmail" class="form-control" placeholder="Email" required="" autofocus="">
-                        <label for="inputPassword" class="sr-only">Password</label>
-                        <input type="password" name="password" id="inputPassword" class="form-control" placeholder="Password" required="">
-
-                        <input type="hidden" name="_csrf_token" value="ZYKAflyjGwGp1PQs6ltJW9VFz1UIPOJfY0TgTWnC1y8">
-                        <input type="hidden" name="_target_path" value="{{ path('app_index_detail_offer', {'offer': offer.id}) }}" />
-
-                        <button class="btn btn-lg btn-primary" type="submit">
-                            Sign in
-                        </button>
-                    </form>
-                </div>
-            </div>
-        </div>
-    {% endif %}#}
-
     <div class="offer__coverCity">
         <h3 class="coverCity__title">{{ offer.city }}</h3>
     </div>
 
     <div class="offer__container row">
-        <a href="{{ path('app_index_search') }}" class="back-arrow-offer"><img src="{{ asset('left-arrow.svg') }}" alt="" width="20px"></a>
-        <div class="offer-item__image" style="background-image: url('{{ offer.image.path }}')"></div>
+        <div class="image__container">
+            <a href="{{ path('app_index_search') }}" class="back-arrow-offer"><img src="{{ asset('left-arrow.svg') }}" alt="" width="20px"></a>
+            <img  src="{{ asset( offer.image.path) }}" class="offer-item__image" >
+        </div>
         <div class="offer-info__container">
             <h3>{{ offer.title }}</h3>
             <div class="available_date">
                 {{ form_start(form) }}
-                <div class="info-render">
+                <div class="info-render date">
                     <div class="info-render__form">
                         {{ form_widget(form.intervalDate) }}
                         <div class="inputText__container">
@@ -72,22 +47,19 @@
         </div>
     </div>
 
-    <div class="associate__container row">
-        <h3>Découvrir</h3>
-        <p>Endroit qui pourrait vous plaire</p>
-        <div class="booking-enable__container">
-            <div class="last-offer__container">
-                {% for offer in offers %}
-                    <a href="{{ path('app_index_detail_offer', { 'offer' : offer.id }) }}">
-                        <div class="offer-item">
-                            <img src="{{ offer.image.path }}" alt="">
-                            <p>{{ offer.city }}, {{ offer.location }}</p>
-                            <span>A partir de {{ offer.costByTraveler * offer.travelerNumbers }} €</span>
-                        </div>
-                    </a>
+    <div class="booking-enable__container">
+        <h2 class="booking-enable__title">Dernière Locations Disponibles</h2>
+        <div class="last-offer__container">
+            {% for offer in offers %}
+                <a href="{{ path('app_index_detail_offer', { 'offer' : offer.id }) }}">
+                    <div class="offer-item">
+                        <img src="{{ offer.image.path }}" alt="">
+                        <p>{{ offer.city }}, {{ offer.location }}</p>
+                        <span>A partir de {{ offer.costByTraveler * offer.travelerNumbers }} €</span>
+                    </div>
+                </a>
 
-                {% endfor %}
-            </div>
+            {% endfor %}
         </div>
     </div>
 

@@ -12,6 +12,7 @@ use App\Repository\AvailabilityOfferRepository;
 use App\Repository\OfferRepository;
 use App\Service\DateAvailableManager;
 use App\Service\EmailManager;
+use App\Service\PriceManager;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -46,19 +47,12 @@ class HomeController extends AbstractController
         $offers = $offerRepository->searchOffer($data['name']);
 
         $useRegion = $offerRepository->getUseCity();
-        $prices = $offerRepository->getPrices();
         $form = $this->createForm(SearchOfferType::class);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
             $data = $request->request->get('search_offer');
             $offers = $offerRepository->searchOffer($data['name']);
-
-            return $this->render('home/search.html.twig', [
-                'form' => $form->createView(),
-                'offers' => $offers,
-                'useCities' => $useRegion
-            ]);
         }
 
         return $this->render('home/search.html.twig', [

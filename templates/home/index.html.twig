@@ -1,16 +1,21 @@
 {% extends 'base.html.twig' %}
 
-{% block body %}
+{% block header %}
+    <header class="header__container">
+        {{ include('templates/header.html.twig') }}
 
-    <div class="secondary-cover__container">
-        <div class="tipical-place__container">
-            <h2>Lieux <br>Atypique</h2>
-            <p>Location disponible dans toute la france</p>
-            <button class="btn"><a href="{{ path('app_index_search') }}">Découvrir</a></button>
+        <div class="secondary-cover__container">
+            <div class="tipical-place__container">
+                <h2>Découverer des lieux atypiques dans toutes la france</h2>
+                <p>
+                    Avec Aty'place l'accès vous aller pour découvrir des lieux exceptionelle dans toutes la france. <br>
+                    Sur notre site vous pouvez trouver des locations de particulier à particulier mais également profité du patrimoine français
+                </p>
+            </div>
         </div>
-    </div>
-    <img src="{{ asset('logo.png') }}" alt="atyplace" class="logo">
-
+    </header>
+{% endblock %}
+{% block body %}
     <div class="place__container">
         <div class="place-item">
             <img src="{{ asset('foret.png') }}" alt="image de foret" class="place-item__img">
