@@ -5,6 +5,7 @@ Encore
     .setPublicPath('/build')
     .addEntry('recipient', './assets/js/recipient.js')
     .addEntry('client', './assets/js/client.js')
+    .addEntry('admin', './assets/js/admin.js')
 
     .enableSingleRuntimeChunk()
     .cleanupOutputBeforeBuild()

@@ -1,0 +1,22 @@
+{% extends 'admin/base.html.twig' %}
+    {% form_theme form 'admin/form/template_form.html.twig' %}
+{% block body %}
+    <a href="{{ path('app_admin_user_index') }}">< Voir les utilisateurs</a>
+    {{ form_start(form) }}
+        <div class="form-row">
+            {{ form_widget(form.gender) }}
+            {{ form_widget(form.firstname) }}
+            {{ form_widget(form.lastname) }}
+            {{ form_widget(form.city) }}
+            {{ form_widget(form.zipcode) }}
+            {{ form_widget(form.country) }}
+            {{ form_widget(form.bornDate) }}
+            {{ form_widget(form.email) }}
+            {{ form_widget(form.phoneNumber) }}
+            {% if form.siren is defined %}
+                {{ form_widget(form.siren) }}
+            {% endif %}
+        </div>
+    <button type="submit" class="btn btn-primary">Modifier</button>
+    {{ form_end(form) }}
+{% endblock %}

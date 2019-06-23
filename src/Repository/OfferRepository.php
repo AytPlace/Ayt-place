@@ -3,6 +3,7 @@
 namespace App\Repository;
 
 use App\Entity\Offer;
+use App\Service\PriceManager;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Symfony\Bridge\Doctrine\RegistryInterface;
 
@@ -67,6 +68,18 @@ class OfferRepository extends ServiceEntityRepository
 
 
         return $query->getQuery()->getResult();
+    }
+
+    public function getPrices(PriceManager $priceManager)
+    {
+        $offers = $this->findAll();
+        $data = [];
+
+        foreach ($offers as $offer) {
+            $data[] = $priceManager->getPrice($offer);
+        }
+
+        return $data;
     }
 
     public function getUseCity()

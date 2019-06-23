@@ -1,0 +1,48 @@
+{% extends 'admin/base.html.twig' %}
+
+{% block body %}
+    <table class="table">
+        <thead>
+        <tr>
+            <th>Titre</th>
+            <th>Utilisateur</th>
+            <th>Adresse</th>
+            <th>Statut</th>
+            <th>Pays</th>
+            <th>Date d'inscription</th>
+            <th class="text-right">Actions</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for offer in offers %}
+            <tr>
+                <td>{{ offer.title }}</td>
+                <td><a href="{{ path('app_admin_user_edit', {'id' : offer.recipient.id}) }}">{{ offer.recipient.firstname }}  {{ offer.recipient.lastname }}</a></td>
+                <td>{{ offer.location }}</td>
+                <td>
+                    {% if offer.recipient.status  == 1%}
+                        valide
+                    {% else %}
+                        Non valide
+                    {% endif %}
+                </td>
+                <td>{{ offer.country }}</td>
+                <td>{{ offer.createdAt|date('d/m/Y') }}</td>
+                <td class="td-actions text-right">
+                    <a href="{{ path('app_admin_offer_view', {'id' : offer.id}) }}">
+                        <button type="button" rel="tooltip" class="btn btn-success">
+                            <i class="material-icons">edit</i>
+                        </button>
+                    </a>
+
+                    <a href="{{ path('app_admin_offer_remove', {'id' : offer.id}) }}">
+                        <button type="button" class="btn btn-danger"  rel="tooltip" data-toggle="modal">
+                            <i class="material-icons">close</i>
+                        </button>
+                    </a>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}

@@ -20,17 +20,17 @@ class Recipient extends User
     private $siren;
 
     /**
-     * @ORM\OneToOne(targetEntity="Medium")
+     * @ORM\OneToOne(targetEntity="Medium", cascade={"remove"})
      */
     private $sirenPicture;
 
     /**
-     * @ORM\OneToOne(targetEntity="Medium")
+     * @ORM\OneToOne(targetEntity="Medium", cascade={"remove"})
      */
     private $identityCardPicture;
 
     /**
-     * @ORM\OneToOne(targetEntity="App\Entity\Offer", mappedBy="recipient")
+     * @ORM\OneToOne(targetEntity="App\Entity\Offer", mappedBy="recipient", cascade={"remove"})
      */
     private $offers;
 

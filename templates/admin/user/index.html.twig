@@ -1,0 +1,38 @@
+{% extends 'admin/base.html.twig' %}
+
+{% block body %}
+    <table class="table">
+        <thead>
+        <tr>
+            <th>Nom</th>
+            <th>Email</th>
+            <th>Rôle</th>
+            <th>Date d'inscription</th>
+            <th class="text-right">Actions</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for user in users %}
+            <tr>
+                <td>{{ user.firstname }} {{ user.lastname }}</td>
+                <td>{{ user.email }}</td>
+                <td>{{ user.roles[0]|roleDisplay }}</td>
+                <td>{{ user.createdAt|date('d/m/Y') }}</td>
+                <td class="td-actions text-right">
+                    <a href="{{ path('app_admin_user_edit', {'id' : user.id}) }}">
+                        <button type="button" rel="tooltip" class="btn btn-success">
+                            <i class="material-icons">edit</i>
+                        </button>
+                    </a>
+
+                    <a href="{{ path('app_admin_remove_user', {'id': user.id}) }}">
+                        <button type="button" class="btn btn-danger"  rel="tooltip" data-toggle="modal">
+                            <i class="material-icons">close</i>
+                        </button>
+                    </a>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}

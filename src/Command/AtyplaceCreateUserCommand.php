@@ -4,6 +4,7 @@ namespace App\Command;
 
 use App\Entity\Client;
 use App\Entity\Recipient;
+use App\Entity\User;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
@@ -43,7 +44,7 @@ class AtyplaceCreateUserCommand extends Command
         $helper = $this->getHelper('question');
         $question = new ChoiceQuestion(
             'Select new user type',
-            ['recipient', 'client']
+            ['recipient', 'client', 'admin']
 
         );
 
@@ -104,6 +105,21 @@ class AtyplaceCreateUserCommand extends Command
                 ->setSiren($siren)
             ;
 
+        }elseif ($user === 'admin') {
+            $newUser = new User();
+            $newUser->setFirstname($firstname)
+                ->setLastname($lastname)
+                ->setZipcode($zipcode)
+                ->setCity($city)
+                ->setZipcode($zipcode)
+                ->setCountry($country)
+                ->setBorndate(new \DateTime($borndate))
+                ->setPhonenumber($phonenumber)
+                ->setGender($gender)
+                ->setEmail($email)
+                ->setRoles(["ROLE_ADMIN"])
+                ->setPassword($password)
+            ;
         }else {
             $newUser = new Client();
             $newUser->setFirstname($firstname)
